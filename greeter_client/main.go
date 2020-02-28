@@ -27,8 +27,8 @@ import (
 	"sync"
 	"time"
 
+	pb "github.com/hello/helloworld"
 	"google.golang.org/grpc"
-	pb "google.golang.org/grpc/examples/helloworld/helloworld"
 )
 
 const (

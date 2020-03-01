@@ -21,9 +21,9 @@ option java_outer_classname = "HelloWorldProto";
 package helloworld;
 
 // The greeting service definition.
-service Greeter {
+service StorageService {
   // Sends a greeting
-  rpc TestEndpoint (TestRequest) returns (TestResponse) {}
+  rpc FindByRollAndName (TestRequest) returns (TestResponse) {}
 }
 
 // The request message containing the user's name.

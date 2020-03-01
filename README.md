@@ -1,2 +1,3 @@
-# sidecar-sql
-sidecar testing for SQL
+# Mage - SQL Sidecar
+This project contains code which would generate a sidecar for mage.
+

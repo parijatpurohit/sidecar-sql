@@ -1,0 +1,42 @@
+---
+storage:
+  # table name in mysql
+  - table: users
+    # gives the entity name as "User" for "users" table
+    isPlural: 'true'
+    schema:
+      #all fields present in storage with their types
+      fields:
+        - fieldName: Name
+          fieldType: string
+        - fieldName: Roll
+          fieldType: int64
+        - fieldName: CreatedAt
+          fieldType: Timestamp
+        - fieldName: UpdatedAt
+          fieldType: Timestamp
+        - fieldName: CreatedAt
+          fieldType: Timestamp
+        - fieldName: DeletedAt
+          fieldType: string
+    views:
+      # method for every call
+      - name: FindByRollAndName
+        # fields to be returned in find query
+        searchFields:
+          # default value is ALL i.e. select would by default be generated as select *
+          default: __ALL__
+        query:
+          fields:
+            - fieldName: Roll
+              searchType: EQ
+            - fieldName: DeletedAt
+              searchType: IS_NULL
+            - fieldName: UpdatedAt
+              searchType: GT
+            - fieldName: Name
+              searchType: CONTAINS
+            # EQ: Equals
+            # IS_NULL: field is null
+            # GT: Greater than
+            # Contains: Contained in array

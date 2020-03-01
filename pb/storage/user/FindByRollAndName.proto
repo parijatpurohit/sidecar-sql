@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package storage;
+import "google/protobuf/timestamp.proto";
+import "schema.proto";
+
+option go_package = "storage/user";
+
+message FindByRollAndNameRequest {
+    Query query = 1;
+    // default value will be considered as __ALL__. Otherwise, we would consider the values provided
+    repeated Fields fields = 2;
+}
+
+message FindByRollAndNameResponse {
+    repeated User users = 1;
+}
+
+message Query {
+    int64 Roll = 1;
+    google.protobuf.Timestamp DeletedAt = 2;
+    google.protobuf.Timestamp UpdatedAt = 3;
+    // config has contains and thus, repeated array is created
+    repeated string Name = 4;
+}

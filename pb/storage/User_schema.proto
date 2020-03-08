@@ -3,10 +3,10 @@ syntax = "proto3";
 
 import "google/protobuf/timestamp.proto";
 package storage;
-option go_package = "storage/user";
+option go_package = "storage";
 
 // generated with every schema change
-enum Fields {
+enum User_Fields {
     Name = 0;
     Roll = 1;
     CreatedAt = 2;

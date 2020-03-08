@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package storage;
+import "User_FindByRollAndName.proto";
+
+option go_package = "storage";
+
+// Server definition
+service StorageService {
+    // Sends a greeting
+    rpc User_FindByRollAndName (User_FindByRollAndNameRequest) returns (User_FindByRollAndNameResponse) {}
+}

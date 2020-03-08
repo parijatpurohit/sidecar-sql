@@ -11,6 +11,9 @@ then
 elif [ "$1" == "node" ] || [ "$1" == "nodejs" ] || [ "$1" == "javascript" ] || [ "$1" == "js" ]
 then
   mkdir -p github.com/sidecar-storage/zz_generated/js
-  protoc --proto_path=github.com/sidecar-storage/pb/storage \
-  --js_out=import_style=commonjs,binary:github.com/sidecar-storage/zz_generated/js github.com/sidecar-storage/pb/storage/*.proto
+  cd github.com/sidecar-storage/pb/storage
+  grpc_tools_node_protoc --js_out=import_style=commonjs,binary:../../zz_generated/js \
+  --grpc_out=../../zz_generated/js \
+  --plugin=protoc-gen-grpc=`which grpc_tools_node_protoc_plugin` *.proto
+
 fi

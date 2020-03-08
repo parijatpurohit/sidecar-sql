@@ -26,7 +26,9 @@ import (
 	"log"
 	"net"
 
-	pb "github.com/hello/helloworld"
+	"github.com/golang/protobuf/ptypes/timestamp"
+
+	pb "github.com/sidecar-storage/generated"
 	"google.golang.org/grpc"
 )
 
@@ -36,12 +38,20 @@ const (
 
 // server is used to implement helloworld.GreeterServer.
 type server struct {
-	pb.UnimplementedGreeterServer
+	pb.UnimplementedStorageServiceServer
 }
 
 // SayHello implements helloworld.GreeterServer
-func (s *server) TestEndpoint(ctx context.Context, in *pb.TestRequest) (*pb.TestResponse, error) {
-	return &pb.TestResponse{Message: "Hello " + in.GetName()}, nil
+func (s *server) User_FindByRollAndName(ctx context.Context, in *pb.User_FindByRollAndNameRequest) (*pb.User_FindByRollAndNameResponse, error) {
+	return &pb.User_FindByRollAndNameResponse{
+		Users: []*pb.User{
+			{
+				Name:      "some name",
+				Roll:      123,
+				CreatedAt: &timestamp.Timestamp{Seconds: 1234567890111, Nanos: 0},
+			},
+		},
+	}, nil
 }
 
 func main() {
@@ -50,7 +60,7 @@ func main() {
 		log.Fatalf("failed to listen: %v", err)
 	}
 	s := grpc.NewServer()
-	pb.RegisterGreeterServer(s, &server{})
+	pb.RegisterStorageServiceServer(s, &server{})
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)
 	}

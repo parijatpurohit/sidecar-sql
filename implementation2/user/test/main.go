@@ -40,8 +40,8 @@ func InsertTableUsers() {
 	db.Save(&user.Users{Name: "L1214", Roll: 6000})
 }
 func TestFindByRollAndName() {
-	_, _ = views.FindByRollAndNameRequest(&dto.FindByRollAndNameRequest{
-		Query:&dto.Query{
+	_, _ = views.FindByRollAndNameRequest(&dto.User_FindByRollAndNameRequest{
+		Query:&dto.User_Query{
 			Roll: 3000,
 			Name: []string{"L1213"},
 		},

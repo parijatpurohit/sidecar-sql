@@ -13,7 +13,7 @@ import (
 
 // request, response needs to be generated from config
 // this method can be templatised
-func FindByRollAndNameRequest(request *dto.FindByRollAndNameRequest) (*dto.FindByRollAndNameResponse, error){
+func FindByRollAndNameRequest(request *dto.User_FindByRollAndNameRequest) (*dto.User_FindByRollAndNameResponse, error){
 	//TODO : this connection should be created on startup and singleton pattern should be used
 	db, err := gorm.Open("mysql", "root:@(localhost:3306)/test?charset=utf8&parseTime=True&loc=Local")
 	if err != nil {

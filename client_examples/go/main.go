@@ -4,9 +4,9 @@ package main
 import (
 	"context"
 	"fmt"
+	storage "github.com/parijatpurohit/sidecar-sql/zz_generated/go"
 	"log"
 
-	pb "github.com/sidecar-storage/zz_generated/go"
 	"google.golang.org/grpc"
 )
 
@@ -20,11 +20,14 @@ func main() {
 		log.Fatalf("did not connect: %v", err)
 	}
 	defer conn.Close()
-	c := pb.NewStorageServiceClient(conn)
+	c := storage.NewStorageServiceClient(conn)
 
-	res, err := c.User_FindByRollAndName(context.Background(), &pb.User_FindByRollAndNameRequest{Query: &pb.User_Query{Name: []string{"a", "b"}}})
+	res, err := c.User_FindByRollAndName(context.Background(), &storage.User_FindByRollAndNameRequest{
+		Query: &storage.User_Query{Name: []string{"L1213"}, Roll: 3000},
+	})
 	if err != nil {
 		fmt.Println("err here\n--------", err)
 	}
+	fmt.Println("I REACHED HERE")
 	fmt.Println(res)
 }

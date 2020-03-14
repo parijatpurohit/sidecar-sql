@@ -3,12 +3,12 @@ package main
 
 import (
 	"context"
+	"github.com/parijatpurohit/sidecar-sql/storage/user/translators"
+	"github.com/parijatpurohit/sidecar-sql/storage/user/views"
 	"log"
 	"net"
 
-	"github.com/golang/protobuf/ptypes/timestamp"
-
-	pb "github.com/sidecar-storage/zz_generated/go"
+	pb "github.com/parijatpurohit/sidecar-sql/zz_generated/go"
 	"google.golang.org/grpc"
 )
 
@@ -22,12 +22,11 @@ type server struct {
 
 // User_FindByRollAndName implements storage.StorageServiceServer
 func (s *server) User_FindByRollAndName(ctx context.Context, in *pb.User_FindByRollAndNameRequest) (*pb.User_FindByRollAndNameResponse, error) {
-	return &pb.User_FindByRollAndNameResponse{
-		Users: []*pb.User{
-			{Name: "some name", Roll: 123, CreatedAt: &timestamp.Timestamp{Seconds: 1234567890111, Nanos: 0}},
-		},
-	}, nil
+	users, _ := user_views.FindByRollAndNameRequest(in)
+	return &pb.User_FindByRollAndNameResponse{Users: translators.TranslateUsers(users)}, nil
 }
+
+
 
 func main() {
 	lis, err := net.Listen("tcp", port)

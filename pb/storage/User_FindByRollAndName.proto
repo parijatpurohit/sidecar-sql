@@ -4,7 +4,7 @@ package storage;
 import "google/protobuf/timestamp.proto";
 import "User_schema.proto";
 
-option go_package = "storage/dto";
+option go_package = "storage";
 
 message User_FindByRollAndNameRequest {
     User_Query query = 1;

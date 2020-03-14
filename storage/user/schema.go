@@ -2,8 +2,8 @@ package user
 
 import "time"
 
-// Users : name of the table, generated from the config
-type Users struct {
+// User : name of the table, generated from the config
+type User struct {
 	Name string
 	Roll int64
 	CreatedAt *time.Time

@@ -3,7 +3,7 @@ syntax = "proto3";
 package storage;
 import "User_FindByRollAndName.proto";
 
-option go_package = "storage";
+option go_package = "pb";
 
 // Server definition
 service StorageService {

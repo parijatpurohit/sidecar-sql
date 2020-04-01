@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
-	"github.com/parijatpurohit/sidecar-sql/storage/user"
+	"github.com/parijatpurohit/sidecar-sql/storage/user/models"
 )
 
 func CreateTableUsers() {
@@ -16,10 +16,9 @@ func CreateTableUsers() {
 	defer db.Close()
 
 	// Migrate the schema
-	db.AutoMigrate(&user.User{})
-
+	db.AutoMigrate(&models.User{})
 	// Create
-	db.Create(&user.User{Name: "L1212", Roll: 1000})
+	db.Create(&models.User{Name: "L1212", Roll: 1000})
 }
 
 func InsertTableUsers() {
@@ -32,10 +31,10 @@ func InsertTableUsers() {
 
 
 	// Create
-	db.Save(&user.User{Name: "L1213", Roll: 3000})
-	db.Save(&user.User{Name: "L1213", Roll: 4000})
-	db.Save(&user.User{Name: "L1214", Roll: 5000})
-	db.Save(&user.User{Name: "L1214", Roll: 6000})
+	db.Save(&models.User{Name: "L1213", Roll: 3000})
+	db.Save(&models.User{Name: "L1213", Roll: 4000})
+	db.Save(&models.User{Name: "L1214", Roll: 5000})
+	db.Save(&models.User{Name: "L1214", Roll: 6000})
 }
 
 func main() {

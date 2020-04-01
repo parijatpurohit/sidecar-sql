@@ -7,16 +7,14 @@ import "User_schema.proto";
 option go_package = "pb";
 
 message User_FindByRollAndNameRequest {
-    User_Query query = 1;
-    // default value will be considered as __ALL__. Otherwise, we would consider the values provided
-    repeated User_Fields fields = 2;
+    User_FindByRollAndNameQuery query = 1;
 }
 
 message User_FindByRollAndNameResponse {
     repeated User users = 1;
 }
 
-message User_Query {
+message User_FindByRollAndNameQuery {
     int64 Roll = 1;
     google.protobuf.Timestamp DeletedAt = 2;
     google.protobuf.Timestamp UpdatedAt = 3;

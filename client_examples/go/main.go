@@ -24,7 +24,6 @@ func main() {
 
 	res, err := c.User_FindByRollAndName(context.Background(), &pb.User_FindByRollAndNameRequest{
 		Query: &pb.User_Query{Name: []string{"L1213"}, Roll: 3000},
-		Fields: []pb.User_Fields{pb.User_Fields_Name, pb.User_Fields_Roll},
 	})
 	if err != nil {
 		fmt.Println("err here\n--------", err)

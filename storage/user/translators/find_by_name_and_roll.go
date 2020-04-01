@@ -3,19 +3,34 @@ package translators
 import (
 	"github.com/golang/protobuf/ptypes"
 	"github.com/golang/protobuf/ptypes/timestamp"
-	"github.com/parijatpurohit/sidecar-sql/storage/user"
+	"github.com/parijatpurohit/sidecar-sql/storage/user/models"
+	"github.com/parijatpurohit/sidecar-sql/utils"
 	pb "github.com/parijatpurohit/sidecar-sql/zz_generated/go"
+	"time"
 )
 
-func TranslateUsers(inputs []*user.User) []*pb.User {
+func TranslateUser_FindByRollAndNameQuery(in *pb.User_FindByRollAndNameQuery) *models.User_FindByRollAndNameQuery {
+	res := models.User_FindByRollAndNameQuery{
+		Roll:      in.Roll,
+		DeletedAt: utils.GetTimestamp(in.DeletedAt),
+		UpdatedAt: utils.GetTimestamp(in.UpdatedAt),
+		Name:      in.Name,
+	}
+	return &res
+}
+
+func TranslateUser_FindByRollAndNameResponse(in []*models.User) *pb.User_FindByRollAndNameResponse {
+	return &pb.User_FindByRollAndNameResponse{Users: TranslateUsers(in)}
+}
+func TranslateUsers(in []*models.User) []*pb.User {
 	var returnVal []*pb.User
-	for _, elem := range inputs {
+	for _, elem := range in {
 		returnVal = append(returnVal, TranslateUser(elem))
 	}
 	return returnVal
 }
 
-func TranslateUser(user *user.User) *pb.User {
+func TranslateUser(user *models.User) *pb.User {
 	var createdAt *timestamp.Timestamp
 	var updatedAt *timestamp.Timestamp
 	var deletedAt *timestamp.Timestamp
@@ -37,3 +52,4 @@ func TranslateUser(user *user.User) *pb.User {
 		DeletedAt:            deletedAt,
 	}
 }
+

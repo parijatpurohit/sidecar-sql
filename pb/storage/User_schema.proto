@@ -5,20 +5,11 @@ import "google/protobuf/timestamp.proto";
 package storage;
 option go_package = "pb";
 
-// generated with every schema change
-enum User_Fields {
-    Name = 0;
-    Roll = 1;
-    CreatedAt = 2;
-    UpdatedAt = 3;
-    DeletedAt = 4;
-    __ALL__ = 5;
-}
-
 message User {
-    string Name = 1;
-    int64 Roll = 2;
-    google.protobuf.Timestamp CreatedAt = 3;
-    google.protobuf.Timestamp UpdatedAt = 4;
-    google.protobuf.Timestamp DeletedAt = 5;
+    string UUID = 1;
+    string Name = 2;
+    int64 Roll = 3;
+    google.protobuf.Timestamp CreatedAt = 4;
+    google.protobuf.Timestamp UpdatedAt = 5;
+    google.protobuf.Timestamp DeletedAt = 6;
 }

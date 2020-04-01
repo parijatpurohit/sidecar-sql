@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package storage;
 import "User_FindByRollAndName.proto";
+import "User_CreateUser.proto";
 
 option go_package = "pb";
 
@@ -9,4 +10,5 @@ option go_package = "pb";
 service StorageService {
     // Sends a greeting
     rpc User_FindByRollAndName (User_FindByRollAndNameRequest) returns (User_FindByRollAndNameResponse) {}
+    rpc User_CreateUser (User_CreateUserRequest) returns (User_CreateUserResponse) {}
 }

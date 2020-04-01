@@ -23,11 +23,17 @@ func main() {
 	c := pb.NewStorageServiceClient(conn)
 
 	res, err := c.User_FindByRollAndName(context.Background(), &pb.User_FindByRollAndNameRequest{
-		Query: &pb.User_Query{Name: []string{"L1213"}, Roll: 3000},
+		Query: &pb.User_FindByRollAndNameQuery{Name: []string{"something"}, Roll: 123},
 	})
 	if err != nil {
 		fmt.Println("err here\n--------", err)
 	}
-	fmt.Println("I REACHED HERE")
+
 	fmt.Println(res)
+	createRes, err := c.User_CreateUser(context.Background(), &pb.User_CreateUserRequest{User: &pb.User{Name: "something", Roll: 123}})
+	if err != nil {
+		fmt.Println("err here\n--------", err)
+	}
+
+	fmt.Println(createRes)
 }

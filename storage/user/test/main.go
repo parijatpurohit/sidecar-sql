@@ -38,7 +38,7 @@ func InsertTableUsers() {
 }
 
 func main() {
-	// CreateTableUsers()
+	CreateTableUsers()
 	// InsertTableUsers()
 	// TestFindByRollAndName()
 }

@@ -6,7 +6,6 @@ import (
 	"github.com/parijatpurohit/sidecar-sql/storage/user/models"
 	"github.com/parijatpurohit/sidecar-sql/utils"
 	pb "github.com/parijatpurohit/sidecar-sql/zz_generated/go"
-	"time"
 )
 
 func TranslateUser_FindByRollAndNameQuery(in *pb.User_FindByRollAndNameQuery) *models.User_FindByRollAndNameQuery {

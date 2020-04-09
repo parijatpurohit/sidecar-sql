@@ -13,3 +13,7 @@ func GetTimestamp(ts *timestamp.Timestamp) *time.Time {
 	}
 	return nil
 }
+
+func GetTimePtr(t time.Time) *time.Time {
+	return &t
+}

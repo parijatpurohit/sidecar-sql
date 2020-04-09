@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package storage;
+import "User_schema.proto";
+
+option go_package = "pb";
+
+message User_DeleteUsersRequest {
+    repeated User entities = 1;
+}
+
+message User_DeleteUsersResponse {
+    int64 count = 1;
+}

@@ -5,9 +5,8 @@ import (
 	"context"
 	"fmt"
 	pb "github.com/parijatpurohit/sidecar-sql/zz_generated/go"
-	"log"
-
 	"google.golang.org/grpc"
+	"log"
 )
 
 const (
@@ -22,18 +21,38 @@ func main() {
 	defer conn.Close()
 	c := pb.NewStorageServiceClient(conn)
 
-	res, err := c.User_FindByRollAndName(context.Background(), &pb.User_FindByRollAndNameRequest{
-		Query: &pb.User_FindByRollAndNameQuery{Name: []string{"something"}, Roll: 123},
-	})
-	if err != nil {
-		fmt.Println("err here\n--------", err)
-	}
-
-	fmt.Println(res)
-	createRes, err := c.User_CreateUser(context.Background(), &pb.User_CreateUserRequest{User: &pb.User{Name: "something", Roll: 123}})
+	name  := "random_"
+	createRes, err := c.User_CreateUser(context.Background(), &pb.User_CreateUserRequest{User: &pb.User{Name: name, Roll: 1234}})
 	if err != nil {
 		fmt.Println("err here\n--------", err)
 	}
 
 	fmt.Println(createRes)
+
+	findRes, err := c.User_FindByRollAndName(context.Background(), &pb.User_FindByRollAndNameRequest{
+		Query: &pb.User_FindByRollAndNameQuery{Name: []string{name, "blah"}, Roll: 1234},
+	})
+	if err != nil {
+		fmt.Println("err here\n--------", err)
+	}
+
+	fmt.Println("find response", findRes)
+
+	for _, res := range findRes.Users {
+		res.Name = res.Name + "_updated"
+	}
+	updateRes, err := c.User_UpdateUsers(context.Background(), &pb.User_UpdateUsersRequest{Entities: findRes.Users})
+	if err != nil {
+		fmt.Println("err here\n--------", err)
+	}
+
+	fmt.Println(updateRes)
+
+	deleteRes, err := c.User_DeleteUsers(context.Background(), &pb.User_DeleteUsersRequest{Entities: updateRes.Entities})
+	if err != nil {
+		fmt.Println("err here\n--------", err)
+	}
+
+	fmt.Println(deleteRes)
+
 }

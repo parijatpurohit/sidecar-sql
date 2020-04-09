@@ -1,7 +1,6 @@
 syntax = "proto3";
 
 package storage;
-import "google/protobuf/timestamp.proto";
 import "User_schema.proto";
 
 option go_package = "pb";
@@ -16,8 +15,6 @@ message User_FindByRollAndNameResponse {
 
 message User_FindByRollAndNameQuery {
     int64 Roll = 1;
-    google.protobuf.Timestamp DeletedAt = 2;
-    google.protobuf.Timestamp UpdatedAt = 3;
     // config has contains and thus, repeated array is created
     repeated string Name = 4;
 }

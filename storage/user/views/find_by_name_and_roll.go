@@ -13,9 +13,10 @@ import (
 // this method can be converted to a template
 func FindByRollAndName(query *models.User_FindByRollAndNameQuery) ([]*models.User, error){
 	db := storage.GetDB()
-
 	var u1 models.User
-	rows, err := db.Where("roll=? AND name IN (?)", query.Roll, query.Name).Find(&u1).Rows()
+
+	queryStr, args := queryStrFindByRollAndName(query)
+	rows, err := db.Model(&u1).Where(queryStr, args...).Rows()
 	if err != nil {
 		return nil, err
 	}
@@ -36,5 +37,10 @@ func FindByRollAndName(query *models.User_FindByRollAndNameQuery) ([]*models.Use
 	}
 
 	return res, nil
+}
+
+func queryStrFindByRollAndName(obj *models.User_FindByRollAndNameQuery) (string, []interface{}) {
+	return "roll=? AND name IN (?)", []interface{}{obj.Roll, obj.Name}
+
 }
 

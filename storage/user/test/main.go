@@ -17,8 +17,6 @@ func CreateTableUsers() {
 
 	// Migrate the schema
 	db.AutoMigrate(&models.User{})
-	// Create
-	db.Create(&models.User{Name: "L1212", Roll: 1000})
 }
 
 func InsertTableUsers() {

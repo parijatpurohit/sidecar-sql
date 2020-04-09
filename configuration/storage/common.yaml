@@ -1,0 +1,4 @@
+common:
+  isPlural: true
+  maxIdle: 10
+  maxOpen: 100

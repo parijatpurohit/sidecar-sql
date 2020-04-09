@@ -15,7 +15,7 @@ func FindByRollAndName(query *models.User_FindByRollAndNameQuery) ([]*models.Use
 	db := storage.GetDB()
 	var u1 models.User
 
-	queryStr, args := queryStrFindByRollAndName(query)
+	queryStr, args := queryFindByRollAndName(query)
 	rows, err := db.Model(&u1).Where(queryStr, args...).Rows()
 	if err != nil {
 		return nil, err
@@ -39,7 +39,7 @@ func FindByRollAndName(query *models.User_FindByRollAndNameQuery) ([]*models.Use
 	return res, nil
 }
 
-func queryStrFindByRollAndName(obj *models.User_FindByRollAndNameQuery) (string, []interface{}) {
+func queryFindByRollAndName(obj *models.User_FindByRollAndNameQuery) (string, []interface{}) {
 	return "roll=? AND name IN (?)", []interface{}{obj.Roll, obj.Name}
 
 }

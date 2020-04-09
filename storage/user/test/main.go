@@ -19,22 +19,6 @@ func CreateTableUsers() {
 	db.AutoMigrate(&models.User{})
 }
 
-func InsertTableUsers() {
-	db, err := gorm.Open("mysql", "root:@(localhost:3306)/test?charset=utf8&parseTime=True&loc=Local")
-	if err != nil {
-		fmt.Println(err)
-		panic("failed to connect database")
-	}
-	defer db.Close()
-
-
-	// Create
-	db.Save(&models.User{Name: "L1213", Roll: 3000})
-	db.Save(&models.User{Name: "L1213", Roll: 4000})
-	db.Save(&models.User{Name: "L1214", Roll: 5000})
-	db.Save(&models.User{Name: "L1214", Roll: 6000})
-}
-
 func main() {
 	CreateTableUsers()
 	// InsertTableUsers()

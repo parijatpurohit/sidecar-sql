@@ -1,0 +1,18 @@
+table: job_applications
+schema:
+#all fields present in storage with their types
+fields:
+  - fieldName: UserUUID
+    fieldType: string
+    primaryKey: true
+  - fieldName: JobUUID
+    fieldType: string
+    primaryKey: true
+  - fieldName: CreatedAt
+    fieldType: Timestamp
+  - fieldName: UpdatedAt
+    fieldType: Timestamp
+  - fieldName: DeletedAt
+    fieldType: string
+
+views:

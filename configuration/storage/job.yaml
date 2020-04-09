@@ -1,0 +1,22 @@
+table: jobs
+schema:
+#all fields present in storage with their types
+fields:
+  - fieldName: UUID
+    fieldType: string
+    primaryKey: true
+  - fieldName: Position
+    fieldType: string
+  - fieldName: Company
+    fieldType: string
+  - fieldName: CreatedBy
+    fieldType: string
+  - fieldName: CreatedAt
+    fieldType: Timestamp
+  - fieldName: UpdatedAt
+    fieldType: Timestamp
+  - fieldName: DeletedAt
+    fieldType: string
+
+views:
+

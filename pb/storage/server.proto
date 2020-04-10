@@ -8,9 +8,8 @@ import "User_DeleteUsers.proto";
 
 option go_package = "pb";
 
-// Server definition
+// StorageService has definition of all RPC methods
 service StorageService {
-    // Sends a greeting
     rpc User_FindByRollAndName (User_FindByRollAndNameRequest) returns (User_FindByRollAndNameResponse) {}
     rpc User_CreateUser (User_CreateUserRequest) returns (User_CreateUserResponse) {}
     rpc User_UpdateUsers (User_UpdateUsersRequest) returns (User_UpdateUsersResponse) {}

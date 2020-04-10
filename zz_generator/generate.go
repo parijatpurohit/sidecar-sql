@@ -1,24 +1,31 @@
 package main
 
 import (
-	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"log"
 
-	"github.com/parijatpurohit/sidecar-sql/zz_generator/configreader"
+	"github.com/parijatpurohit/sidecar-sql/zz_generator/config"
+	"github.com/parijatpurohit/sidecar-sql/zz_generator/genproto"
+	"github.com/parijatpurohit/sidecar-sql/zz_generator/genserver"
+	"github.com/parijatpurohit/sidecar-sql/zz_generator/genstorage"
 )
 
 func Generate() {
-	files, err := ioutil.ReadDir(configreader.StorageConfigPath)
+	files, err := ioutil.ReadDir(config.StorageConfigPath)
 	if err != nil {
 		log.Panic(err)
 	}
-
 	for _, f := range files {
-		if f.Name() != configreader.CommonFileName {
-			config, _ := json.Marshal(configreader.GetStorageConfig(f.Name()))
-			fmt.Println(string(config))
+		if f.Name() != config.CommonFileName {
+			conf := config.GetStorageConfig(f.Name())
+			generateForConfig(conf, f.Name())
 		}
 	}
+
+}
+
+func generateForConfig(conf *config.StorageConfig, fileName string) {
+	genproto.GenerateEntityProto(conf, fileName)
+	genstorage.Generate(conf, fileName)
+	genserver.Generate(conf, fileName)
 }

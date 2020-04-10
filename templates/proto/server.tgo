@@ -1,0 +1,18 @@
+{{$configs := .}}
+syntax = "proto3";
+
+package storage;
+import "User_FindByRollAndName.proto";
+import "User_CreateUser.proto";
+import "User_UpdateUsers.proto";
+import "User_DeleteUsers.proto";
+
+option go_package = "pb";
+
+// StorageService has definition of all RPC methods
+service StorageService {
+rpc User_FindByRollAndName (User_FindByRollAndNameRequest) returns (User_FindByRollAndNameResponse) {}
+rpc User_CreateUser (User_CreateUserRequest) returns (User_CreateUserResponse) {}
+rpc User_UpdateUsers (User_UpdateUsersRequest) returns (User_UpdateUsersResponse) {}
+rpc User_DeleteUsers (User_DeleteUsersRequest) returns (User_DeleteUsersResponse) {}
+}

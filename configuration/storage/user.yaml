@@ -1,6 +1,4 @@
 table: users
-schema:
-#all fields present in storage with their types
 fields:
   - fieldName: UUID
     fieldType: string
@@ -11,15 +9,19 @@ fields:
   - fieldName: Roll
     fieldType: int64
   - fieldName: CreatedAt
-    fieldType: Timestamp
+    fieldType: timestamp
   - fieldName: UpdatedAt
-    fieldType: Timestamp
+    fieldType: timestamp
   - fieldName: DeletedAt
-    fieldType: string
+    fieldType: timestamp
 
 views:
   - name: FindByRollAndName
     type: READ
+    config:
+      enableRequestValidation: true
+      multiReturn: true
+      returnType: data
     query:
       fields:
         - fieldName: Roll
@@ -34,15 +36,15 @@ views:
 
   - name: CreateUser
     type: CREATE
-    multiple: false
+    multiReturn: false
     returnType: primaryKey
 
   - name: UpdateUsers
     type: UPDATE
-    multiple: true
+    multiReturn: true
     returnType: data
 
   - name: DeleteUsers
     type: DELETE
-    multiple: true
-    returnType: dataCount
+    multiReturn: true
+    returnType: rowCount

@@ -1,0 +1,17 @@
+// protobuf for defining schema of Job
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+package storage;
+option go_package = "pb";
+
+message Job {
+    string UUID = 1;
+    string Position = 2;
+    string Company = 3;
+    string CreatedBy = 4;
+    google.protobuf.Timestamp CreatedAt = 5;
+    google.protobuf.Timestamp UpdatedAt = 6;
+    google.protobuf.Timestamp DeletedAt = 7;
+    
+}

@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package storage;
+
+import "User_schema.proto";
+
+option go_package = "pb";
+message User_CreateUserRequest {
+     User User = 1;
+}
+
+message User_CreateUserResponse {
+        string UUID = 1;
+}

@@ -12,11 +12,11 @@ fields:
   - fieldName: CreatedBy
     fieldType: string
   - fieldName: CreatedAt
-    fieldType: Timestamp
+    fieldType: timestamp
   - fieldName: UpdatedAt
-    fieldType: Timestamp
+    fieldType: timestamp
   - fieldName: DeletedAt
-    fieldType: string
+    fieldType: timestamp
 
 views:
 

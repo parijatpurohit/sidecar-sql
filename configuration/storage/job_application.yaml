@@ -9,10 +9,10 @@ fields:
     fieldType: string
     primaryKey: true
   - fieldName: CreatedAt
-    fieldType: Timestamp
+    fieldType: timestamp
   - fieldName: UpdatedAt
-    fieldType: Timestamp
+    fieldType: timestamp
   - fieldName: DeletedAt
-    fieldType: string
+    fieldType: timestamp
 
 views:

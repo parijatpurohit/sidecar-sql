@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-func DeleteUsers(ctx context.Context, users []*models.User) ([]*models.User, error){
+func DeleteUsers(ctx context.Context, users []*models.User) ([]*models.User, error) {
 	db := storage.GetDB().BeginTx(ctx, &sql.TxOptions{Isolation: sql.LevelDefault})
 	for _, user := range users {
 		user.UpdatedAt = utils.GetTimePtr(time.Now())

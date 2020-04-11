@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package storage;
+{{ if .HasTimestampField }}import "google/protobuf/timestamp.proto";{{ end }}
+import "{{ .TableName }}_schema.proto";
+
+option go_package = "pb";
+message {{ .TableName }}_{{ .Name }}Request {
+    {{ if eq .ViewType "READ" }}
+    {{- .Name }}Query query = 1;
+    {{- end }}
+    {{- if eq .ViewType "CREATE" "UPDATE" "DELETE"  }}
+        {{- if eq .Config.MultiReturn true }}repeated{{end}} {{ .TableName }} {{ .TableName }}{{ if eq .Config.MultiReturn true }}s{{end}} = 1;
+    {{- end }}
+}
+{{ if eq .ViewType "READ" }}
+message {{ .Name }}Query {
+    {{ range $index, $field := .Fields }}
+        {{- if .IsArray}}repeated {{ end }} {{- if eq $field.FieldSchema.FieldType "timestamp" }}google.protobuf.Timestamp{{ else }}{{ $field.FieldSchema.FieldType }}{{ end }} {{ $field.FieldSchema.FieldName }} = {{ sum $index 1 }};
+    {{ end }}
+}
+{{ end }}
+message {{ .TableName }}_{{ .Name }}Response {
+    {{- if eq .Config.ReturnType "data"}}
+    {{ if eq .Config.MultiReturn true }}repeated{{end}} {{ .TableName }} {{.TableName}}{{ if eq .Config.MultiReturn true }}s{{end}} = 1;
+    {{- end }}
+    {{- if eq .Config.ReturnType "rowCount"}}
+    int64 count = 1;
+    {{- end }}
+    {{- if eq .Config.ReturnType "primaryKey"}}
+        {{ range $index, $field := .PrimaryKeys }}
+            {{- if eq $field.FieldType "timestamp" }}google.protobuf.Timestamp{{ else }}{{- $field.FieldType }}{{ end }} {{ $field.FieldName }} = {{ sum $index 1 }};
+        {{- end }}
+    {{- end}}
+}

@@ -5,7 +5,7 @@ import (
 	pb "github.com/parijatpurohit/sidecar-sql/zz_generated/go"
 )
 
-func TranslateUser_UpdateUsersRequest (in *pb.User_UpdateUsersRequest) []*models.User {
+func TranslateUser_UpdateUsersRequest(in *pb.User_UpdateUsersRequest) []*models.User {
 	entities := in.Entities
 	var res []*models.User
 	for _, entity := range entities {
@@ -14,8 +14,7 @@ func TranslateUser_UpdateUsersRequest (in *pb.User_UpdateUsersRequest) []*models
 	return res
 }
 
-
-func TranslateUser_UpdateUsersResponse (users []*models.User) *pb.User_UpdateUsersResponse {
+func TranslateUser_UpdateUsersResponse(users []*models.User) *pb.User_UpdateUsersResponse {
 	var entities []*pb.User
 	for _, user := range users {
 		entities = append(entities, TranslateUserModel(user))

@@ -21,10 +21,10 @@ type Field struct {
 }
 
 type View struct {
-	Name     string      `yaml:"name"`
-	Config   *ViewConfig `yaml:"config"`
-	ViewType ViewType    `yaml:"type"`
-	Query    *Query      `yaml:"query"`
+	Name     string     `yaml:"name"`
+	Config   ViewConfig `yaml:"config"`
+	ViewType ViewType   `yaml:"type"`
+	Query    *Query     `yaml:"query"`
 }
 
 type ViewConfig struct {

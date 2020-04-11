@@ -33,7 +33,7 @@ func TranslateUserModel(user *models.User) *pb.User {
 
 func TranslateUser_Proto(user *pb.User) *models.User {
 	return &models.User{
-		UUID: user.UUID,
+		UUID:      user.UUID,
 		Name:      user.Name,
 		Roll:      user.Roll,
 		CreatedAt: utils.GetTimestamp(user.CreatedAt),

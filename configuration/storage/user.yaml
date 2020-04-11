@@ -36,15 +36,18 @@ views:
 
   - name: CreateUser
     type: CREATE
-    multiReturn: false
-    returnType: primaryKey
+    config:
+      returnType: primaryKey
+      multiReturn: false
 
   - name: UpdateUsers
     type: UPDATE
-    multiReturn: true
-    returnType: data
+    config:
+      multiInput: true
+      returnType: data
+      multiReturn: true
 
   - name: DeleteUsers
     type: DELETE
-    multiReturn: true
-    returnType: rowCount
+    config:
+      returnType: rowCount

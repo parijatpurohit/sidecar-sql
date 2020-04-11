@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-func UpdateUsers(ctx context.Context, users []*models.User) ([]*models.User, error){
+func UpdateUsers(ctx context.Context, users []*models.User) ([]*models.User, error) {
 	db := storage.GetDB().BeginTx(ctx, &sql.TxOptions{Isolation: sql.LevelDefault})
 	for _, user := range users {
 		user.UpdatedAt = utils.GetTimePtr(time.Now())

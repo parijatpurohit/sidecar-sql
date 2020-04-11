@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/parijatpurohit/sidecar-sql/zz_generator/utils"
+	"github.com/parijatpurohit/sidecar-sql/code_generator/utils"
 
 	"gopkg.in/yaml.v2"
 )

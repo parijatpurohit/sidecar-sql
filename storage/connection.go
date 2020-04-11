@@ -7,10 +7,11 @@ import (
 )
 
 var (
-	once  = sync.Once{}
-	db *gorm.DB
+	once = sync.Once{}
+	db   *gorm.DB
 )
-func GetDB() *gorm.DB{
+
+func GetDB() *gorm.DB {
 	var err error
 	once.Do(func() {
 		db, err = gorm.Open("mysql", "root:@(localhost:3306)/test?charset=utf8&parseTime=True&loc=Local")

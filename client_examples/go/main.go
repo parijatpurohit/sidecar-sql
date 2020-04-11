@@ -21,7 +21,7 @@ func main() {
 	defer conn.Close()
 	c := pb.NewStorageServiceClient(conn)
 
-	name  := "random_"
+	name := "random_"
 	createRes, err := c.User_CreateUser(context.Background(), &pb.User_CreateUserRequest{User: &pb.User{Name: name, Roll: 1234}})
 	if err != nil {
 		fmt.Println("err here\n--------", err)

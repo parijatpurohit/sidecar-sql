@@ -7,11 +7,9 @@ import (
 	"github.com/parijatpurohit/sidecar-sql/storage/user/models"
 )
 
-
-
 // request, response needs to be generated from config
 // this method can be converted to a template
-func FindByRollAndName(query *models.User_FindByRollAndNameQuery) ([]*models.User, error){
+func FindByRollAndName(query *models.User_FindByRollAndNameQuery) ([]*models.User, error) {
 	db := storage.GetDB()
 	var u1 models.User
 
@@ -21,11 +19,11 @@ func FindByRollAndName(query *models.User_FindByRollAndNameQuery) ([]*models.Use
 		return nil, err
 	}
 
-	var res  []*models.User
+	var res []*models.User
 	for rows.Next() {
 		var tempUser models.User
 		err := db.ScanRows(rows, &tempUser)
-		if err!= nil {
+		if err != nil {
 			fmt.Println(err)
 		}
 		fmt.Println(tempUser)
@@ -43,4 +41,3 @@ func queryFindByRollAndName(obj *models.User_FindByRollAndNameQuery) (string, []
 	return "roll=? AND name IN (?)", []interface{}{obj.Roll, obj.Name}
 
 }
-

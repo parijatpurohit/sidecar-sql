@@ -2,10 +2,11 @@ package handlers
 
 import (
 	"context"
+	"log"
+
 	"github.com/parijatpurohit/sidecar-sql/storage/user/translators"
 	user_views "github.com/parijatpurohit/sidecar-sql/storage/user/views"
 	pb "github.com/parijatpurohit/sidecar-sql/zz_generated/go"
-	"log"
 )
 
 // User_FindByRollAndName implements storage.StorageServiceServer

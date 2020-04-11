@@ -8,8 +8,8 @@ import (
 func TranslateUser_FindByRollAndNameRequest(in *pb.User_FindByRollAndNameRequest) *models.User_FindByRollAndNameQuery {
 	query := in.Query
 	res := models.User_FindByRollAndNameQuery{
-		Roll:      query.Roll,
-		Name:      query.Name,
+		Roll: query.Roll,
+		Name: query.Name,
 	}
 	return &res
 }
@@ -24,6 +24,3 @@ func TranslateUsers(in []*models.User) []*pb.User {
 	}
 	return returnVal
 }
-
-
-

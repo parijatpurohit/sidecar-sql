@@ -1,12 +1,12 @@
 // protobuf for defining schema of {{ .TableName }}
 syntax = "proto3";
 
-{{ if .HasTimestampField }} import "google/protobuf/timestamp.proto"; {{ end }}
+{{ if .HasTimestampField }}import "google/protobuf/timestamp.proto";{{ end }}
 package storage;
 option go_package = "pb";
 
 message {{ .TableName }} {
     {{ range $index, $field := .StorageConfig.Fields }}
-    {{- if eq $field.FieldType "timestamp" }} google.protobuf.Timestamp {{ else }} {{ $field.FieldType }} {{ end }} {{ $field.FieldName }} = {{ $index }};
+    {{- if eq $field.FieldType "timestamp" }}google.protobuf.Timestamp{{ else }}{{- $field.FieldType }}{{ end }} {{ $field.FieldName }} = {{ sum $index 1 }};
     {{ end }}
 }

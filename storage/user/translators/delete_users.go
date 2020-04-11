@@ -5,7 +5,7 @@ import (
 	pb "github.com/parijatpurohit/sidecar-sql/zz_generated/go"
 )
 
-func TranslateUser_DeleteUsersRequest (in *pb.User_DeleteUsersRequest) []*models.User {
+func TranslateUser_DeleteUsersRequest(in *pb.User_DeleteUsersRequest) []*models.User {
 	entities := in.Entities
 	var res []*models.User
 	for _, entity := range entities {
@@ -14,7 +14,6 @@ func TranslateUser_DeleteUsersRequest (in *pb.User_DeleteUsersRequest) []*models
 	return res
 }
 
-
-func TranslateUser_DeleteUsersResponse (users []*models.User) *pb.User_DeleteUsersResponse {
+func TranslateUser_DeleteUsersResponse(users []*models.User) *pb.User_DeleteUsersResponse {
 	return &pb.User_DeleteUsersResponse{Count: int64(len(users))}
 }

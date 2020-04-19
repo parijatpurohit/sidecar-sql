@@ -2,4 +2,4 @@ package genstorage
 
 import "github.com/parijatpurohit/sidecar-sql/code_generator/config"
 
-func Generate(config *config.StorageConfig) {}
+func GenerateStorage(conf *config.StorageConfig) {}

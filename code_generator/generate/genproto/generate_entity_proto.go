@@ -5,11 +5,8 @@ import (
 	"os"
 
 	"github.com/parijatpurohit/sidecar-sql/code_generator/config"
-)
-
-const (
-	entityProtoPath    = "%s/pb/storage/%s_schema.proto"
-	schemaTemplateFile = "schema.tgo"
+	"github.com/parijatpurohit/sidecar-sql/code_generator/generate/paths"
+	generateUtils "github.com/parijatpurohit/sidecar-sql/code_generator/generate/utils"
 )
 
 type EntityProtoConfig struct {
@@ -26,9 +23,9 @@ func GenerateEntityProto(storageConfig *config.StorageConfig) {
 			break
 		}
 	}
-	entityConfig.TableName = GetTableName(entityConfig.StorageConfig.Table, entityConfig.StorageConfig.Common.IsPlural)
+	entityConfig.TableName = generateUtils.GetTableName(entityConfig.StorageConfig.Table, entityConfig.StorageConfig.Common.IsPlural)
 
-	template := getTemplate(schemaTemplateFile)
+	template := getTemplate(paths.SchemaTemplateFile)
 	outputFile, err := getOutputEntityProtoFile(&entityConfig)
 	if err != nil {
 		panic(err)
@@ -40,6 +37,6 @@ func GenerateEntityProto(storageConfig *config.StorageConfig) {
 }
 
 func getOutputEntityProtoFile(entityConfig *EntityProtoConfig) (*os.File, error) {
-	outputFilePath := fmt.Sprintf(entityProtoPath, config.GeneratedFilePath, entityConfig.TableName)
+	outputFilePath := fmt.Sprintf(paths.EntityProtoPath, paths.GeneratedFilePath, entityConfig.TableName)
 	return os.Create(outputFilePath)
 }

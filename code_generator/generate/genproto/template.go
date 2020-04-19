@@ -2,21 +2,17 @@ package genproto
 
 import (
 	"fmt"
-	"strings"
 	"text/template"
+
+	"github.com/parijatpurohit/sidecar-sql/code_generator/generate/paths"
 
 	"github.com/parijatpurohit/sidecar-sql/code_generator/utils/template_methods"
 
 	"github.com/parijatpurohit/sidecar-sql/code_generator/utils"
 )
 
-const (
-	templatePath      = "templates/proto"
-	basicTemplateFile = "basic.tgo"
-)
-
 func getTemplate(templateFile string) *template.Template {
-	bytes, err := utils.GetFileBytes(fmt.Sprintf("%s/%s", templatePath, templateFile))
+	bytes, err := utils.GetFileBytes(fmt.Sprintf("%s/%s", paths.TemplatePath, templateFile))
 	if err != nil {
 		panic(err)
 	}
@@ -25,11 +21,4 @@ func getTemplate(templateFile string) *template.Template {
 		panic(err)
 	}
 	return t
-}
-
-func GetTableName(tableName string, isPlural bool) string {
-	if isPlural {
-		return strings.Title(tableName[:len(tableName)-1])
-	}
-	return tableName
 }

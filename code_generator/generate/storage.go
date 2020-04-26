@@ -5,9 +5,11 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"strings"
+
+	"github.com/parijatpurohit/sidecar-sql/code_generator/generate/genstorage/genmodels"
 
 	"github.com/parijatpurohit/sidecar-sql/code_generator/config"
-	"github.com/parijatpurohit/sidecar-sql/code_generator/generate/genstorage"
 	"github.com/parijatpurohit/sidecar-sql/code_generator/generate/paths"
 )
 
@@ -16,14 +18,16 @@ func Storage() {
 	if err != nil {
 		log.Panic(err)
 	}
-	err = os.MkdirAll(fmt.Sprintf("%s/%s", paths.GeneratedFilePath, paths.StorageOutputPath), 0755)
-	if err != nil {
-		log.Panic(err)
-	}
+	// sqlConf := config.GetSQLConfig()
 	for _, f := range files {
 		if f.Name() != paths.CommonConfigFileName {
-			conf := config.GetStorageConfig(f.Name())
-			genstorage.GenerateStorage(conf)
+			storageConf := config.GetStorageConfig(f.Name())
+			dirPath := fmt.Sprintf("%s/%s/%s/%s", paths.GeneratedFilePath, paths.StorageOutputPath, strings.ToLower(storageConf.Table), paths.ModelsOutputPath)
+			if err := os.MkdirAll(dirPath, 0755); err != nil {
+				log.Panic(err)
+			}
+			genmodels.GenerateSchema(storageConf)
+			genmodels.GenerateQueryModels(storageConf)
 		}
 	}
 }

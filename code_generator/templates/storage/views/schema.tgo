@@ -1,0 +1,10 @@
+package {{ .TableName | toLower }}_models
+
+{{ if .HasTimestampField }} import "time" {{- end }}
+
+// {{ .TableName }} : name of the table, generated from the config
+type {{ .TableName }} struct {
+{{- range .Fields }}
+    {{ .Name }} {{ .FieldType }} {{if .TagStr }}`{{.TagStr}}`{{ end }}
+{{- end }}
+}

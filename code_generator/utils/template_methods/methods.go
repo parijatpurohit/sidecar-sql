@@ -1,7 +1,11 @@
 package template_methods
 
-import "text/template"
+import (
+	"strings"
+	"text/template"
+)
 
 var TemplateMethods template.FuncMap = template.FuncMap{
-	"sum": template_sum,
+	"sum":     template_sum,
+	"toLower": strings.ToLower,
 }

@@ -4,11 +4,9 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/parijatpurohit/sidecar-sql/code_generator/generate/paths"
-
-	generate_utils "github.com/parijatpurohit/sidecar-sql/code_generator/generate/utils"
-
 	"github.com/parijatpurohit/sidecar-sql/code_generator/config"
+	"github.com/parijatpurohit/sidecar-sql/code_generator/generate/paths"
+	generateUtils "github.com/parijatpurohit/sidecar-sql/code_generator/generate/utils"
 )
 
 type TemplateQueryField struct {
@@ -30,17 +28,10 @@ type ViewProtoConfig struct {
 }
 
 func GenerateViewProto(storageConfig *config.StorageConfig) {
-	fieldSchema := map[string]*config.Field{}
-	var primaryKeys []*config.Field
-	for _, field := range storageConfig.Fields {
-		fieldSchema[field.FieldName] = field
-		if field.PrimaryKey {
-			primaryKeys = append(primaryKeys, field)
-		}
-	}
+	fieldSchema, primaryKeys := generateUtils.GetFieldConfig(storageConfig)
 	for _, view := range storageConfig.Views {
 		viewConfig := ViewProtoConfig{View: view, PrimaryKeys: primaryKeys}
-		viewConfig.TableName = generate_utils.GetTableName(storageConfig.Table, storageConfig.Common.IsPlural)
+		viewConfig.TableName = generateUtils.GetTableName(storageConfig.Table, storageConfig.Common.IsPlural)
 		if view.Query != nil {
 			for _, field := range view.Query.Fields {
 				queryField := TemplateQueryField{
@@ -54,7 +45,7 @@ func GenerateViewProto(storageConfig *config.StorageConfig) {
 				}
 			}
 		}
-		template := getTemplate(paths.ProtoViewTemplateFile)
+		template := generateUtils.GetTemplate(fmt.Sprintf("%s/%s", paths.ProtoTemplatePath, paths.ProtoViewTemplateFile))
 		outputFile, err := getOutputViewProtoFile(&viewConfig, view.Name)
 		if err != nil {
 			panic(err)

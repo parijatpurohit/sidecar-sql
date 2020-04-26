@@ -17,6 +17,7 @@ type StorageConfig struct {
 type Field struct {
 	FieldName  string    `yaml:"fieldName"`
 	FieldType  FieldType `yaml:"fieldType"`
+	NotNull    bool      `yaml:"notNull"`
 	PrimaryKey bool      `yaml:"primaryKey"`
 }
 

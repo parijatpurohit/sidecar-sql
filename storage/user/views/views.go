@@ -4,7 +4,8 @@ import (
 	"context"
 	"sync"
 
-	"github.com/parijatpurohit/sidecar-sql/code_generator/config"
+	"github.com/jinzhu/gorm"
+	"github.com/parijatpurohit/sidecar-sql/lib/sqlconn"
 	"github.com/parijatpurohit/sidecar-sql/storage/user/models"
 )
 
@@ -20,12 +21,13 @@ type IViews interface {
 	UpdateUsers(ctx context.Context, users []*models.User) ([]*models.User, error)
 }
 type viewsImpl struct {
-	sqlConfig *config.SQLConfig
+	db *gorm.DB
 }
 
-func GetViews(sqlConfig *config.SQLConfig) IViews {
+func GetViews() IViews {
 	once.Do(func() {
-		views = &viewsImpl{sqlConfig: sqlConfig}
+		db := sqlconn.GetDB()
+		views = &viewsImpl{db: db}
 	})
 	return views
 }

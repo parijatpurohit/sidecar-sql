@@ -5,13 +5,12 @@ import (
 	"database/sql"
 	"time"
 
-	"github.com/parijatpurohit/sidecar-sql/lib/sqlconn"
 	"github.com/parijatpurohit/sidecar-sql/storage/user/models"
 	"github.com/parijatpurohit/sidecar-sql/utils"
 )
 
 func (v *viewsImpl) DeleteUsers(ctx context.Context, users []*models.User) ([]*models.User, error) {
-	db := sqlconn.GetDB(v.sqlConfig).BeginTx(ctx, &sql.TxOptions{Isolation: sql.LevelDefault})
+	db := v.db.BeginTx(ctx, &sql.TxOptions{Isolation: sql.LevelDefault})
 	for _, user := range users {
 		user.UpdatedAt = utils.GetTimePtr(time.Now())
 		user.DeletedAt = utils.GetTimePtr(time.Now())

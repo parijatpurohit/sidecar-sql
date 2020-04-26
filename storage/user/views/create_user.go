@@ -2,12 +2,11 @@ package user_views
 
 import (
 	"github.com/google/uuid"
-	"github.com/parijatpurohit/sidecar-sql/lib/sqlconn"
 	"github.com/parijatpurohit/sidecar-sql/storage/user/models"
 )
 
 func (v *viewsImpl) CreateUser(user *models.User) (*models.User, error) {
-	db := sqlconn.GetDB(v.sqlConfig)
+	db := v.db
 	if user.UUID == "" {
 		user.UUID = uuid.New().String()
 	}

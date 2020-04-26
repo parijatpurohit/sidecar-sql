@@ -1,0 +1,10 @@
+package {{ .TableName | toLower }}_models
+
+{{ if .HasTimestampField }} import "time" {{- end }}
+
+// {{ .TableName }}_{{ .ViewName}}Query : query object used for find, generated from the config
+type {{ .TableName }}_{{ .ViewName}}Query struct {
+{{- range .Fields }}
+	{{ .Name }} {{if .IsRepeated}} [] {{- end}} {{- .FieldType }} {{if .TagStr }}`{{.TagStr}}`{{ end }}
+{{- end }}
+}

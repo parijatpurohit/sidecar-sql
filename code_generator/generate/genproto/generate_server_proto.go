@@ -25,7 +25,7 @@ func GenerateServerProto(storageConfigs map[string]*config.StorageConfig) {
 		}
 	}
 
-	template := getTemplate(paths.ServerTemplateFile)
+	template := getTemplate(paths.ProtoServerTemplateFile)
 	outputFile, err := getOutputServerProtoFile()
 	if err != nil {
 		panic(err)

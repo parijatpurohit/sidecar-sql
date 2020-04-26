@@ -15,7 +15,7 @@ func Server() {
 		log.Panic(err)
 	}
 	for _, f := range files {
-		if f.Name() != paths.CommonFileName {
+		if f.Name() != paths.CommonConfigFileName {
 			conf := config.GetStorageConfig(f.Name())
 			genserver.Generate(conf)
 		}

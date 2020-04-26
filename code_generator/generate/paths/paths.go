@@ -5,13 +5,15 @@ const (
 	EntityProtoPath   = "%s/pb/storage/%s_schema.proto"
 	ServerProtoPath   = "%s/pb/storage/server.proto"
 	ViewProtoPath     = "%s/pb/storage/%s_%s_View.proto"
-	TemplatePath      = "templates/proto"
+	TemplatePath      = "code_generator/templates/proto"
 	StorageConfigPath = "configuration/storage"
 	GeneratedFilePath = "zz_generated"
+	StorageOutputPath = "go/storage"
 
 	// file names
-	SchemaTemplateFile = "schema.tgo"
-	ServerTemplateFile = "server.tgo"
-	ViewTemplateFile   = "view.tgo"
-	CommonFileName     = "common.yaml"
+	ProtoSchemaTemplateFile = "schema.tgo"
+	ProtoServerTemplateFile = "server.tgo"
+	ProtoViewTemplateFile   = "view.tgo"
+	CommonConfigFileName    = "common.yaml"
+	SQLConfigFileName       = "sql/sql.yaml"
 )

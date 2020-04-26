@@ -5,7 +5,7 @@ import (
 	"github.com/golang/protobuf/ptypes/timestamp"
 	"github.com/parijatpurohit/sidecar-sql/storage/user/models"
 	"github.com/parijatpurohit/sidecar-sql/utils"
-	pb "github.com/parijatpurohit/sidecar-sql/zz_generated/go"
+	pb "github.com/parijatpurohit/sidecar-sql/zz_generated/go/protogen"
 )
 
 func TranslateUserModel(user *models.User) *pb.User {

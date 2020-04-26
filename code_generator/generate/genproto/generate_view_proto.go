@@ -54,7 +54,7 @@ func GenerateViewProto(storageConfig *config.StorageConfig) {
 				}
 			}
 		}
-		template := getTemplate(paths.ViewTemplateFile)
+		template := getTemplate(paths.ProtoViewTemplateFile)
 		outputFile, err := getOutputViewProtoFile(&viewConfig, view.Name)
 		if err != nil {
 			panic(err)

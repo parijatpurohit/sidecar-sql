@@ -2,7 +2,7 @@ package translators
 
 import (
 	"github.com/parijatpurohit/sidecar-sql/storage/user/models"
-	pb "github.com/parijatpurohit/sidecar-sql/zz_generated/go"
+	pb "github.com/parijatpurohit/sidecar-sql/zz_generated/go/protogen"
 )
 
 func TranslateUser_FindByRollAndNameRequest(in *pb.User_FindByRollAndNameRequest) *models.User_FindByRollAndNameQuery {

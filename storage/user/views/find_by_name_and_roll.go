@@ -2,15 +2,16 @@ package user_views
 
 import (
 	"fmt"
+
 	_ "github.com/jinzhu/gorm/dialects/mysql"
-	storage "github.com/parijatpurohit/sidecar-sql/storage"
+	"github.com/parijatpurohit/sidecar-sql/lib/sqlconn"
 	"github.com/parijatpurohit/sidecar-sql/storage/user/models"
 )
 
 // request, response needs to be generated from config
 // this method can be converted to a template
-func FindByRollAndName(query *models.User_FindByRollAndNameQuery) ([]*models.User, error) {
-	db := storage.GetDB()
+func (v *viewsImpl) FindByRollAndName(query *models.User_FindByRollAndNameQuery) ([]*models.User, error) {
+	db := sqlconn.GetDB(v.sqlConfig)
 	var u1 models.User
 
 	queryStr, args := queryFindByRollAndName(query)

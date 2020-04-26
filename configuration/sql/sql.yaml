@@ -1,0 +1,5 @@
+sql:
+  dialect: mysql
+  connStr: "root:@(localhost:3306)/test?charset=utf8&parseTime=True&loc=Local"
+  maxIdle: 10
+  maxOpen: 100

@@ -25,7 +25,7 @@ func GenerateEntityProto(storageConfig *config.StorageConfig) {
 	}
 	entityConfig.TableName = generateUtils.GetTableName(entityConfig.StorageConfig.Table, entityConfig.StorageConfig.Common.IsPlural)
 
-	template := getTemplate(paths.SchemaTemplateFile)
+	template := getTemplate(paths.ProtoSchemaTemplateFile)
 	outputFile, err := getOutputEntityProtoFile(&entityConfig)
 	if err != nil {
 		panic(err)

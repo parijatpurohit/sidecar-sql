@@ -4,9 +4,9 @@ echo "generating go server and $1 client code"
 # generate for argument go or golang
 if [ "$1" == "go" ] || [ "$1" == "golang" ]
 then
-  mkdir -p github.com/parijatpurohit/sidecar-sql/zz_generated/go
+  mkdir -p github.com/parijatpurohit/sidecar-sql/zz_generated/go/protogen
   protoc --proto_path=github.com/parijatpurohit/sidecar-sql/zz_generated/pb/storage \
-  --go_out=plugins=grpc:github.com/parijatpurohit/sidecar-sql/zz_generated/go \github.com/parijatpurohit/sidecar-sql/zz_generated/pb/storage/*.proto
+  --go_out=plugins=grpc:github.com/parijatpurohit/sidecar-sql/zz_generated/go/protogen github.com/parijatpurohit/sidecar-sql/zz_generated/pb/storage/*.proto
 
 # generate javascript clients
 elif [ "$1" == "node" ] || [ "$1" == "nodejs" ] || [ "$1" == "javascript" ] || [ "$1" == "js" ]

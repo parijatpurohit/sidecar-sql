@@ -10,7 +10,7 @@ message {{ .TableName }}_{{ .Name }}Request {
     {{- .Name }}Query query = 1;
     {{- end }}
     {{- if eq .ViewType "CREATE" "UPDATE" "DELETE"  }}
-        {{- if eq .Config.MultiReturn true }}repeated{{end}} {{ .TableName }} {{ .TableName }}{{ if eq .Config.MultiReturn true }}s{{end}} = 1;
+        {{- if eq .Config.MultiInput true }}repeated{{end}} {{ .TableName }} {{ .TableName }}{{ if eq .Config.MultiInput true }}s{{end}} = 1;
     {{- end }}
 }
 {{ if eq .ViewType "READ" }}

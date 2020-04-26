@@ -50,4 +50,5 @@ views:
   - name: DeleteUsers
     type: DELETE
     config:
+      multiInput: true
       returnType: rowCount

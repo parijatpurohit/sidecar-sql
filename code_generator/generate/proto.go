@@ -1,6 +1,7 @@
 package generate
 
 import (
+	"fmt"
 	"io/ioutil"
 	"log"
 
@@ -15,8 +16,9 @@ func Proto() {
 		log.Panic(err)
 	}
 	for _, f := range files {
-		if f.Name() != paths.CommonFileName {
+		if f.Name() != paths.CommonConfigFileName {
 			conf := config.GetStorageConfig(f.Name())
+			fmt.Println("generating proto for: ", f.Name())
 			generateProtoForConfig(conf)
 		}
 	}

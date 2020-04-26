@@ -2,7 +2,7 @@ package translators
 
 import (
 	"github.com/parijatpurohit/sidecar-sql/storage/user/models"
-	pb "github.com/parijatpurohit/sidecar-sql/zz_generated/go"
+	pb "github.com/parijatpurohit/sidecar-sql/zz_generated/go/protogen"
 )
 
 func TranslateUser_CreateUserRequest(in *pb.User_CreateUserRequest) *models.User {

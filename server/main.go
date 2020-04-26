@@ -2,11 +2,14 @@
 package main
 
 import (
-	"github.com/parijatpurohit/sidecar-sql/server/handlers"
+	"fmt"
 	"log"
 	"net"
 
-	pb "github.com/parijatpurohit/sidecar-sql/zz_generated/go"
+	"github.com/parijatpurohit/sidecar-sql/code_generator/config"
+	"github.com/parijatpurohit/sidecar-sql/server/handlers"
+	user_views "github.com/parijatpurohit/sidecar-sql/storage/user/views"
+	pb "github.com/parijatpurohit/sidecar-sql/zz_generated/go/protogen"
 	"google.golang.org/grpc"
 )
 
@@ -20,7 +23,11 @@ func main() {
 		log.Fatalf("failed to listen: %v", err)
 	}
 	s := grpc.NewServer()
-	pb.RegisterStorageServiceServer(s, &handlers.Service{})
+	sqlConfig := config.GetSQLConfig()
+	userViews := user_views.GetViews(sqlConfig)
+	service := &handlers.Service{UserViews: userViews}
+	pb.RegisterStorageServiceServer(s, service)
+	fmt.Println("starting server on port", port)
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)
 	}

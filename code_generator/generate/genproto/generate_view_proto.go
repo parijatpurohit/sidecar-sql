@@ -56,6 +56,7 @@ type ViewProtoConfig struct {
 	ResponsePKConfig      *ResponsePKConfig
 }
 
+// GenerateViewProto generates View protobuf config including request and response objects
 func GenerateViewProto(storageConfig *config.StorageConfig) {
 	fieldSchema, primaryKeys := generateUtils.GetFieldConfig(storageConfig)
 	tableName := generateUtils.GetTableName(storageConfig.Table, storageConfig.Common.IsPlural)
@@ -69,9 +70,9 @@ func GenerateViewProto(storageConfig *config.StorageConfig) {
 			ViewName:              view.Name,
 			IsQueryPopulated:      view.ViewType == config.VIEW_TYPE_READ,
 			IsResponsePKPopulated: view.Config.ReturnType == config.RETURN_TYPE_PK,
-			RequestConfig:         getRequestConfig(tableName, view, fieldSchema),
+			RequestConfig:         getRequestConfig(tableName, view),
 			QueryConfig:           getQueryConfig(tableName, view, fieldSchema),
-			ResponseConfig:        getResponseConfig(tableName, view, fieldSchema),
+			ResponseConfig:        getResponseConfig(tableName, view),
 			ResponsePKConfig:      getPrimaryKeyConfig(tableName, view.Name, primaryKeys),
 		}
 		template := generateUtils.GetTemplate(fmt.Sprintf("%s/%s", paths.ProtoTemplatePath, paths.ProtoViewTemplateFile))
@@ -86,6 +87,7 @@ func GenerateViewProto(storageConfig *config.StorageConfig) {
 	}
 }
 
+// generates all imports for the file and returns for template to use
 func getImports(tableName string, primaryKeys []*config.Field, viewConfig *config.View, fieldSchema map[string]*config.Field) []string {
 	schemaImport := fmt.Sprintf("%s_schema.proto", tableName)
 	imports := []string{schemaImport}
@@ -106,7 +108,9 @@ func getImports(tableName string, primaryKeys []*config.Field, viewConfig *confi
 	return utils.GetUnique(imports)
 
 }
-func getRequestConfig(tableName string, viewConfig *config.View, fieldSchema map[string]*config.Field) *RequestConfig {
+
+// generates all request fields excluding query and returns for template to use
+func getRequestConfig(tableName string, viewConfig *config.View) *RequestConfig {
 	requestConfig := &RequestConfig{}
 	switch viewConfig.ViewType {
 	case config.VIEW_TYPE_READ:
@@ -126,6 +130,7 @@ func getRequestConfig(tableName string, viewConfig *config.View, fieldSchema map
 	return requestConfig
 }
 
+// generates query struct. doesn't check if query needs to be generated
 func getQueryConfig(tableName string, viewConfig *config.View, fieldSchema map[string]*config.Field) *QueryConfig {
 	queryName := fmt.Sprintf("%s_%s_%s", tableName, viewConfig.Name, QueryFieldPlaceholder)
 	var queryFields []*ProtoFieldConfig
@@ -142,7 +147,8 @@ func getQueryConfig(tableName string, viewConfig *config.View, fieldSchema map[s
 	return &QueryConfig{Name: queryName, Fields: queryFields}
 }
 
-func getResponseConfig(tableName string, viewConfig *config.View, fieldSchema map[string]*config.Field) *ResponseConfig {
+// generates response object config without primary key config
+func getResponseConfig(tableName string, viewConfig *config.View) *ResponseConfig {
 	var responseField *ProtoFieldConfig
 	switch viewConfig.Config.ReturnType {
 	case config.RETURN_TYPE_DATA:
@@ -169,6 +175,7 @@ func getResponseConfig(tableName string, viewConfig *config.View, fieldSchema ma
 	return &ResponseConfig{Field: responseField}
 }
 
+// generates primary key config. doesn't check if primary key object needs to be generated
 func getPrimaryKeyConfig(tableName string, viewName string, primaryKeys []*config.Field) *ResponsePKConfig {
 	var fields []*ProtoFieldConfig
 	name := fmt.Sprintf("%s_%s_%s", tableName, viewName, PrimaryKeyFieldPlaceholder)

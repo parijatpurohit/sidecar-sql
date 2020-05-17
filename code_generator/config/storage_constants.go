@@ -16,6 +16,10 @@ const (
 	GO_TYPE_STRING    string = "string"
 	GO_TYPE_INT64     string = "int64"
 
+	PROTO_TYPE_TIMESTAMP string = "google.protobuf.Timestamp"
+	PROTO_TYPE_STRING    string = "string"
+	PROTO_TYPE_INT64     string = "int64"
+
 	RETURN_TYPE_PK        ReturnType = "primaryKey"
 	RETURN_TYPE_DATA      ReturnType = "data"
 	RETURN_TYPE_ROW_COUNT ReturnType = "rowCount"
@@ -34,4 +38,10 @@ var GetGoFieldTypeFor = map[FieldType]string{
 	FIELD_TYPE_TIMESTAMP: GO_TYPE_TIMESTAMP,
 	FIELD_TYPE_INT64:     GO_TYPE_INT64,
 	FIELD_TYPE_STRING:    GO_TYPE_STRING,
+}
+
+var GetProtoFieldTypeFor = map[FieldType]string{
+	FIELD_TYPE_TIMESTAMP: PROTO_TYPE_TIMESTAMP,
+	FIELD_TYPE_INT64:     PROTO_TYPE_INT64,
+	FIELD_TYPE_STRING:    PROTO_TYPE_STRING,
 }

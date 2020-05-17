@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"log"
 	"os"
 
 	"github.com/parijatpurohit/sidecar-sql/code_generator/generate"
@@ -21,15 +21,15 @@ func main() {
 		panic("invalid arguments. please try again")
 	}
 	if utils.ContainsAnyStr(args, GenTypeProto, GenTypeAll) != -1 {
-		fmt.Println("generating proto files")
+		log.Printf("generating proto files")
 		generate.Proto()
 	}
 	if utils.ContainsAnyStr(args, GenTypeStorage, GenTypeAll) != -1 {
-		fmt.Println("generating storage files")
+		log.Printf("generating storage files")
 		generate.Storage()
 	}
 	if utils.ContainsAnyStr(args, GenTypeServer, GenTypeAll) != -1 {
-		fmt.Println("generating server files")
+		log.Printf("generating server files")
 		generate.Server()
 	}
 

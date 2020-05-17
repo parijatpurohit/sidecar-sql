@@ -13,6 +13,7 @@ import (
 
 const (
 	TagOmitEmpty = "omitempty"
+	TagSeparator = ","
 )
 
 func GenerateQueryModels(storageConfig *config.StorageConfig) {
@@ -22,7 +23,6 @@ func GenerateQueryModels(storageConfig *config.StorageConfig) {
 			generateQueryModel(storageConfig, view)
 		}
 	}
-
 }
 
 func generateQueryModel(storageConfig *config.StorageConfig, view *config.View) {
@@ -63,11 +63,11 @@ func GetQueryFieldTags(queryField *config.QueryField) []*FieldTag {
 
 func GetQueryJSONTag(queryField *config.QueryField) *FieldTag {
 	tag := &FieldTag{TagName: "json", TagValue: ","}
-	tag.TagValue = strings.Title(queryField.FieldName) + ","
+	tag.TagValue = strings.Title(queryField.FieldName) + TagSeparator
 	if queryField.IsOptional {
-		tag.TagValue = tag.TagValue + "omitempty" + ","
+		tag.TagValue = tag.TagValue + TagOmitEmpty + TagSeparator
 	}
-	strings.Trim(tag.TagValue, ",")
+	tag.TagValue = strings.Trim(tag.TagValue, TagSeparator)
 	if tag.TagValue == "" {
 		return nil
 	}

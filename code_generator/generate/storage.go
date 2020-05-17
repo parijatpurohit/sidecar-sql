@@ -7,6 +7,8 @@ import (
 	"os"
 	"strings"
 
+	"github.com/parijatpurohit/sidecar-sql/code_generator/generate/genstorage"
+
 	"github.com/parijatpurohit/sidecar-sql/code_generator/generate/genstorage/genmodels"
 
 	"github.com/parijatpurohit/sidecar-sql/code_generator/config"
@@ -28,6 +30,7 @@ func Storage() {
 			}
 			genmodels.GenerateSchema(storageConf)
 			genmodels.GenerateQueryModels(storageConf)
+			genstorage.GenerateViews(storageConf)
 		}
 	}
 }

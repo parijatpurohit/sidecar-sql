@@ -18,3 +18,15 @@ func ContainsStr(arr []string, elem string) int {
 	}
 	return -1
 }
+
+func GetUnique(arr []string) []string {
+	data := map[string]struct{}{}
+	for _, s := range arr {
+		data[s] = struct{}{}
+	}
+	var filtered []string
+	for s, _ := range data {
+		filtered = append(filtered, s)
+	}
+	return filtered
+}

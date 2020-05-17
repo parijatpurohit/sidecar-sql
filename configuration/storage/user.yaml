@@ -38,7 +38,7 @@ views:
     type: CREATE
     config:
       returnType: primaryKey
-      multiReturn: false
+      multiReturn: true
 
   - name: UpdateUsers
     type: UPDATE

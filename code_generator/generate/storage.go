@@ -6,9 +6,9 @@ import (
 	"os"
 	"strings"
 
-	"github.com/parijatpurohit/sidecar-sql/code_generator/generate/genstorage"
+	generateUtils "github.com/parijatpurohit/sidecar-sql/code_generator/generate/utils"
 
-	"github.com/parijatpurohit/sidecar-sql/code_generator/generate/genstorage/genmodels"
+	"github.com/parijatpurohit/sidecar-sql/code_generator/generate/genstorage"
 
 	"github.com/parijatpurohit/sidecar-sql/code_generator/config"
 	"github.com/parijatpurohit/sidecar-sql/code_generator/generate/paths"
@@ -16,16 +16,22 @@ import (
 
 func Storage() {
 	for _, conf := range config.GetAllStorage() {
-		createPath(conf.Table)
-		genmodels.GenerateSchema(conf)
-		genmodels.GenerateQueryModels(conf)
+		tableName := generateUtils.GetTableName(conf.Table, conf.Common.IsPlural)
+		createPath(tableName)
+		genstorage.GenerateStorage(conf)
 		genstorage.GenerateViews(conf)
 	}
 }
 
 func createPath(tableName string) {
-	dirPath := fmt.Sprintf("%s/%s/%s/%s", paths.GeneratedFilePath, paths.StorageOutputPath, strings.ToLower(tableName), paths.ModelsOutputPath)
-	if err := os.MkdirAll(dirPath, 0755); err != nil {
-		log.Panic(err)
+	var paths = []string{
+		fmt.Sprintf("%s/%s/%s/%s", paths.GeneratedFilePath, paths.StorageOutputPath, strings.ToLower(tableName), paths.ModelsOutputPath),
+		fmt.Sprintf("%s/%s/%s/%s", paths.GeneratedFilePath, paths.StorageOutputPath, strings.ToLower(tableName), paths.ViewsOutputPath),
 	}
+	for _, path := range paths {
+		if err := os.MkdirAll(path, 0755); err != nil {
+			log.Panic(err)
+		}
+	}
+
 }

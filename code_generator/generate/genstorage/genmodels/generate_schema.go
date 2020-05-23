@@ -25,9 +25,9 @@ const (
 
 func GenerateSchema(storageConfig *config.StorageConfig) {
 	conf := getSchemaConfig(storageConfig)
-
+	tableName := generateUtils.GetTableName(storageConfig.Table, storageConfig.Common.IsPlural)
 	tpl := generateUtils.GetTemplate(fmt.Sprintf("%s/%s", paths.StorageTemplatePath, paths.ModelSchemaTemplateFile))
-	outFile, err := getOutputViewSchemaFile(storageConfig.Table)
+	outFile, err := getOutputViewSchemaFile(tableName)
 	if err != nil {
 		panic(err)
 	}

@@ -29,8 +29,9 @@ func GenerateQueryModels(storageConfig *config.StorageConfig) {
 
 func generateQueryModel(storageConfig *config.StorageConfig, view *config.View) {
 	conf := getQueryConfig(storageConfig, view)
+	tableName := generateUtils.GetTableName(storageConfig.Table, storageConfig.Common.IsPlural)
 	tpl := generateUtils.GetTemplate(fmt.Sprintf("%s/%s", paths.StorageTemplatePath, paths.ModelQueryTemplateFile))
-	outFile, err := getOutputViewQueryFile(storageConfig.Table, view.Name)
+	outFile, err := getOutputViewQueryFile(tableName, view.Name)
 	if err != nil {
 		panic(err)
 	}

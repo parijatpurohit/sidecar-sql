@@ -1,18 +1,28 @@
-package {{ .View }}_views
+package {{ .PackageName }}
 
 import (
-    "github.com/google/uuid"
-    "github.com/parijatpurohit/sidecar-sql/lib/sqlconn"
-    "github.com/parijatpurohit/sidecar-sql/storage/user/models"
+{{- range .Imports}}
+    "{{ . }}"
+{{- end}}
 )
 
-func (v *viewsImpl) CreateUser(user *models.User) (*models.User, error) {
+// Create{{ .ViewName }} stores array of view objects
+func (v *viewsImpl) Create{{.ViewName}}(ctx context.Context, entities {{.InputType}}) error {
     db := v.db
-    if user.UUID == "" {
-        user.UUID = uuid.New().String()
+    isTxEnabled := len(entities) > 1
+    if isTxEnabled {
+        db = db.BeginTx(ctx, &sql.TxOptions{Isolation: sql.LevelDefault})
     }
-    if err := db.Save(user).Error; err != nil {
-        return nil, err
+    for _, entity := range entities {
+        if err := db.Save(entity).Error; err != nil {
+            return err
+        }
     }
-    return user, nil
+    if isTxEnabled {
+        if err := db.Commit().Error; err != nil {
+            return err
+        }
+    }
+
+    return nil
 }

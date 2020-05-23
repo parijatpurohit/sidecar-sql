@@ -1,6 +1,8 @@
 package paths
 
 const (
+	BaseImportPath   = "github.com/parijatpurohit/sidecar-sql/"
+	ModelsImportPath = BaseImportPath + GeneratedFilePath + "/go/storage/%s/models"
 	// file paths
 	EntityProtoPath = "%s/pb/storage/%s_schema.proto"
 	ServerProtoPath = "%s/pb/storage/server.proto"
@@ -8,6 +10,7 @@ const (
 
 	SchemaFilePath = "%s/go/storage/%s/models/schema.go"
 	QueryFilePath  = "%s/go/storage/%s/models/%s.go"
+	ViewsFilePath  = "%s/go/storage/%s/views/create.go"
 
 	ProtoTemplatePath   = "code_generator/templates/proto"
 	StorageTemplatePath = "code_generator/templates/storage"
@@ -15,6 +18,7 @@ const (
 	GeneratedFilePath   = "zz_generated"
 	StorageOutputPath   = "go/storage"
 	ModelsOutputPath    = "/models"
+	ViewsOutputPath     = "/views"
 
 	// file names
 	ProtoSchemaTemplateFile = "schema.tgo"
@@ -23,6 +27,7 @@ const (
 
 	ModelSchemaTemplateFile = "views/schema.tgo"
 	ModelQueryTemplateFile  = "views/query.tgo"
+	CreateViewTemplateFile  = "views/create.tgo"
 	CommonConfigFileName    = "common.yaml"
 	SQLConfigFileName       = "sql/sql.yaml"
 )

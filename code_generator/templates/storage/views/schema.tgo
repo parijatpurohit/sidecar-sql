@@ -1,6 +1,10 @@
-package {{ .TableName | toLower }}_models
+package {{ .PackageName }}
 
-{{ if .HasTimestampField }} import "time" {{- end }}
+import (
+{{- range .Imports }}
+    "{{.}}"
+{{- end }}
+)
 
 // {{ .TableName }} : name of the table, generated from the config
 type {{ .TableName }} struct {

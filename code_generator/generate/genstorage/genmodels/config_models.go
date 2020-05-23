@@ -7,13 +7,7 @@ type FieldTag struct {
 	TagValue string
 }
 
-type SchemaFieldConfig struct {
-	Name      string
-	FieldType string
-	TagStr    string
-}
-
-type QueryFieldConfig struct {
+type FieldConfig struct {
 	Name       string
 	IsRepeated bool
 	FieldType  string
@@ -21,16 +15,18 @@ type QueryFieldConfig struct {
 }
 
 type SchemaConfig struct {
-	TableName         string
-	Fields            []*SchemaFieldConfig
-	HasTimestampField bool
+	PackageName string
+	Imports     []string
+	TableName   string
+	Fields      []*FieldConfig
 }
 
 type QueryConfig struct {
-	TableName         string
-	ViewName          string
-	Fields            []*QueryFieldConfig
-	HasTimestampField bool
+	PackageName string
+	Imports     []string
+	TableName   string
+	ViewName    string
+	Fields      []*FieldConfig
 }
 
 func GetTagsString(tags []*FieldTag) string {

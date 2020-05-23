@@ -2,7 +2,6 @@ package generate
 
 import (
 	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
 	"strings"
@@ -16,21 +15,17 @@ import (
 )
 
 func Storage() {
-	files, err := ioutil.ReadDir(paths.StorageConfigPath)
-	if err != nil {
-		log.Panic(err)
+	for _, conf := range config.GetAllStorage() {
+		createPath(conf.Table)
+		genmodels.GenerateSchema(conf)
+		genmodels.GenerateQueryModels(conf)
+		genstorage.GenerateViews(conf)
 	}
-	// sqlConf := config.GetSQLConfig()
-	for _, f := range files {
-		if f.Name() != paths.CommonConfigFileName {
-			storageConf := config.GetStorageConfig(f.Name())
-			dirPath := fmt.Sprintf("%s/%s/%s/%s", paths.GeneratedFilePath, paths.StorageOutputPath, strings.ToLower(storageConf.Table), paths.ModelsOutputPath)
-			if err := os.MkdirAll(dirPath, 0755); err != nil {
-				log.Panic(err)
-			}
-			genmodels.GenerateSchema(storageConf)
-			genmodels.GenerateQueryModels(storageConf)
-			genstorage.GenerateViews(storageConf)
-		}
+}
+
+func createPath(tableName string) {
+	dirPath := fmt.Sprintf("%s/%s/%s/%s", paths.GeneratedFilePath, paths.StorageOutputPath, strings.ToLower(tableName), paths.ModelsOutputPath)
+	if err := os.MkdirAll(dirPath, 0755); err != nil {
+		log.Panic(err)
 	}
 }

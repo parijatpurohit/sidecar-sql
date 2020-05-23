@@ -2,22 +2,40 @@ package config
 
 import (
 	"fmt"
+	"io/ioutil"
+	"log"
+	"sync"
 
 	"github.com/parijatpurohit/sidecar-sql/code_generator/generate/paths"
 	"github.com/parijatpurohit/sidecar-sql/code_generator/utils"
 	"gopkg.in/yaml.v2"
 )
 
-var ParsedStorageConfig map[string]*StorageConfig
+var parsedStorageConfig map[string]*StorageConfig
+var once sync.Once
 
+func InitStorageConfig() {
+	once.Do(func() {
+		parsedStorageConfig = map[string]*StorageConfig{}
+		files, err := ioutil.ReadDir(paths.StorageConfigPath)
+		if err != nil {
+			log.Panic(err)
+		}
+		for _, f := range files {
+			if f.Name() != paths.CommonConfigFileName {
+				if parsedStorageConfig[f.Name()] == nil {
+					parsedStorageConfig[f.Name()] = getFinalConfig(f.Name())
+				}
+			}
+		}
+	})
+}
+
+func GetAllStorage() map[string]*StorageConfig {
+	return parsedStorageConfig
+}
 func GetStorageConfig(entity string) *StorageConfig {
-	if ParsedStorageConfig == nil {
-		ParsedStorageConfig = map[string]*StorageConfig{}
-	}
-	if ParsedStorageConfig[entity] == nil {
-		ParsedStorageConfig[entity] = getFinalConfig(entity)
-	}
-	return ParsedStorageConfig[entity]
+	return parsedStorageConfig[entity]
 }
 
 func getFinalConfig(entity string) *StorageConfig {

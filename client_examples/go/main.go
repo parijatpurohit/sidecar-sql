@@ -31,7 +31,7 @@ func main() {
 	fmt.Println(createRes)
 
 	findRes, err := c.User_FindByRollAndName(context.Background(), &pb.User_FindByRollAndNameRequest{
-		Query: &pb.FindByRollAndNameQuery{Name: []string{name, "blah"}, Roll: 1234},
+		Query: &pb.User_FindByRollAndName_Query{Name: []string{name, "blah"}, Roll: 1234},
 	})
 	if err != nil {
 		fmt.Println("err here\n--------", err)

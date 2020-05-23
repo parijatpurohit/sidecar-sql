@@ -161,7 +161,7 @@ func getResponseConfig(tableName string, viewConfig *config.View) *ResponseConfi
 	case config.RETURN_TYPE_DATA:
 		responseField = &ProtoFieldConfig{
 			IsRepeated: viewConfig.Config.MultiReturn,
-			FieldName:  getPlural(viewConfig.Config.MultiInput, tableName),
+			FieldName:  getPlural(viewConfig.Config.MultiReturn, tableName),
 			FieldType:  tableName,
 			FieldIndex: ResponseStartFieldIndex,
 		}

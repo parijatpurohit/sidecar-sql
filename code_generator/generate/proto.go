@@ -21,7 +21,7 @@ func Proto() {
 			generateProtoForConfig(conf)
 		}
 	}
-	genproto.GenerateServerProto(config.ParsedStorageConfig)
+	genproto.GenerateServerProto(config.GetAllStorage())
 }
 
 func generateProtoForConfig(conf *config.StorageConfig) {

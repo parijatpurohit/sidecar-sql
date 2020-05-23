@@ -4,6 +4,8 @@ import (
 	"log"
 	"os"
 
+	"github.com/parijatpurohit/sidecar-sql/code_generator/config"
+
 	"github.com/parijatpurohit/sidecar-sql/code_generator/generate"
 	"github.com/parijatpurohit/sidecar-sql/code_generator/utils"
 )
@@ -17,6 +19,7 @@ const (
 
 func main() {
 	args := os.Args[1:]
+	config.InitStorageConfig()
 	if len(args) == 0 {
 		panic("invalid arguments. please try again")
 	}
@@ -35,5 +38,4 @@ func main() {
 		log.Printf("*********GENERATING SERVER FILES*********")
 		generate.Server()
 	}
-
 }

@@ -1,7 +1,6 @@
 package generate
 
 import (
-	"fmt"
 	"io/ioutil"
 	"log"
 
@@ -18,7 +17,7 @@ func Proto() {
 	for _, f := range files {
 		if f.Name() != paths.CommonConfigFileName {
 			conf := config.GetStorageConfig(f.Name())
-			fmt.Println("generating proto for: ", f.Name())
+			log.Printf("generating proto for: %s", f.Name())
 			generateProtoForConfig(conf)
 		}
 	}
@@ -26,6 +25,8 @@ func Proto() {
 }
 
 func generateProtoForConfig(conf *config.StorageConfig) {
+	log.Printf("generating proto entity for: %s", conf.Table)
 	genproto.GenerateEntityProto(conf)
+	log.Printf("generating proto views for: %s", conf.Table)
 	genproto.GenerateViewProto(conf)
 }

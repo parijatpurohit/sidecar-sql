@@ -21,15 +21,18 @@ func main() {
 		panic("invalid arguments. please try again")
 	}
 	if utils.ContainsAnyStr(args, GenTypeProto, GenTypeAll) != -1 {
-		log.Printf("generating proto files")
+		log.Printf("*********GENERATING PROTOBUF FILES********")
 		generate.Proto()
+		log.Printf("*********PROTOBUF GENERATION COMPLETE********")
 	}
 	if utils.ContainsAnyStr(args, GenTypeStorage, GenTypeAll) != -1 {
-		log.Printf("generating storage files")
+		log.Printf("*********GENERATING STORAGE FILES*********")
 		generate.Storage()
+		log.Printf("*********STORAGE GENERATION COMPLETE********")
+
 	}
 	if utils.ContainsAnyStr(args, GenTypeServer, GenTypeAll) != -1 {
-		log.Printf("generating server files")
+		log.Printf("*********GENERATING SERVER FILES*********")
 		generate.Server()
 	}
 

@@ -60,7 +60,9 @@ type ViewProtoConfig struct {
 func GenerateViewProto(storageConfig *config.StorageConfig) {
 	fieldSchema, primaryKeys := generateUtils.GetFieldConfig(storageConfig)
 	tableName := generateUtils.GetTableName(storageConfig.Table, storageConfig.Common.IsPlural)
-	log.Printf("generating views for table: %s", tableName)
+	if len(storageConfig.Views) == 0 {
+		log.Printf("Found no view definitions for %s", tableName)
+	}
 	for _, view := range storageConfig.Views {
 		log.Printf("generating view: %s_%s", tableName, view.Name)
 		viewConfig := getProtoViewConfig(tableName, view, fieldSchema, primaryKeys)
@@ -75,6 +77,7 @@ func GenerateViewProto(storageConfig *config.StorageConfig) {
 			panic(err)
 		}
 	}
+
 }
 
 func getProtoViewConfig(tableName string, view *config.View, fieldSchema map[string]*config.Field, primaryKeys []*config.Field) *ViewProtoConfig {

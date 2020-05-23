@@ -63,18 +63,8 @@ func GenerateViewProto(storageConfig *config.StorageConfig) {
 	log.Printf("generating views for table: %s", tableName)
 	for _, view := range storageConfig.Views {
 		log.Printf("generating view: %s_%s", tableName, view.Name)
+		viewConfig := getProtoViewConfig(tableName, view, fieldSchema, primaryKeys)
 
-		viewConfig := ViewProtoConfig{
-			Imports:               getImports(tableName, primaryKeys, view, fieldSchema),
-			TableName:             tableName,
-			ViewName:              view.Name,
-			IsQueryPopulated:      view.ViewType == config.VIEW_TYPE_READ,
-			IsResponsePKPopulated: view.Config.ReturnType == config.RETURN_TYPE_PK,
-			RequestConfig:         getRequestConfig(tableName, view),
-			QueryConfig:           getQueryConfig(tableName, view, fieldSchema),
-			ResponseConfig:        getResponseConfig(tableName, view),
-			ResponsePKConfig:      getPrimaryKeyConfig(tableName, view.Name, primaryKeys),
-		}
 		template := generateUtils.GetTemplate(fmt.Sprintf("%s/%s", paths.ProtoTemplatePath, paths.ProtoViewTemplateFile))
 		outputFile, err := getOutputViewProtoFile(tableName, view.Name)
 		if err != nil {
@@ -84,6 +74,20 @@ func GenerateViewProto(storageConfig *config.StorageConfig) {
 		if err != nil {
 			panic(err)
 		}
+	}
+}
+
+func getProtoViewConfig(tableName string, view *config.View, fieldSchema map[string]*config.Field, primaryKeys []*config.Field) *ViewProtoConfig {
+	return &ViewProtoConfig{
+		Imports:               getImports(tableName, primaryKeys, view, fieldSchema),
+		TableName:             tableName,
+		ViewName:              view.Name,
+		IsQueryPopulated:      view.ViewType == config.VIEW_TYPE_READ,
+		IsResponsePKPopulated: view.Config.ReturnType == config.RETURN_TYPE_PK,
+		RequestConfig:         getRequestConfig(tableName, view),
+		QueryConfig:           getQueryConfig(tableName, view, fieldSchema),
+		ResponseConfig:        getResponseConfig(tableName, view),
+		ResponsePKConfig:      getPrimaryKeyConfig(tableName, view.Name, primaryKeys),
 	}
 }
 

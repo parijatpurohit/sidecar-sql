@@ -16,15 +16,8 @@ type ServerProtoConfig struct {
 }
 
 func GenerateServerProto(storageConfigs map[string]*config.StorageConfig) {
-	serverProtoConfig := ServerProtoConfig{}
-	for _, storageConfig := range storageConfigs {
-		for _, view := range storageConfig.Views {
-			tableName := generateUtils.GetTableName(storageConfig.Table, storageConfig.Common.IsPlural)
-			viewName := fmt.Sprintf(viewNameFormat, tableName, view.Name)
-			serverProtoConfig.Views = append(serverProtoConfig.Views, viewName)
-		}
-	}
 
+	serverProtoConfig := getServerProtoConfig(storageConfigs)
 	template := generateUtils.GetTemplate(fmt.Sprintf("%s/%s", paths.ProtoTemplatePath, paths.ProtoServerTemplateFile))
 	outputFile, err := getOutputServerProtoFile()
 	if err != nil {
@@ -34,6 +27,18 @@ func GenerateServerProto(storageConfigs map[string]*config.StorageConfig) {
 	if err != nil {
 		panic(err)
 	}
+}
+
+func getServerProtoConfig(storageConfigs map[string]*config.StorageConfig) *ServerProtoConfig {
+	serverProtoConfig := &ServerProtoConfig{}
+	for _, storageConfig := range storageConfigs {
+		for _, view := range storageConfig.Views {
+			tableName := generateUtils.GetTableName(storageConfig.Table, storageConfig.Common.IsPlural)
+			viewName := fmt.Sprintf(viewNameFormat, tableName, view.Name)
+			serverProtoConfig.Views = append(serverProtoConfig.Views, viewName)
+		}
+	}
+	return serverProtoConfig
 }
 
 func getOutputServerProtoFile() (*os.File, error) {

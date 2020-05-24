@@ -10,7 +10,12 @@ const (
 
 	SchemaFilePath = "%s/go/storage/%s/models/schema.go"
 	QueryFilePath  = "%s/go/storage/%s/models/%s.go"
-	ViewsFilePath  = "%s/go/storage/%s/views/create.go"
+	ViewsFilePath  = "%s/go/storage/%s/views/%s.go"
+
+	CreateFileName   = "create"
+	UpdateFileName   = "update"
+	DeleteFileName   = "delete"
+	ViewDefsFileName = "views"
 
 	ProtoTemplatePath   = "code_generator/templates/proto"
 	StorageTemplatePath = "code_generator/templates/storage"
@@ -28,6 +33,9 @@ const (
 	ModelSchemaTemplateFile = "views/schema.tgo"
 	ModelQueryTemplateFile  = "views/query.tgo"
 	CreateViewTemplateFile  = "views/create.tgo"
+	UpdateViewTemplateFile  = "views/update.tgo"
+	DeleteViewTemplateFile  = "views/delete.tgo"
+	ViewDefTemplateFile     = "views/viewsdef.tgo"
 	CommonConfigFileName    = "common.yaml"
 	SQLConfigFileName       = "sql/sql.yaml"
 )

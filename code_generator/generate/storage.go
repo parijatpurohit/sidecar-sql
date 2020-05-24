@@ -19,6 +19,7 @@ func Storage() {
 		tableName := generateUtils.GetTableName(conf.Table, conf.Common.IsPlural)
 		createPath(tableName)
 		genstorage.GenerateStorage(conf)
+		genstorage.GenerateViewDef(conf)
 		genstorage.GenerateViews(conf)
 	}
 }

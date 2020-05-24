@@ -6,7 +6,7 @@ import (
 {{- end}}
 )
 
-// {{.FuncDef.Name}} stores array of view objects
+// {{.FuncDef.Name}} deletes an array of input view objects
 func (v *viewsImpl) {{.FuncDef.Name}}({{.FuncDef.InputVars}}) ({{.FuncDef.ReturnVars}}) {
     db := v.db
     isTxEnabled := len(entities) > 1
@@ -14,15 +14,13 @@ func (v *viewsImpl) {{.FuncDef.Name}}({{.FuncDef.InputVars}}) ({{.FuncDef.Return
         db = db.BeginTx(ctx, &sql.TxOptions{Isolation: sql.LevelDefault})
     }
     for _, entity := range entities {
-        if err := db.Save(entity).Error; err != nil {
-            return err
-        }
+        entity.UpdatedAt = utils.GetTimePtr(time.Now())
+        db.Model(&entity).UpdateColumns(entity)
     }
     if isTxEnabled {
         if err := db.Commit().Error; err != nil {
             return err
         }
     }
-
     return nil
 }

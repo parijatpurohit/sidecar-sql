@@ -8,13 +8,14 @@ import (
 )
 
 var viewGenerators = map[config.ViewType]func(*config.StorageConfig, *config.View){
-	config.VIEW_TYPE_CREATE: genviews.GenerateCreateView,
+	config.VIEW_TYPE_CREATE: genviews.GenerateNonReadView,
 	//config.VIEW_TYPE_READ:   genviews.GenerateCreateView,
-	//config.VIEW_TYPE_UPDATE: genviews.GenerateCreateView,
-	//config.VIEW_TYPE_DELETE: genviews.GenerateCreateView,
+	config.VIEW_TYPE_UPDATE: genviews.GenerateNonReadView,
+	config.VIEW_TYPE_DELETE: genviews.GenerateNonReadView,
 }
 
 func GenerateViews(storageConfig *config.StorageConfig) {
+
 	for _, view := range storageConfig.Views {
 		generator := viewGenerators[view.ViewType]
 		if generator == nil {
@@ -23,4 +24,8 @@ func GenerateViews(storageConfig *config.StorageConfig) {
 		}
 		generator(storageConfig, view)
 	}
+}
+
+func GenerateViewDef(storageConfig *config.StorageConfig) {
+	genviews.GenerateDefs(storageConfig)
 }

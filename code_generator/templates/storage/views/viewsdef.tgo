@@ -1,0 +1,29 @@
+package {{ .PackageName }}
+
+import (
+{{- range .Imports}}
+    "{{ . }}"
+{{- end }}
+)
+
+var (
+    once  = sync.Once{}
+    views {{.InterfaceName}}
+)
+
+type {{.InterfaceName}} interface {
+{{- range .Views}}
+    {{.Name}}({{.InputVars}}) ({{.ReturnVars}})
+{{- end}}
+}
+type viewsImpl struct {
+    db *gorm.DB
+}
+
+func GetViews() {{.InterfaceName}} {
+    once.Do(func() {
+        db := sqlconn.GetDB()
+        views = &viewsImpl{db: db}
+    })
+    return views
+}

@@ -5,7 +5,9 @@ import (
 	"os"
 	"strings"
 
-	"github.com/parijatpurohit/sidecar-sql/code_generator/generate/paths"
+	"github.com/parijatpurohit/sidecar-sql/code_generator/generate/constants/alias"
+
+	"github.com/parijatpurohit/sidecar-sql/code_generator/generate/constants/paths"
 
 	"github.com/parijatpurohit/sidecar-sql/code_generator/config"
 	generateUtils "github.com/parijatpurohit/sidecar-sql/code_generator/generate/utils"
@@ -24,22 +26,10 @@ type NonReadViewConfig struct {
 	FuncDef     *ViewFuncConfig
 }
 
-var fileNameForView = map[config.ViewType]string{
-	config.VIEW_TYPE_CREATE: paths.CreateFileName,
-	config.VIEW_TYPE_UPDATE: paths.UpdateFileName,
-	config.VIEW_TYPE_DELETE: paths.DeleteFileName,
-}
-
-var templateForView = map[config.ViewType]string{
-	config.VIEW_TYPE_CREATE: paths.CreateViewTemplateFile,
-	config.VIEW_TYPE_UPDATE: paths.UpdateViewTemplateFile,
-	config.VIEW_TYPE_DELETE: paths.DeleteViewTemplateFile,
-}
-
 func GenerateNonReadView(storageConfig *config.StorageConfig, viewConfig *config.View) {
 	conf := getNonReadConfig(storageConfig, viewConfig)
 	tableName := generateUtils.GetTableName(storageConfig.Table, storageConfig.Common.IsPlural)
-	tpl := generateUtils.GetTemplate(fmt.Sprintf("%s/%s", paths.StorageTemplatePath, templateForView[viewConfig.ViewType]))
+	tpl := generateUtils.GetTemplate(fmt.Sprintf("%s/%s", paths.StorageTemplatePath, alias.GetTemplateForView[viewConfig.ViewType]))
 	outFile, err := getOutputNonReadViewFile(tableName, viewConfig.ViewType)
 	if err != nil {
 		panic(err)
@@ -72,6 +62,6 @@ func getNonReadImports(tableName string, viewType config.ViewType) []string {
 }
 
 func getOutputNonReadViewFile(tableName string, viewType config.ViewType) (*os.File, error) {
-	outputFilePath := fmt.Sprintf(paths.ViewsFilePath, paths.GeneratedFilePath, strings.ToLower(tableName), fileNameForView[viewType])
+	outputFilePath := fmt.Sprintf(paths.ViewsFilePath, paths.GeneratedFilePath, strings.ToLower(tableName), alias.GetFileNameForView[viewType])
 	return os.Create(outputFilePath)
 }

@@ -6,7 +6,7 @@ import (
 	"log"
 	"sync"
 
-	"github.com/parijatpurohit/sidecar-sql/code_generator/generate/paths"
+	"github.com/parijatpurohit/sidecar-sql/code_generator/generate/constants/paths"
 	"github.com/parijatpurohit/sidecar-sql/code_generator/utils"
 	"gopkg.in/yaml.v2"
 )

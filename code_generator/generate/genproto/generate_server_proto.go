@@ -5,7 +5,7 @@ import (
 	"os"
 
 	"github.com/parijatpurohit/sidecar-sql/code_generator/config"
-	"github.com/parijatpurohit/sidecar-sql/code_generator/generate/paths"
+	"github.com/parijatpurohit/sidecar-sql/code_generator/generate/constants/paths"
 	generateUtils "github.com/parijatpurohit/sidecar-sql/code_generator/generate/utils"
 )
 

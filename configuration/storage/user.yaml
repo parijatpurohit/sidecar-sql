@@ -16,23 +16,23 @@ fields:
     fieldType: timestamp
 
 views:
-  - name: FindByRollAndName
-    type: READ
-    config:
-      enableRequestValidation: true
-      multiReturn: true
-      returnType: data
-    query:
-      fields:
-        - fieldName: Roll
-          searchType: EQUALS
-          optional: false
-        - fieldName: UpdatedAt
-          searchType: GREATER_THAN
-          optional: true
-        - fieldName: Name
-          searchType: CONTAINS
-          optional: true
+#  - name: FindByRollAndName
+#    type: READ
+#    config:
+#      enableRequestValidation: true
+#      multiReturn: true
+#      returnType: data
+#    query:
+#      fields:
+#        - fieldName: Roll
+#          searchType: EQUALS
+#          optional: false
+#        - fieldName: UpdatedAt
+#          searchType: GREATER_THAN
+#          optional: true
+#        - fieldName: Name
+#          searchType: CONTAINS
+#          optional: true
 
   - name: CreateUser
     type: CREATE

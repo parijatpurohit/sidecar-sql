@@ -22,6 +22,7 @@ func GenerateViews(storageConfig *config.StorageConfig) {
 			log.Printf("no view generator found for view: %s, type: %s", view.Name, view.ViewType)
 			continue
 		}
+		log.Printf("generating view for: %s type: %s", view.Name, view.ViewType)
 		generator(storageConfig, view)
 	}
 }

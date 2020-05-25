@@ -5,10 +5,12 @@ import (
 	"os"
 	"strings"
 
+	"github.com/parijatpurohit/sidecar-sql/code_generator/generate/constants/alias"
+
 	"github.com/parijatpurohit/sidecar-sql/code_generator/utils"
 
 	"github.com/parijatpurohit/sidecar-sql/code_generator/config"
-	"github.com/parijatpurohit/sidecar-sql/code_generator/generate/paths"
+	"github.com/parijatpurohit/sidecar-sql/code_generator/generate/constants/paths"
 	generateUtils "github.com/parijatpurohit/sidecar-sql/code_generator/generate/utils"
 )
 
@@ -52,7 +54,7 @@ func getSchemaFieldsConfig(fields []*config.Field) []*FieldConfig {
 	for _, field := range fields {
 		fieldCfg := &FieldConfig{
 			Name:      field.FieldName,
-			FieldType: config.GetGoFieldTypeFor[field.FieldType],
+			FieldType: alias.GetGoFieldTypeFor[field.FieldType],
 			TagStr:    GetTagsString(getSchemaFieldTags(field)),
 		}
 		fieldConfig = append(fieldConfig, fieldCfg)

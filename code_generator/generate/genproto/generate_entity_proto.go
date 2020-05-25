@@ -4,10 +4,12 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/parijatpurohit/sidecar-sql/code_generator/generate/constants/alias"
+
 	"github.com/parijatpurohit/sidecar-sql/code_generator/utils"
 
 	"github.com/parijatpurohit/sidecar-sql/code_generator/config"
-	"github.com/parijatpurohit/sidecar-sql/code_generator/generate/paths"
+	"github.com/parijatpurohit/sidecar-sql/code_generator/generate/constants/paths"
 	generateUtils "github.com/parijatpurohit/sidecar-sql/code_generator/generate/utils"
 )
 
@@ -68,7 +70,7 @@ func getProtoFields(storageConfig *config.StorageConfig) []*ProtoFieldConfig {
 	var fieldsConfig []*ProtoFieldConfig
 	for index, field := range storageConfig.Fields {
 		fieldsConfig = append(fieldsConfig, &ProtoFieldConfig{
-			FieldType:  config.GetProtoFieldTypeFor[field.FieldType],
+			FieldType:  alias.GetProtoFieldTypeFor[field.FieldType],
 			FieldName:  field.FieldName,
 			FieldIndex: index + 1,
 		})

@@ -6,10 +6,12 @@ import (
 	"os"
 	"strings"
 
+	"github.com/parijatpurohit/sidecar-sql/code_generator/generate/constants/alias"
+
 	"github.com/parijatpurohit/sidecar-sql/code_generator/utils"
 
 	"github.com/parijatpurohit/sidecar-sql/code_generator/config"
-	"github.com/parijatpurohit/sidecar-sql/code_generator/generate/paths"
+	"github.com/parijatpurohit/sidecar-sql/code_generator/generate/constants/paths"
 	generateUtils "github.com/parijatpurohit/sidecar-sql/code_generator/generate/utils"
 )
 
@@ -59,7 +61,7 @@ func getQueryFieldConfig(fields []*config.QueryField, fieldSchema map[string]*co
 		field := fieldSchema[queryField.FieldName]
 		queryFieldCfg := &FieldConfig{
 			Name:       field.FieldName,
-			FieldType:  config.GetGoFieldTypeFor[field.FieldType],
+			FieldType:  alias.GetGoFieldTypeFor[field.FieldType],
 			IsRepeated: queryField.SearchType == config.SEARCH_TYPE_CONTAINS,
 			TagStr:     GetTagsString(GetQueryFieldTags(queryField)),
 		}

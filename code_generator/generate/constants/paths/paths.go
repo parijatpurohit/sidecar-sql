@@ -1,8 +1,9 @@
 package paths
 
 const (
-	BaseImportPath   = "github.com/parijatpurohit/sidecar-sql/"
-	ModelsImportPath = BaseImportPath + GeneratedFilePath + "/go/storage/%s/models"
+	BaseImportPath     = "github.com/parijatpurohit/sidecar-sql/"
+	ModelsRelativePath = "/go/storage/%s/models"
+	ModelsImportPath   = BaseImportPath + GeneratedFilePath + ModelsRelativePath
 	// file paths
 	EntityProtoPath = "%s/pb/storage/%s_schema.proto"
 	ServerProtoPath = "%s/pb/storage/server.proto"
@@ -12,9 +13,6 @@ const (
 	QueryFilePath  = "%s/go/storage/%s/models/%s.go"
 	ViewsFilePath  = "%s/go/storage/%s/views/%s.go"
 
-	CreateFileName   = "create"
-	UpdateFileName   = "update"
-	DeleteFileName   = "delete"
 	ViewDefsFileName = "views"
 
 	ProtoTemplatePath   = "code_generator/templates/proto"

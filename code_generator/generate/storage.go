@@ -11,7 +11,7 @@ import (
 	"github.com/parijatpurohit/sidecar-sql/code_generator/generate/genstorage"
 
 	"github.com/parijatpurohit/sidecar-sql/code_generator/config"
-	"github.com/parijatpurohit/sidecar-sql/code_generator/generate/paths"
+	"github.com/parijatpurohit/sidecar-sql/code_generator/generate/constants/paths"
 )
 
 func Storage() {
@@ -19,6 +19,7 @@ func Storage() {
 		tableName := generateUtils.GetTableName(conf.Table, conf.Common.IsPlural)
 		createPath(tableName)
 		genstorage.GenerateStorage(conf)
+		log.Printf("generating view interface for table: %s", tableName)
 		genstorage.GenerateViewDef(conf)
 		genstorage.GenerateViews(conf)
 	}
@@ -34,5 +35,4 @@ func createPath(tableName string) {
 			log.Panic(err)
 		}
 	}
-
 }

@@ -6,10 +6,12 @@ import (
 	"os"
 	"strings"
 
+	"github.com/parijatpurohit/sidecar-sql/code_generator/generate/constants/alias"
+
 	"github.com/parijatpurohit/sidecar-sql/code_generator/utils"
 
 	"github.com/parijatpurohit/sidecar-sql/code_generator/config"
-	"github.com/parijatpurohit/sidecar-sql/code_generator/generate/paths"
+	"github.com/parijatpurohit/sidecar-sql/code_generator/generate/constants/paths"
 	generateUtils "github.com/parijatpurohit/sidecar-sql/code_generator/generate/utils"
 )
 
@@ -146,7 +148,7 @@ func getQueryConfig(tableName string, viewConfig *config.View, fieldSchema map[s
 			queryFields = append(queryFields, &ProtoFieldConfig{
 				IsRepeated: field.SearchType == config.SEARCH_TYPE_CONTAINS,
 				FieldName:  field.FieldName,
-				FieldType:  config.GetProtoFieldTypeFor[fieldSchema[field.FieldName].FieldType],
+				FieldType:  alias.GetProtoFieldTypeFor[fieldSchema[field.FieldName].FieldType],
 				FieldIndex: QueryStartFieldIndex + index,
 			})
 		}
@@ -189,7 +191,7 @@ func getPrimaryKeyConfig(tableName string, viewName string, primaryKeys []*confi
 	for index, pk := range primaryKeys {
 		fields = append(fields, &ProtoFieldConfig{
 			FieldName:  pk.FieldName,
-			FieldType:  config.GetProtoFieldTypeFor[pk.FieldType],
+			FieldType:  alias.GetProtoFieldTypeFor[pk.FieldType],
 			FieldIndex: ResponsePKStartIndex + index,
 		})
 	}

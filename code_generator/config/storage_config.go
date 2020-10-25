@@ -5,6 +5,7 @@ type CommonConfig struct {
 	MaxIdle           int64 `yaml:"maxIdle"`
 	MaxOpen           int64 `yaml:"maxOpen"`
 	SoftDeleteEnabled bool  `yaml:"softDeleteEnabled"`
+	GRPCPort          int64 `yaml:"grpcPort"`
 }
 
 type StorageConfig struct {

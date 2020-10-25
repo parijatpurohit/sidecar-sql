@@ -37,5 +37,6 @@ func main() {
 	if utils.ContainsAnyStr(args, GenTypeServer, GenTypeAll) != -1 {
 		log.Printf("*********GENERATING SERVER FILES*********")
 		generate.Server()
+		log.Printf("*********SERVER GENERATION COMPLETE*********")
 	}
 }

@@ -10,5 +10,9 @@ func TranslateUser_CreateUserRequest(in *pb.User_CreateUserRequest) *models.User
 }
 
 func TranslateUser_CreateUserResponse(user *models.User) *pb.User_CreateUserResponse {
-	return &pb.User_CreateUserResponse{UUID: user.UUID}
+	return &pb.User_CreateUserResponse{
+		PrimaryKeys: []*pb.User_CreateUser_PrimaryKey{
+			{UUID: user.UUID},
+		},
+	}
 }

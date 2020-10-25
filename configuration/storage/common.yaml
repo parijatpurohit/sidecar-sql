@@ -1,3 +1,4 @@
 common:
   isPlural: true
   softDeleteEnabled: true
+  grpcPort: 50010

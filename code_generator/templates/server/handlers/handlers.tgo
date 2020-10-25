@@ -1,0 +1,14 @@
+package {{ .PackageName}}
+
+import (
+{{- range .Imports}}
+	{{.ImportKey}} "{{ .ImportPath }}"
+{{- end}}
+)
+
+type Service struct {
+	pb.UnimplementedStorageServiceServer
+{{- range .Views}}
+	{{ .ViewName}}Views {{.ViewName}}_Views.I{{.ViewName}}Views
+{{- end}}
+}

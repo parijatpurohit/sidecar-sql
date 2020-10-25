@@ -1,4 +1,4 @@
-table: job_applications
+table: JobApplications
 schema:
 #all fields present in storage with their types
 fields:

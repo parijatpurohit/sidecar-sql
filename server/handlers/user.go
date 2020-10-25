@@ -23,7 +23,7 @@ func (s *Service) User_FindByRollAndName(ctx context.Context, in *pb.User_FindBy
 func (s *Service) User_CreateUser(ctx context.Context, in *pb.User_CreateUserRequest) (*pb.User_CreateUserResponse, error) {
 	log.Println("User_CreateUser")
 	req := translators.TranslateUser_CreateUserRequest(in)
-	res, err := s.UserViews.CreateUser(req)
+	res, err := s.UserViews.Create(req)
 	if err != nil {
 		return nil, err
 	}
@@ -34,7 +34,7 @@ func (s *Service) User_CreateUser(ctx context.Context, in *pb.User_CreateUserReq
 func (s *Service) User_UpdateUsers(ctx context.Context, in *pb.User_UpdateUsersRequest) (*pb.User_UpdateUsersResponse, error) {
 	log.Println("User_UpdateUsers")
 	req := translators.TranslateUser_UpdateUsersRequest(in)
-	res, err := s.UserViews.UpdateUsers(ctx, req)
+	res, err := s.UserViews.Update(ctx, req)
 	if err != nil {
 		return nil, err
 	}
@@ -45,7 +45,7 @@ func (s *Service) User_UpdateUsers(ctx context.Context, in *pb.User_UpdateUsersR
 func (s *Service) User_DeleteUsers(ctx context.Context, in *pb.User_DeleteUsersRequest) (*pb.User_DeleteUsersResponse, error) {
 	log.Println("User_DeleteUsers")
 	req := translators.TranslateUser_DeleteUsersRequest(in)
-	res, err := s.UserViews.DeleteUsers(ctx, req)
+	res, err := s.UserViews.Delete(ctx, req)
 	if err != nil {
 		return nil, err
 	}

@@ -19,4 +19,9 @@ fields:
     fieldType: timestamp
 
 views:
+  - name: CreateJob
+    type: CREATE
+    config:
+      returnType: primaryKey
+      multiReturn: true
 

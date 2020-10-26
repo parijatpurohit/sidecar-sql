@@ -12,6 +12,10 @@ const (
 	FIELD_TYPE_INT64     FieldType = "int64"
 	FIELD_TYPE_TIMESTAMP FieldType = "timestamp"
 
+	FIELD_CREATED_AT = "CreatedAt"
+	FIELD_UPDATED_AT = "UpdatedAt"
+	FIELD_DELETED_AT = "DeletedAt"
+
 	GO_TYPE_TIMESTAMP string = "*time.Time"
 	GO_TYPE_STRING    string = "string"
 	GO_TYPE_INT64     string = "int64"

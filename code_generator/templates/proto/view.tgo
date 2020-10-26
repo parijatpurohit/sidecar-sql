@@ -20,10 +20,3 @@ message {{ .QueryConfig.Name }} {
 message {{ .TableName }}_{{ .ViewName }}Response {
     {{ if .ResponseConfig.Field.IsRepeated }}repeated{{end}} {{ .ResponseConfig.Field.FieldType }} {{ .ResponseConfig.Field.FieldName }} = {{ .ResponseConfig.Field.FieldIndex }};
 }
-{{ if eq .IsResponsePKPopulated true}}
-message {{ .ResponsePKConfig.Name }} {
-{{- range .ResponsePKConfig.Fields }}
-    {{ if .IsRepeated}}repeated {{end}} {{ .FieldType }} {{ .FieldName }} = {{ .FieldIndex }};
-{{- end }}
-}
-{{ end}}

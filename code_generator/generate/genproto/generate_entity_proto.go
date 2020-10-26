@@ -21,6 +21,7 @@ type EntityProtoConfig struct {
 	StorageConfig *config.StorageConfig
 	TableName     string
 	Fields        []*ProtoFieldConfig
+	PKConfig      *PKConfig
 	Imports       []string
 }
 
@@ -29,6 +30,11 @@ type ProtoFieldConfig struct {
 	FieldName  string
 	FieldType  string
 	FieldIndex int
+}
+
+type PKConfig struct {
+	Name   string
+	Fields []*ProtoFieldConfig
 }
 
 func GenerateEntityProto(storageConfig *config.StorageConfig) {
@@ -52,10 +58,13 @@ func GenerateEntityProto(storageConfig *config.StorageConfig) {
 }
 
 func getEntityConfig(storageConfig *config.StorageConfig) *EntityProtoConfig {
+	_, primaryKeys := generateUtils.GetFieldConfig(storageConfig)
+	tableName := generateUtils.GetTableName(storageConfig.Table, storageConfig.Common.IsPlural)
 	entityConfig := &EntityProtoConfig{
 		StorageConfig: storageConfig,
 		Fields:        getProtoFields(storageConfig),
-		TableName:     generateUtils.GetTableName(storageConfig.Table, storageConfig.Common.IsPlural),
+		TableName:     tableName,
+		PKConfig:      getPrimaryKeyConfig(tableName, primaryKeys),
 	}
 	for _, field := range storageConfig.Fields {
 		if field.FieldType == config.FIELD_TYPE_TIMESTAMP {
@@ -64,6 +73,20 @@ func getEntityConfig(storageConfig *config.StorageConfig) *EntityProtoConfig {
 	}
 	entityConfig.Imports = utils.GetUnique(entityConfig.Imports)
 	return entityConfig
+}
+
+// generates primary key config. doesn't check if primary key object needs to be generated
+func getPrimaryKeyConfig(tableName string, primaryKeys []*config.Field) *PKConfig {
+	var fields []*ProtoFieldConfig
+	name := fmt.Sprintf("%s_%s", tableName, PrimaryKeyFieldPlaceholder)
+	for index, pk := range primaryKeys {
+		fields = append(fields, &ProtoFieldConfig{
+			FieldName:  pk.FieldName,
+			FieldType:  alias.GetProtoFieldTypeFor[pk.FieldType],
+			FieldIndex: ResponsePKStartIndex + index,
+		})
+	}
+	return &PKConfig{Name: name, Fields: fields}
 }
 
 func getProtoFields(storageConfig *config.StorageConfig) []*ProtoFieldConfig {

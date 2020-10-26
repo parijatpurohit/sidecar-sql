@@ -1,0 +1,43 @@
+package {{ .PackageName }}
+
+import (
+{{- range .Imports}}
+    {{.ImportKey}} "{{ .ImportPath }}"
+{{- end}}
+)
+
+{{if .IsRead}}
+{{else}}
+func Translate{{.TableName}}_{{.ViewName}}Request(in *pb.{{.TableName}}_{{.ViewName}}Request) []*{{.TableNameLower}}_models.{{.TableName}} {
+    {{- if .MultiInput}}
+    return Translate{{.TableName}}Protos(in.{{.TableName}}s)
+    {{- else}}
+    return []*{{.TableNameLower}}_models.{{.TableName}}{Translate{{.TableName}}Proto(in.{{.TableName}})}
+    {{- end}}
+}
+{{end}}
+
+
+{{- if eq .ReturnType "primaryKey"}}
+func Translate{{.TableName}}_{{.ViewName}}Response(in []*{{.TableNameLower}}_models.{{.TableName}})*pb.{{.TableName}}_{{.ViewName}}Response  {
+    return &pb.{{.TableName}}_{{.ViewName}}Response{
+        {{- if .MultiReturn}}
+        PrimaryKeys: Translate{{.TableName}}ModelsPK(in),
+        {{- else}}
+        PrimaryKeys: Translate{{.TableName}}ModelsPK(in[0]),
+        {{- end}}
+    }
+}
+{{- else if eq .ReturnType "rowCount"}}
+func Translate{{.TableName}}_{{.ViewName}}Response(in []*{{.TableNameLower}}_models.{{.TableName}})*pb.{{.TableName}}_{{.ViewName}}Response  {
+    return &pb.{{.TableName}}_{{.ViewName}}Response{Count: int64(len(in))}
+}
+{{- else }}
+func Translate{{.TableName}}_{{.ViewName}}Response(in []*{{.TableNameLower}}_models.{{.TableName}}) *pb.{{.TableName}}_{{.ViewName}}Response  {
+    {{- if .MultiReturn}}
+    return &pb.{{.TableName}}_{{.ViewName}}Response{ {{.TableName}}s: Translate{{.TableName}}Models(in)}
+    {{- else}}
+    return &pb.{{.TableName}}_{{.ViewName}}Response{ {{.TableName}}: Translate{{.TableName}}Model(in)}
+    {{- end}}
+}
+{{- end}}

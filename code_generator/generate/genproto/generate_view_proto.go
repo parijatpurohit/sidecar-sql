@@ -42,10 +42,7 @@ type DataReturnConfig struct {
 type ResponseConfig struct {
 	Field *ProtoFieldConfig
 }
-type ResponsePKConfig struct {
-	Name   string
-	Fields []*ProtoFieldConfig
-}
+
 type ViewProtoConfig struct {
 	Imports               []string
 	TableName             string
@@ -55,7 +52,6 @@ type ViewProtoConfig struct {
 	RequestConfig         *RequestConfig
 	QueryConfig           *QueryConfig
 	ResponseConfig        *ResponseConfig
-	ResponsePKConfig      *ResponsePKConfig
 }
 
 // GenerateViewProto generates View protobuf config including request and response objects
@@ -92,7 +88,6 @@ func getProtoViewConfig(tableName string, view *config.View, fieldSchema map[str
 		RequestConfig:         getRequestConfig(tableName, view),
 		QueryConfig:           getQueryConfig(tableName, view, fieldSchema),
 		ResponseConfig:        getResponseConfig(tableName, view),
-		ResponsePKConfig:      getPrimaryKeyConfig(tableName, view.Name, primaryKeys),
 	}
 }
 
@@ -176,26 +171,12 @@ func getResponseConfig(tableName string, viewConfig *config.View) *ResponseConfi
 	case config.RETURN_TYPE_PK:
 		responseField = &ProtoFieldConfig{
 			IsRepeated: viewConfig.Config.MultiReturn,
-			FieldType:  fmt.Sprintf("%s_%s_%s", tableName, viewConfig.Name, PrimaryKeyFieldPlaceholder),
+			FieldType:  fmt.Sprintf("%s_%s", tableName, PrimaryKeyFieldPlaceholder),
 			FieldName:  getPlural(viewConfig.Config.MultiReturn, PrimaryKeyFieldPlaceholder),
 			FieldIndex: ResponseStartFieldIndex,
 		}
 	}
 	return &ResponseConfig{Field: responseField}
-}
-
-// generates primary key config. doesn't check if primary key object needs to be generated
-func getPrimaryKeyConfig(tableName string, viewName string, primaryKeys []*config.Field) *ResponsePKConfig {
-	var fields []*ProtoFieldConfig
-	name := fmt.Sprintf("%s_%s_%s", tableName, viewName, PrimaryKeyFieldPlaceholder)
-	for index, pk := range primaryKeys {
-		fields = append(fields, &ProtoFieldConfig{
-			FieldName:  pk.FieldName,
-			FieldType:  alias.GetProtoFieldTypeFor[pk.FieldType],
-			FieldIndex: ResponsePKStartIndex + index,
-		})
-	}
-	return &ResponsePKConfig{Name: name, Fields: fields}
 }
 
 func getOutputViewProtoFile(tableName string, viewName string) (*os.File, error) {

@@ -1,0 +1,79 @@
+package {{ .PackageName }}
+
+import (
+{{- range .Imports}}
+    {{.ImportKey}} "{{ .ImportPath }}"
+{{- end}}
+)
+
+func Translate{{.ViewName}}Model({{.ViewNameLower}} *{{.ViewNameLower}}_models.{{.ViewName}}) *pb.{{.ViewName}} {
+    var createdAt *timestamp.Timestamp
+    var updatedAt *timestamp.Timestamp
+    var deletedAt *timestamp.Timestamp
+    if {{.ViewNameLower}}.CreatedAt != nil {
+        createdAt, _ = ptypes.TimestampProto(*{{.ViewNameLower}}.CreatedAt)
+    }
+    if {{.ViewNameLower}}.UpdatedAt != nil {
+        updatedAt, _ = ptypes.TimestampProto(*{{.ViewNameLower}}.UpdatedAt)
+    }
+    if {{.ViewNameLower}}.DeletedAt != nil {
+        deletedAt, _ = ptypes.TimestampProto(*{{.ViewNameLower}}.DeletedAt)
+    }
+    return &pb.{{.ViewName}}{
+        {{- range .ViewFields}}
+        {{ .ProtoFieldName}}: {{$.ViewNameLower}}.{{.ViewFieldName}},
+        {{- end}}
+        CreatedAt: createdAt,
+        UpdatedAt: updatedAt,
+        DeletedAt: deletedAt,
+    }
+}
+
+func Translate{{.ViewName}}Proto({{.ViewNameLower}} *pb.{{.ViewName}}) *{{.ViewNameLower}}_models.{{.ViewName}} {
+    return &{{.ViewNameLower}}_models.{{.ViewName}}{
+        {{- range .ViewFields}}
+        {{ .ViewFieldName}}: {{$.ViewNameLower}}.{{.ProtoFieldName}},
+        {{- end}}
+        CreatedAt: utils.GetTimestamp({{.ViewNameLower}}.CreatedAt),
+        UpdatedAt: utils.GetTimestamp({{.ViewNameLower}}.UpdatedAt),
+        DeletedAt: utils.GetTimestamp({{.ViewNameLower}}.DeletedAt),
+    }
+}
+
+func Translate{{.ViewName}}Models(entities []*{{.ViewNameLower}}_models.{{.ViewName}}) []*pb.{{.ViewName}} {
+    var res []*pb.{{.ViewName}}
+    for _, entity := range entities {
+        res = append(res,  Translate{{.ViewName}}Model(entity))
+    }
+    return res
+}
+
+func Translate{{.ViewName}}ModelPK(entity *{{.ViewNameLower}}_models.{{.ViewName}}) *pb.{{.ViewName}}_PrimaryKey {
+    res := &pb.{{.ViewName}}_PrimaryKey{
+        {{- range .PrimaryKeys}}
+        {{ .ProtoFieldName}} : entity.{{ .ViewFieldName}},
+        {{- end}}
+    }
+    return res
+}
+
+func Translate{{.ViewName}}ModelsPK(entities []*{{.ViewNameLower}}_models.{{.ViewName}}) []*pb.{{.ViewName}}_PrimaryKey {
+    var res []*pb.{{.ViewName}}_PrimaryKey
+    for _, entity := range entities {
+        res = append(res,  Translate{{.ViewName}}ModelPK(entity))
+    }
+    return res
+}
+
+func Translate{{.ViewName}}Protos(entities []*pb.{{.ViewName}}) []*{{.ViewNameLower}}_models.{{.ViewName}} {
+    var res []*{{.ViewNameLower}}_models.{{.ViewName}}
+    for _, entity := range entities {
+        res = append(res,  Translate{{.ViewName}}Proto(entity))
+    }
+    return res
+}
+
+
+
+
+

@@ -18,7 +18,7 @@ const (
 func GenerateHandlers(allConfig map[string]*config.StorageConfig) {
 	conf := getHandlerConfig(allConfig)
 	tpl := generateUtils.GetTemplate(fmt.Sprintf("%s/%s", paths.ServerTemplatePath, paths.HandlersTemplateFile))
-	outFile, err := getOutputHandlerSchema()
+	outFile, err := getOutputHandlerFile()
 	if err != nil {
 		panic(err)
 	}
@@ -53,11 +53,7 @@ func getHandlerImports(allConfig map[string]*config.StorageConfig) []*ImportConf
 	return imports
 }
 
-func getOutputHandlerSchema() (*os.File, error) {
+func getOutputHandlerFile() (*os.File, error) {
 	outputFilePath := fmt.Sprintf(paths.HandersFilePath, paths.GeneratedFilePath)
 	return os.Create(outputFilePath)
-}
-
-func GenerateViewHandler(config *config.StorageConfig) {
-
 }

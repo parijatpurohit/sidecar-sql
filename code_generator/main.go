@@ -11,10 +11,11 @@ import (
 )
 
 const (
-	GenTypeProto   = "proto"
-	GenTypeServer  = "server"
-	GenTypeStorage = "storage"
-	GenTypeAll     = "all"
+	GenTypeProto      = "proto"
+	GenTypeServer     = "server"
+	GenTypeStorage    = "storage"
+	GenTypeTranslator = "translator"
+	GenTypeAll        = "all"
 )
 
 func main() {
@@ -33,6 +34,11 @@ func main() {
 		generate.Storage()
 		log.Printf("*********STORAGE GENERATION COMPLETE********")
 
+	}
+	if utils.ContainsAnyStr(args, GenTypeTranslator, GenTypeAll) != -1 {
+		log.Printf("*********GENERATING TRANSLATOR FILES*********")
+		generate.Translator()
+		log.Printf("*********TRANSLATOR GENERATION COMPLETE*********")
 	}
 	if utils.ContainsAnyStr(args, GenTypeServer, GenTypeAll) != -1 {
 		log.Printf("*********GENERATING SERVER FILES*********")

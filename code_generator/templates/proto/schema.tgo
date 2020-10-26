@@ -11,3 +11,9 @@ message {{ .TableName }} {
     {{- .FieldType }} {{ .FieldName }} = {{ .FieldIndex }};
     {{ end }}
 }
+
+message {{ .PKConfig.Name }} {
+{{- range .PKConfig.Fields }}
+    {{ if .IsRepeated}}repeated {{end}} {{ .FieldType }} {{ .FieldName }} = {{ .FieldIndex }};
+{{- end }}
+}

@@ -15,10 +15,10 @@ const (
 	protoImportKey      = "pb"
 )
 
-func GenerateHandlers(allConfig map[string]*config.StorageConfig) {
-	conf := getHandlerConfig(allConfig)
-	tpl := generateUtils.GetTemplate(fmt.Sprintf("%s/%s", paths.ServerTemplatePath, paths.HandlersTemplateFile))
-	outFile, err := getOutputHandlerFile()
+func GenerateBaseHandler(allConfig map[string]*config.StorageConfig) {
+	conf := getBaseHandlerConfig(allConfig)
+	tpl := generateUtils.GetTemplate(fmt.Sprintf("%s/%s", paths.ServerTemplatePath, paths.BaseHandlerTemplateFile))
+	outFile, err := getOutputBaseHandlerFile()
 	if err != nil {
 		panic(err)
 	}
@@ -28,18 +28,18 @@ func GenerateHandlers(allConfig map[string]*config.StorageConfig) {
 	}
 }
 
-func getHandlerConfig(allConfig map[string]*config.StorageConfig) *HandlersConfig {
+func getBaseHandlerConfig(allConfig map[string]*config.StorageConfig) *HandlersConfig {
 	handlersConfig := &HandlersConfig{}
 	handlersConfig.PackageName = handlersPackageName
 	for _, conf := range allConfig {
 		tableName := generateUtils.GetTableName(conf.Table, conf.Common.IsPlural)
-		handlersConfig.Views = append(handlersConfig.Views, &ViewConfig{ViewName: tableName})
+		handlersConfig.Tables = append(handlersConfig.Tables, &TableConfig{TableName: tableName})
 	}
-	handlersConfig.Imports = getHandlerImports(allConfig)
+	handlersConfig.Imports = getBaseHandlerImports(allConfig)
 	return handlersConfig
 }
 
-func getHandlerImports(allConfig map[string]*config.StorageConfig) []*ImportConfig {
+func getBaseHandlerImports(allConfig map[string]*config.StorageConfig) []*ImportConfig {
 	var imports []*ImportConfig
 	protoImport := &ImportConfig{ImportKey: protoImportKey, ImportPath: paths.ProtoImportPath}
 	imports = append(imports, protoImport)
@@ -53,7 +53,7 @@ func getHandlerImports(allConfig map[string]*config.StorageConfig) []*ImportConf
 	return imports
 }
 
-func getOutputHandlerFile() (*os.File, error) {
-	outputFilePath := fmt.Sprintf(paths.HandersFilePath, paths.GeneratedFilePath)
+func getOutputBaseHandlerFile() (*os.File, error) {
+	outputFilePath := fmt.Sprintf(paths.BaseHanderFilePath, paths.GeneratedFilePath)
 	return os.Create(outputFilePath)
 }

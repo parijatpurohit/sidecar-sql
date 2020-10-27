@@ -26,17 +26,15 @@ var (
 
 func getFuncDef(tableName string, view *config.View) *ViewFuncConfig {
 	return &ViewFuncConfig{
-		Name:       getViewName(view),
-		InputVars:  getViewInputParams(tableName, view),
-		ReturnVars: getViewResponseParams(tableName, view),
+		Name:        GetViewName(view),
+		InputVars:   getViewInputParams(tableName, view),
+		ReturnVars:  getViewResponseParams(tableName, view),
+		ResponseVar: EntityFieldName,
 	}
 }
 
-func getViewName(view *config.View) string {
-	if view.ViewType == config.VIEW_TYPE_READ {
-		return view.Name
-	}
-	return viewNamePrefix[view.ViewType]
+func GetViewName(view *config.View) string {
+	return view.Name
 }
 
 func getViewInputParams(tableName string, view *config.View) string {
@@ -60,16 +58,13 @@ func getViewInputParams(tableName string, view *config.View) string {
 
 func getViewResponseParams(tableName string, view *config.View) string {
 	var fields []*FuncFieldConfig
-	if view.ViewType == config.VIEW_TYPE_READ {
-		fields = append(fields, getReadReturnParams(tableName))
-	}
-	fields = append(fields, ErrorField)
+	fields = append(fields, getReadReturnParams(tableName), ErrorField)
 	return getFieldStr(fields)
 }
 
 func getReadReturnParams(tableName string) *FuncFieldConfig {
 	return &FuncFieldConfig{
-		FieldName: EntityFieldName,
+		FieldName: ResFieldName,
 		FieldType: getEntityType(tableName),
 	}
 }

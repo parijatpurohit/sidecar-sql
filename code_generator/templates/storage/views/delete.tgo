@@ -19,8 +19,8 @@ func (v *viewsImpl) {{.FuncDef.Name}}({{.FuncDef.InputVars}}) ({{.FuncDef.Return
     }
     if isTxEnabled {
         if err := db.Commit().Error; err != nil {
-            return err
+            return nil, err
         }
     }
-    return nil
+    return {{.FuncDef.ResponseVar}}, nil
 }

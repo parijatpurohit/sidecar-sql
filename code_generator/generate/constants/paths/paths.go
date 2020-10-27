@@ -13,6 +13,7 @@ const (
 	ModelsImportPath       = BaseImportPath + GeneratedFilePath + ModelsRelativePath
 	ViewsImportPath        = BaseImportPath + GeneratedFilePath + ViewsRelativePath
 	ProtoImportPath        = BaseImportPath + GeneratedFilePath + ProtoRelativePath
+	TranslatorImportPath   = BaseImportPath + OutputGoPath + TranslatorRelativePath
 
 	UtilsRelativePath   = "utils"
 	TimestampImportPath = "github.com/golang/protobuf/ptypes/timestamp"
@@ -28,7 +29,8 @@ const (
 	BaseTranslatorFilePath = OutputGoPath + TranslatorRelativePath + "/base.go"
 	ViewTranslatorFilePath = OutputGoPath + TranslatorRelativePath + "/%s.go"
 
-	HandersFilePath = HandersRelativePath + "/handlers.go"
+	BaseHanderFilePath  = HandersRelativePath + "/handlers.go"
+	TableHanderFilePath = HandersRelativePath + "/%s_handlers.go"
 
 	ViewDefsFileName = "views"
 
@@ -51,8 +53,9 @@ const (
 	ProtoServerTemplateFile = "server.tgo"
 	ProtoViewTemplateFile   = "view.tgo"
 
-	HandlersTemplateFile = "handlers/handlers.tgo"
-	ServerTemplateFile   = "server.tgo"
+	BaseHandlerTemplateFile  = "handlers/base_handler.tgo"
+	TableHandlerTemplateFile = "handlers/table_handler.tgo"
+	ServerTemplateFile       = "server.tgo"
 
 	BaseTranslatorTemplateFile = "basetranslator.tgo"
 	ViewTranslatorTemplateFile = "viewtranslator.tgo"

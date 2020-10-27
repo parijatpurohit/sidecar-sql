@@ -1,0 +1,21 @@
+package {{ .PackageName}}
+
+import (
+{{- range .Imports}}
+    {{.ImportKey}} "{{ .ImportPath }}"
+{{- end}}
+)
+
+{{- range .Views}}
+// {{$.TableName}}_{{.ViewName}} ...
+func (s *Service) {{$.TableName}}_{{.ViewName}}(ctx context.Context, in *pb.{{$.TableName}}_{{.ViewName}}Request) (*pb.{{$.TableName}}_{{.ViewName}}Response, error) {
+    log.Println("request: {{$.TableName}}_{{.ViewName}}")
+    req := {{$.TableNameLower}}.Translate{{$.TableName}}_{{.ViewName}}Request(in)
+    res, err := s.{{$.TableName}}Views.{{.ViewName}}(ctx, req)
+    if err != nil {
+        return nil, err
+    }
+    return {{$.TableNameLower}}.Translate{{$.TableName}}_{{.ViewName}}Response(res), nil
+}
+
+{{- end}}

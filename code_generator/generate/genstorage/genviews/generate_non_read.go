@@ -30,7 +30,7 @@ func GenerateNonReadView(storageConfig *config.StorageConfig, viewConfig *config
 	conf := getNonReadConfig(storageConfig, viewConfig)
 	tableName := generateUtils.GetTableName(storageConfig.Table, storageConfig.Common.IsPlural)
 	tpl := generateUtils.GetTemplate(fmt.Sprintf("%s/%s", paths.StorageTemplatePath, alias.GetTemplateForView[viewConfig.ViewType]))
-	outFile, err := getOutputNonReadViewFile(tableName, viewConfig.ViewType)
+	outFile, err := getOutputNonReadViewFile(tableName, viewConfig)
 	if err != nil {
 		panic(err)
 	}
@@ -61,7 +61,7 @@ func getNonReadImports(tableName string, viewType config.ViewType) []string {
 	return imports
 }
 
-func getOutputNonReadViewFile(tableName string, viewType config.ViewType) (*os.File, error) {
-	outputFilePath := fmt.Sprintf(paths.ViewsFilePath, paths.GeneratedFilePath, strings.ToLower(tableName), alias.GetFileNameForView[viewType])
+func getOutputNonReadViewFile(tableName string, viewConfig *config.View) (*os.File, error) {
+	outputFilePath := fmt.Sprintf(paths.ViewsFilePath, paths.GeneratedFilePath, strings.ToLower(tableName), strings.ToLower(viewConfig.Name))
 	return os.Create(outputFilePath)
 }

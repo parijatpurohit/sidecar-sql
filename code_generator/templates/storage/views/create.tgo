@@ -15,14 +15,14 @@ func (v *viewsImpl) {{.FuncDef.Name}}({{.FuncDef.InputVars}}) ({{.FuncDef.Return
     }
     for _, entity := range entities {
         if err := db.Save(entity).Error; err != nil {
-            return err
+            return nil, err
         }
     }
     if isTxEnabled {
         if err := db.Commit().Error; err != nil {
-            return err
+            return nil, err
         }
     }
 
-    return nil
+    return {{.FuncDef.ResponseVar}}, nil
 }

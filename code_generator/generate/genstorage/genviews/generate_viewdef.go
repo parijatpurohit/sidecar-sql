@@ -22,6 +22,7 @@ const (
 	FieldDelimiter  = ","
 	QueryFieldName  = "query"
 	EntityFieldName = "entities"
+	ResFieldName    = "res"
 
 	QueryFieldType = "%s_%sQuery"
 )
@@ -32,9 +33,10 @@ type FuncFieldConfig struct {
 }
 
 type ViewFuncConfig struct {
-	Name       string
-	InputVars  string
-	ReturnVars string
+	Name        string
+	InputVars   string
+	ReturnVars  string
+	ResponseVar string
 }
 
 type ViewDefConfig struct {

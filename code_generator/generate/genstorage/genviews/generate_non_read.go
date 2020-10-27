@@ -43,7 +43,7 @@ func GenerateNonReadView(storageConfig *config.StorageConfig, viewConfig *config
 func getNonReadConfig(storageConfig *config.StorageConfig, viewConfig *config.View) *NonReadViewConfig {
 	tableName := generateUtils.GetTableName(storageConfig.Table, storageConfig.Common.IsPlural)
 	return &NonReadViewConfig{
-		PackageName: fmt.Sprintf(ViewPackageName, tableName),
+		PackageName: strings.ToLower(fmt.Sprintf(ViewPackageName, tableName)),
 		Imports:     getNonReadImports(tableName, viewConfig.ViewType),
 		FuncDef:     getFuncDef(tableName, viewConfig),
 	}
@@ -53,7 +53,7 @@ func getNonReadImports(tableName string, viewType config.ViewType) []string {
 	var imports = []string{
 		ImportContext,
 		ImportSQL,
-		fmt.Sprintf(paths.ModelsImportPath, tableName),
+		fmt.Sprintf(paths.ModelsImportPath, strings.ToLower(tableName)),
 	}
 	if viewType == config.VIEW_TYPE_DELETE || viewType == config.VIEW_TYPE_UPDATE {
 		imports = append(imports, ImportTime, fmt.Sprintf("%sutils", paths.BaseImportPath))

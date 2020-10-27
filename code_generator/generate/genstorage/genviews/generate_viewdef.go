@@ -63,7 +63,7 @@ func GenerateDefs(storageConfig *config.StorageConfig) {
 func getDefConfig(storageConfig *config.StorageConfig) *ViewDefConfig {
 	tableName := generateUtils.GetTableName(storageConfig.Table, storageConfig.Common.IsPlural)
 	return &ViewDefConfig{
-		PackageName:   fmt.Sprintf(ViewPackageName, tableName),
+		PackageName:   strings.ToLower(fmt.Sprintf(ViewPackageName, tableName)),
 		Imports:       getDefImports(tableName),
 		InterfaceName: fmt.Sprintf(InterfaceName, tableName),
 		Views:         getViews(tableName, storageConfig),
@@ -76,7 +76,7 @@ func getDefImports(tableName string) []string {
 		ImportSync,
 		ImportGorm,
 		ImportSQLConn,
-		fmt.Sprintf(paths.ModelsImportPath, tableName),
+		fmt.Sprintf(paths.ModelsImportPath, strings.ToLower(tableName)),
 	}
 	return imports
 }

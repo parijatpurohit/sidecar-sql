@@ -21,7 +21,7 @@ func Initialize(conf *config.SQLConfig) (*gorm.DB, error) {
 		db.DB().SetMaxIdleConns(conf.MaxIdle)
 		db.DB().SetMaxOpenConns(conf.MaxOpen)
 		if err != nil {
-			err = errors.New(fmt.Sprintf("error creating connection. check database configuration and try again, err: %v", errStr))
+			err = errors.New(fmt.Sprintf("error creating connection. check database configuration and try again, err: %v", err))
 		}
 	})
 	return db, err

@@ -14,7 +14,7 @@ import (
 var sqlConfig *SQLConfig
 
 func GetSQLConfig() *SQLConfig {
-	if sqlConfig != nil {
+	if sqlConfig == nil {
 		sqlConfig = getSQLConfig()
 	}
 	return sqlConfig
@@ -23,7 +23,7 @@ func GetSQLConfig() *SQLConfig {
 func getSQLConfig() *SQLConfig {
 	conf := &SQLConfig{}
 	filePathStr := "%s/%s"
-	bytes, err := utils.GetFileBytes(fmt.Sprintf(filePathStr, paths.StorageConfigPath, paths.SQLConfigFileName))
+	bytes, err := utils.GetFileBytes(fmt.Sprintf(filePathStr, paths.ConfigBasePath, paths.SQLConfigFileName))
 	if err != nil {
 		panic(err)
 	}

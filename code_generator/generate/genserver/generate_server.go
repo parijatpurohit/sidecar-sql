@@ -2,16 +2,72 @@ package genserver
 
 import (
 	"fmt"
-	"log"
+	"os"
+	"strings"
 
 	"github.com/parijatpurohit/sidecar-sql/code_generator/config"
+	"github.com/parijatpurohit/sidecar-sql/code_generator/generate/constants/paths"
+	generateUtils "github.com/parijatpurohit/sidecar-sql/code_generator/generate/utils"
 )
 
-func Generate(config map[string]*config.StorageConfig) {
-	log.Printf("generating base handlers for all views")
-	GenerateBaseHandler(config)
-	for _, conf := range config {
-		log.Printf(fmt.Sprintf("generating table handlers for table: %s", conf.Table))
-		GenerateTableHandler(conf)
+const (
+	defaultGRPCPort   = int64(50010)
+	netImportPath     = "net"
+	grpcImportPath    = "google.golang.org/grpc"
+	serverPackageName = "server"
+)
+
+func GenerateServer(config map[string]*config.StorageConfig) {
+	conf := getServerConfig(config)
+	tpl := generateUtils.GetTemplate(fmt.Sprintf("%s/%s", paths.ServerTemplatePath, paths.ServerTemplateFile))
+	outFile, err := getOutputServerFile()
+	if err != nil {
+		panic(err)
 	}
+	err = tpl.Execute(outFile, conf)
+	if err != nil {
+		panic(err)
+	}
+}
+
+func getServerConfig(conf map[string]*config.StorageConfig) *ServerConfig {
+	var tables []*TableConfig
+	grpcPort := defaultGRPCPort
+	for _, tableConfig := range conf {
+		grpcPort = tableConfig.Common.GRPCPort
+		tableName := generateUtils.GetTableName(tableConfig.Table, tableConfig.Common.IsPlural)
+		tables = append(tables, &TableConfig{TableName: tableName, TableNameLower: strings.ToLower(tableName)})
+	}
+	return &ServerConfig{
+		PackageName: serverPackageName,
+		Imports:     getServerImports(conf),
+		Tables:      tables,
+		GrpcPort:    grpcPort,
+	}
+}
+
+func getServerImports(conf map[string]*config.StorageConfig) []*ImportConfig {
+	imports := []*ImportConfig{
+		{ImportKey: protoImportKey, ImportPath: paths.ProtoImportPath},
+		{ImportPath: netImportPath},
+		{ImportPath: logImport},
+		{ImportPath: grpcImportPath},
+		{ImportPath: fmt.Sprintf(paths.HandlerImportPath, paths.GeneratedFilePath)},
+		{ImportPath: paths.SqlConnImportPath},
+		{ImportPath: paths.ConfigImportPath},
+	}
+
+	for _, tableConfig := range conf {
+		tableName := generateUtils.GetTableName(tableConfig.Table, tableConfig.Common.IsPlural)
+		viewFilePath := fmt.Sprintf(paths.ViewsImportPath, strings.ToLower(tableName))
+		importKey := fmt.Sprintf("%sviews", strings.ToLower(tableName))
+		imports = append(imports, &ImportConfig{ImportKey: importKey, ImportPath: viewFilePath})
+	}
+
+	return imports
+}
+
+func getOutputServerFile() (*os.File, error) {
+	outputFilePath := fmt.Sprintf(paths.ServerFilePath, paths.GeneratedFilePath)
+	return os.Create(outputFilePath)
 }

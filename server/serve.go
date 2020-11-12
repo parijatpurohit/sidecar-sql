@@ -45,6 +45,7 @@ func Serve() {
 
 func initializeDB() {
 	sqlConfig := config.GetSQLConfig()
+	log.Println(sqlConfig, "SQL CONFIG")
 	_, err := sqlconn.Initialize(sqlConfig)
 	if err != nil {
 		log.Fatalf("error initialising storage: %v", err)

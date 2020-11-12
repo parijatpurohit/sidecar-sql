@@ -1,25 +1,17 @@
-// Package main implements a server for Greeter service.
-package main
+// Package {{.PackageName}} implements a server for the service.
+package {{.PackageName}}
 
 import (
-	"fmt"
-	"log"
-	"net"
-
-	"github.com/parijatpurohit/sidecar-sql/lib/sqlconn"
-
-	"github.com/parijatpurohit/sidecar-sql/code_generator/config"
-	"github.com/parijatpurohit/sidecar-sql/server/handlers"
-	user_views "github.com/parijatpurohit/sidecar-sql/storage/user/views"
-	pb "github.com/parijatpurohit/sidecar-sql/zz_generated/go/protogen"
-	"google.golang.org/grpc"
+{{- range .Imports}}
+    {{.ImportKey}} "{{ .ImportPath }}"
+{{- end}}
 )
 
 const (
-	port = ":{{ .grpcPort }}"
+	port = ":{{ .GrpcPort }}"
 )
 
-func main() {
+func Serve() {
 	lis, err := net.Listen("tcp", port)
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
@@ -28,8 +20,15 @@ func main() {
 
 	initializeDB()
 
-	userViews := user_views.GetViews()
-	service := &handlers.Service{UserViews: userViews}
+	{{- range .Tables}}
+	{{.TableNameLower}}Views := {{.TableNameLower}}views.GetViews()
+	{{- end}}
+
+	service := &handlers.Service{
+	{{- range .Tables}}
+		{{.TableName}}Views: {{.TableNameLower}}Views,
+	{{- end}}
+	}
 	pb.RegisterStorageServiceServer(s, service)
 	log.Printf("starting server on port: %v", port)
 	if err := s.Serve(lis); err != nil {

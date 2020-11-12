@@ -9,15 +9,19 @@ const (
 	ProtoRelativePath      = "/go/protogen"
 	TranslatorRelativePath = "/translator/%s"
 	ServerRelativePath     = OutputGoPath + "/server"
-	HandersRelativePath    = ServerRelativePath + HandlersOutputPath
+	HandlersRelativePath   = ServerRelativePath + HandlersOutputPath
 	ModelsImportPath       = BaseImportPath + GeneratedFilePath + ModelsRelativePath
 	ViewsImportPath        = BaseImportPath + GeneratedFilePath + ViewsRelativePath
 	ProtoImportPath        = BaseImportPath + GeneratedFilePath + ProtoRelativePath
+	HandlerImportPath      = BaseImportPath + HandlersRelativePath
 	TranslatorImportPath   = BaseImportPath + OutputGoPath + TranslatorRelativePath
 
 	UtilsRelativePath   = "utils"
 	TimestampImportPath = "github.com/golang/protobuf/ptypes/timestamp"
 	PTypesImportPath    = "github.com/golang/protobuf/ptypes"
+	SqlConnImportPath   = BaseImportPath + "lib/sqlconn"
+	ConfigImportPath    = BaseImportPath + "code_generator/config"
+
 	// file paths
 	EntityProtoPath = "%s/pb/storage/%s_schema.proto"
 	ServerProtoPath = "%s/pb/storage/server.proto"
@@ -29,8 +33,9 @@ const (
 	BaseTranslatorFilePath = OutputGoPath + TranslatorRelativePath + "/base.go"
 	ViewTranslatorFilePath = OutputGoPath + TranslatorRelativePath + "/%s.go"
 
-	BaseHanderFilePath  = HandersRelativePath + "/handlers.go"
-	TableHanderFilePath = HandersRelativePath + "/%s_handlers.go"
+	BaseHanderFilePath  = HandlersRelativePath + "/handlers.go"
+	TableHanderFilePath = HandlersRelativePath + "/%s_handlers.go"
+	ServerFilePath      = ServerRelativePath + "/serve.go"
 
 	ViewDefsFileName = "views"
 
@@ -38,13 +43,16 @@ const (
 	StorageTemplatePath    = "code_generator/templates/storage"
 	ServerTemplatePath     = "code_generator/templates/server"
 	TranslatorTemplatePath = "code_generator/templates/translator"
-	StorageConfigPath      = "configuration/storage"
-	GeneratedFilePath      = "zz_generated"
-	StorageOutputPath      = "go/storage"
-	TranslatorOutputPath   = "go/translator"
-	ServerOutputPath       = "go/server"
-	ModelsOutputPath       = "/models"
-	ViewsOutputPath        = "/views"
+
+	ConfigBasePath    = "configuration"
+	StorageConfigPath = "configuration/storage"
+
+	GeneratedFilePath    = "zz_generated"
+	StorageOutputPath    = "go/storage"
+	TranslatorOutputPath = "go/translator"
+	ServerOutputPath     = "go/server"
+	ModelsOutputPath     = "/models"
+	ViewsOutputPath      = "/views"
 
 	HandlersOutputPath = "/handlers"
 
@@ -55,7 +63,7 @@ const (
 
 	BaseHandlerTemplateFile  = "handlers/base_handler.tgo"
 	TableHandlerTemplateFile = "handlers/table_handler.tgo"
-	ServerTemplateFile       = "server.tgo"
+	ServerTemplateFile       = "serve.tgo"
 
 	BaseTranslatorTemplateFile = "basetranslator.tgo"
 	ViewTranslatorTemplateFile = "viewtranslator.tgo"

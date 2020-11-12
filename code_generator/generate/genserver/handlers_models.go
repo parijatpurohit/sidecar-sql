@@ -11,7 +11,8 @@ type ImportConfig struct {
 	ImportPath string
 }
 type TableConfig struct {
-	TableName string
+	TableName      string
+	TableNameLower string
 }
 
 type ViewConfig struct {
@@ -24,4 +25,11 @@ type TableHandlerConfig struct {
 	TableName      string
 	TableNameLower string
 	Views          []*ViewConfig
+}
+
+type ServerConfig struct {
+	PackageName string
+	Imports     []*ImportConfig
+	Tables      []*TableConfig
+	GrpcPort    int64
 }

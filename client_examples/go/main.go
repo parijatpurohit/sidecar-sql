@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	address = "localhost:50051"
+	address = "localhost:50010"
 )
 
 func main() {
@@ -25,7 +25,7 @@ func main() {
 	c := pb.NewStorageServiceClient(conn)
 
 	name := "random_"
-	createRes, err := c.User_CreateUser(context.Background(), &pb.User_CreateUserRequest{User: &pb.User{Name: name, Roll: 1234}})
+	createRes, err := c.User_CreateUser(context.Background(), &pb.User_CreateUserRequest{User: &pb.User{UUID: "12345", Name: name, Roll: 1234}})
 	if err != nil {
 		fmt.Println("err here\n--------", err)
 	}
@@ -39,18 +39,23 @@ func main() {
 	//	fmt.Println("err here\n--------", err)
 	//}
 
-	//updateRes, err := c.User_UpdateUsers(context.Background(), &pb.User_UpdateUsersRequest{Users: findRes.Users})
-	//if err != nil {
-	//	fmt.Println("err here\n--------", err)
-	//}
-	//
-	//fmt.Println(updateRes)
-	//
-	//deleteRes, err := c.User_DeleteUsers(context.Background(), &pb.User_DeleteUsersRequest{Users: updateRes.Users})
-	//if err != nil {
-	//	fmt.Println("err here\n--------", err)
-	//}
-	//
-	//fmt.Println(deleteRes)
+	updateRes, err := c.User_UpdateUsers(context.Background(), &pb.User_UpdateUsersRequest{Users: []*pb.User{
+		{
+			UUID: "12345",
+			Name: "UpdateName",
+		},
+	}})
+	if err != nil {
+		fmt.Println("err here\n--------", err)
+	}
+
+	fmt.Println(updateRes)
+
+	deleteRes, err := c.User_DeleteUsers(context.Background(), &pb.User_DeleteUsersRequest{Users: updateRes.Users})
+	if err != nil {
+		fmt.Println("err here\n--------", err)
+	}
+
+	fmt.Println(deleteRes)
 
 }

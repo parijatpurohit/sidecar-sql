@@ -38,20 +38,18 @@ func main() {
 	//if err != nil {
 	//	fmt.Println("err here\n--------", err)
 	//}
-
-	updateRes, err := c.User_UpdateUsers(context.Background(), &pb.User_UpdateUsersRequest{Users: []*pb.User{
-		{
-			UUID: "12345",
-			Name: "UpdateName",
-		},
-	}})
+	user := &pb.User{
+		UUID: "12345",
+		Name: "UpdateName2",
+	}
+	updateRes, err := c.User_UpdateUsers(context.Background(), &pb.User_UpdateUsersRequest{Users: []*pb.User{user}})
 	if err != nil {
 		fmt.Println("err here\n--------", err)
 	}
 
 	fmt.Println(updateRes)
 
-	deleteRes, err := c.User_DeleteUsers(context.Background(), &pb.User_DeleteUsersRequest{Users: updateRes.Users})
+	deleteRes, err := c.User_DeleteUsers(context.Background(), &pb.User_DeleteUsersRequest{Users: []*pb.User{user}})
 	if err != nil {
 		fmt.Println("err here\n--------", err)
 	}

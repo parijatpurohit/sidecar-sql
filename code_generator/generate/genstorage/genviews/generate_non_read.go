@@ -18,6 +18,7 @@ const (
 	ImportSQL       = "database/sql"
 	ImportContext   = "context"
 	ImportTime      = "time"
+	ImportError     = "errors"
 )
 
 type NonReadViewConfig struct {
@@ -54,6 +55,9 @@ func getNonReadImports(tableName string, viewType config.ViewType) []string {
 		ImportContext,
 		ImportSQL,
 		fmt.Sprintf(paths.ModelsImportPath, strings.ToLower(tableName)),
+	}
+	if viewType == config.VIEW_TYPE_UPDATE {
+		imports = append(imports, ImportError)
 	}
 	if viewType == config.VIEW_TYPE_DELETE || viewType == config.VIEW_TYPE_UPDATE {
 		imports = append(imports, ImportTime, fmt.Sprintf("%sutils", paths.BaseImportPath))

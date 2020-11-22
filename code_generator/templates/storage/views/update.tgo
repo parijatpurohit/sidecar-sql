@@ -15,8 +15,15 @@ func (v *viewsImpl) {{.FuncDef.Name}}({{.FuncDef.InputVars}}) ({{.FuncDef.Return
     }
     for _, entity := range entities {
         entity.UpdatedAt = utils.GetTimePtr(time.Now())
-        entity.DeletedAt = utils.GetTimePtr(time.Now())
-        db.Model(&entity).UpdateColumns(entity)
+        rowAffected := db.Model(&entity).UpdateColumns(entity).RowsAffected
+        if rowAffected == 0 {
+            if isTxEnabled {
+                if err := db.Rollback().Error; err != nil {
+                    return nil, err
+                }
+            }
+            return nil, errors.New("error while updating row. No rows affected")
+        }
     }
     if isTxEnabled {
         if err := db.Commit().Error; err != nil {

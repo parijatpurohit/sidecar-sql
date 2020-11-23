@@ -7,6 +7,14 @@ import (
 )
 
 {{if .IsRead}}
+func Translate{{.TableName}}_{{.ViewName}}Request(in *pb.{{.TableName}}_{{.ViewName}}Request) *{{.TableNameLower}}_models.{{.TableName}}_{{.ViewName}}Query {
+    return &{{.TableNameLower}}_models.{{.TableName}}_{{.ViewName}}Query{
+    {{- range .QueryFields}}
+        {{.ViewFieldName}}:  in.Query.{{.ProtoFieldName}},
+    {{- end}}
+    }
+}
+
 {{else}}
 func Translate{{.TableName}}_{{.ViewName}}Request(in *pb.{{.TableName}}_{{.ViewName}}Request) []*{{.TableNameLower}}_models.{{.TableName}} {
     {{- if .MultiInput}}

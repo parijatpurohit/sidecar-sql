@@ -21,6 +21,7 @@ type ViewTranslatorConfig struct {
 	MultiInput     bool
 	MultiReturn    bool
 	Imports        []*ImportConfig
+	QueryFields    []*ViewFieldConfig
 }
 
 type ViewFieldConfig struct {

@@ -38,11 +38,25 @@ func getViewTranslatorConfig(conf *config.StorageConfig, viewConfig *config.View
 		ReturnType:     viewConfig.Config.ReturnType,
 		MultiInput:     viewConfig.Config.MultiInput,
 		MultiReturn:    viewConfig.Config.MultiReturn,
+		QueryFields: 	getQueryFields(viewConfig),
 	}
 	viewTranslatorConfig.Imports = getViewTranslatorImports(conf)
 	return viewTranslatorConfig
 }
 
+func getQueryFields(viewConfig *config.View) []*ViewFieldConfig {
+	var res []*ViewFieldConfig
+	if viewConfig.Query == nil {
+		return res
+	}
+	for _,field := range viewConfig.Query.Fields {
+		res = append(res, &ViewFieldConfig{
+			ProtoFieldName: field.FieldName,
+			ViewFieldName:  field.FieldName,
+		})
+	}
+	return res
+}
 func getViewTranslatorImports(config *config.StorageConfig) []*ImportConfig {
 	tableNameLower := strings.ToLower(generateUtils.GetTableName(config.Table, config.Common.IsPlural))
 	imports := []*ImportConfig{

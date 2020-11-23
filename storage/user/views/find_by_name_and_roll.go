@@ -39,5 +39,4 @@ func (v *viewsImpl) FindByRollAndName(query *models.User_FindByRollAndNameQuery)
 
 func queryFindByRollAndName(obj *models.User_FindByRollAndNameQuery) (string, []interface{}) {
 	return "roll=? AND name IN (?)", []interface{}{obj.Roll, obj.Name}
-
 }

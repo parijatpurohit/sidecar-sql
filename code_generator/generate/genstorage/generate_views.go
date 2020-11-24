@@ -9,7 +9,7 @@ import (
 
 var viewGenerators = map[config.ViewType]func(*config.StorageConfig, *config.View){
 	config.VIEW_TYPE_CREATE: genviews.GenerateNonReadView,
-	//config.VIEW_TYPE_READ:   genviews.GenerateCreateView,
+	config.VIEW_TYPE_READ:   genviews.GenerateReadView,
 	config.VIEW_TYPE_UPDATE: genviews.GenerateNonReadView,
 	config.VIEW_TYPE_DELETE: genviews.GenerateNonReadView,
 }

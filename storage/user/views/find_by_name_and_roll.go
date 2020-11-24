@@ -2,8 +2,6 @@ package user_views
 
 import (
 	"fmt"
-
-	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"github.com/parijatpurohit/sidecar-sql/storage/user/models"
 )
 

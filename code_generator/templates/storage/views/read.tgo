@@ -1,0 +1,43 @@
+package {{ .PackageName }}
+
+import (
+{{- range .Imports}}
+    "{{ . }}"
+{{- end}}
+)
+
+// {{.ViewName}} finds an array of objects
+func (v *viewsImpl) {{.ViewName}}(ctx context.Context, query *{{.TableNameLower}}_models.{{.TableName}}_{{.ViewName}}Query) ([]*{{.TableNameLower}}_models.{{.TableName}}, error) {
+	db := v.db
+	var entity {{.TableNameLower}}_models.{{.TableName}}
+
+	queryStr, args := query{{.ViewName}}(query)
+	rows, err := db.Model(&entity).Where(queryStr, args...).Rows()
+	if err != nil {
+		return nil, err
+	}
+
+	var res []*{{.TableNameLower}}_models.{{.TableName}}
+	for rows.Next() {
+		var temp {{.TableNameLower}}_models.{{.TableName}}
+		err := db.ScanRows(rows, &temp)
+		if err != nil {
+			return nil, err
+		}
+		res = append(res, &temp)
+	}
+	err = rows.Close()
+	if err != nil {
+        return nil, err
+	}
+
+	return res, nil
+}
+
+func query{{.ViewName}}(obj *{{.TableNameLower}}_models.{{.TableName}}_{{.ViewName}}Query) (string, []interface{}) {
+	return "{{.Query}}", []interface{}{
+    {{- range .QueryFields}}
+        obj.{{.}},
+    {{- end}}
+	}
+}

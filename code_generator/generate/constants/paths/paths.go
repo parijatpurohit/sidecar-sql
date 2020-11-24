@@ -73,6 +73,7 @@ const (
 	CreateViewTemplateFile  = "views/create.tgo"
 	UpdateViewTemplateFile  = "views/update.tgo"
 	DeleteViewTemplateFile  = "views/delete.tgo"
+	ReadViewTemplateFile    = "views/read.tgo"
 	ViewDefTemplateFile     = "views/viewsdef.tgo"
 	CommonConfigFileName    = "common.yaml"
 	SQLConfigFileName       = "sql/sql.yaml"

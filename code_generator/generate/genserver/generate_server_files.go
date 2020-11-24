@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/parijatpurohit/sidecar-sql/code_generator/config"
+	"github.com/parijatpurohit/sidecar-sql/lib/config"
 )
 
 func Generate(config map[string]*config.StorageConfig) {

@@ -7,9 +7,9 @@ import (
 
 	"github.com/parijatpurohit/sidecar-sql/code_generator/utils"
 
-	"github.com/parijatpurohit/sidecar-sql/code_generator/config"
 	"github.com/parijatpurohit/sidecar-sql/code_generator/generate/constants/paths"
 	generateUtils "github.com/parijatpurohit/sidecar-sql/code_generator/generate/utils"
+	"github.com/parijatpurohit/sidecar-sql/lib/config"
 )
 
 const (
@@ -70,7 +70,7 @@ func getBaseTranslatorImports(config *config.StorageConfig) []*ImportConfig {
 	imports := []*ImportConfig{
 		{ImportPath: paths.PTypesImportPath},
 		{ImportPath: paths.TimestampImportPath},
-		{ImportPath: paths.BaseImportPath + paths.UtilsRelativePath},
+		{ImportPath: paths.BaseImportPath + paths.DataUtilsRelativePath},
 		{ImportKey: protoImportKey, ImportPath: paths.ProtoImportPath},
 		{ImportKey: fmt.Sprintf(modelsImportKey, tableNameLower), ImportPath: fmt.Sprintf(paths.ModelsImportPath, tableNameLower)},
 	}

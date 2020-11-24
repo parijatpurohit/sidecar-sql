@@ -1,6 +1,6 @@
 package gentranslator
 
-import "github.com/parijatpurohit/sidecar-sql/code_generator/config"
+import "github.com/parijatpurohit/sidecar-sql/lib/config"
 
 type BaseTranslatorConfig struct {
 	PackageName   string

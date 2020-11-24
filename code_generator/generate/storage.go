@@ -10,8 +10,8 @@ import (
 
 	"github.com/parijatpurohit/sidecar-sql/code_generator/generate/genstorage"
 
-	"github.com/parijatpurohit/sidecar-sql/code_generator/config"
 	"github.com/parijatpurohit/sidecar-sql/code_generator/generate/constants/paths"
+	"github.com/parijatpurohit/sidecar-sql/lib/config"
 )
 
 func Storage() {

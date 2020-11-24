@@ -7,8 +7,8 @@ import (
 
 	"github.com/parijatpurohit/sidecar-sql/code_generator/generate/constants/paths"
 
-	"github.com/parijatpurohit/sidecar-sql/code_generator/config"
 	generateUtils "github.com/parijatpurohit/sidecar-sql/code_generator/generate/utils"
+	"github.com/parijatpurohit/sidecar-sql/lib/config"
 )
 
 const (

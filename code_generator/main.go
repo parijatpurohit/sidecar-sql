@@ -4,7 +4,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/parijatpurohit/sidecar-sql/code_generator/config"
+	"github.com/parijatpurohit/sidecar-sql/lib/config"
 
 	"github.com/parijatpurohit/sidecar-sql/code_generator/generate"
 	"github.com/parijatpurohit/sidecar-sql/code_generator/utils"

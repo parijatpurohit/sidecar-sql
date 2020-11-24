@@ -3,7 +3,7 @@ package generateUtils
 import (
 	"strings"
 
-	"github.com/parijatpurohit/sidecar-sql/code_generator/config"
+	"github.com/parijatpurohit/sidecar-sql/lib/config"
 )
 
 func GetTableName(tableName string, isPlural bool) string {

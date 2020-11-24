@@ -34,9 +34,9 @@ func Translate{{.ViewName}}Proto({{.ViewNameLower}} *pb.{{.ViewName}}) *{{.ViewN
         {{- range .ViewFields}}
         {{ .ViewFieldName}}: {{$.ViewNameLower}}.{{.ProtoFieldName}},
         {{- end}}
-        CreatedAt: utils.GetTimestamp({{.ViewNameLower}}.CreatedAt),
-        UpdatedAt: utils.GetTimestamp({{.ViewNameLower}}.UpdatedAt),
-        DeletedAt: utils.GetTimestamp({{.ViewNameLower}}.DeletedAt),
+        CreatedAt: data.GetTimestamp({{.ViewNameLower}}.CreatedAt),
+        UpdatedAt: data.GetTimestamp({{.ViewNameLower}}.UpdatedAt),
+        DeletedAt: data.GetTimestamp({{.ViewNameLower}}.DeletedAt),
     }
 }
 

@@ -3,8 +3,8 @@ package alias
 import (
 	"strings"
 
-	"github.com/parijatpurohit/sidecar-sql/code_generator/config"
 	"github.com/parijatpurohit/sidecar-sql/code_generator/generate/constants/paths"
+	"github.com/parijatpurohit/sidecar-sql/lib/config"
 )
 
 var GetFileNameForView = map[config.ViewType]string{

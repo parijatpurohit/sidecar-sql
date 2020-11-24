@@ -5,9 +5,9 @@ import (
 	"os"
 	"strings"
 
-	"github.com/parijatpurohit/sidecar-sql/code_generator/config"
 	"github.com/parijatpurohit/sidecar-sql/code_generator/generate/constants/paths"
 	generateUtils "github.com/parijatpurohit/sidecar-sql/code_generator/generate/utils"
+	"github.com/parijatpurohit/sidecar-sql/lib/config"
 )
 
 func GenerateViewTranslator(config *config.StorageConfig) {
@@ -38,7 +38,7 @@ func getViewTranslatorConfig(conf *config.StorageConfig, viewConfig *config.View
 		ReturnType:     viewConfig.Config.ReturnType,
 		MultiInput:     viewConfig.Config.MultiInput,
 		MultiReturn:    viewConfig.Config.MultiReturn,
-		QueryFields: 	getQueryFields(viewConfig),
+		QueryFields:    getQueryFields(viewConfig),
 	}
 	viewTranslatorConfig.Imports = getViewTranslatorImports(conf)
 	return viewTranslatorConfig
@@ -49,7 +49,7 @@ func getQueryFields(viewConfig *config.View) []*ViewFieldConfig {
 	if viewConfig.Query == nil {
 		return res
 	}
-	for _,field := range viewConfig.Query.Fields {
+	for _, field := range viewConfig.Query.Fields {
 		res = append(res, &ViewFieldConfig{
 			ProtoFieldName: field.FieldName,
 			ViewFieldName:  field.FieldName,

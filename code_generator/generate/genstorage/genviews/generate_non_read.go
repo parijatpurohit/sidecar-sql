@@ -9,8 +9,8 @@ import (
 
 	"github.com/parijatpurohit/sidecar-sql/code_generator/generate/constants/paths"
 
-	"github.com/parijatpurohit/sidecar-sql/code_generator/config"
 	generateUtils "github.com/parijatpurohit/sidecar-sql/code_generator/generate/utils"
+	"github.com/parijatpurohit/sidecar-sql/lib/config"
 )
 
 const (
@@ -60,7 +60,7 @@ func getNonReadImports(tableName string, viewType config.ViewType) []string {
 		imports = append(imports, ImportError)
 	}
 	if viewType == config.VIEW_TYPE_DELETE || viewType == config.VIEW_TYPE_UPDATE {
-		imports = append(imports, ImportTime, fmt.Sprintf("%sutils", paths.BaseImportPath))
+		imports = append(imports, ImportTime, fmt.Sprintf("%s%s", paths.BaseImportPath, paths.DataUtilsRelativePath))
 	}
 	return imports
 }

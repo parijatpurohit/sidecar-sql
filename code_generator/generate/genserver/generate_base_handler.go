@@ -5,9 +5,9 @@ import (
 	"os"
 	"strings"
 
-	"github.com/parijatpurohit/sidecar-sql/code_generator/config"
 	"github.com/parijatpurohit/sidecar-sql/code_generator/generate/constants/paths"
 	generateUtils "github.com/parijatpurohit/sidecar-sql/code_generator/generate/utils"
+	"github.com/parijatpurohit/sidecar-sql/lib/config"
 )
 
 const (

@@ -1,9 +1,10 @@
-package utils
+package data
 
 import (
+	"time"
+
 	"github.com/golang/protobuf/ptypes"
 	"github.com/golang/protobuf/ptypes/timestamp"
-	"time"
 )
 
 func GetTimestamp(ts *timestamp.Timestamp) *time.Time {

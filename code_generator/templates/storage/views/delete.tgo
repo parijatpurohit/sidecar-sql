@@ -14,7 +14,7 @@ func (v *viewsImpl) {{.FuncDef.Name}}({{.FuncDef.InputVars}}) ({{.FuncDef.Return
         db = db.BeginTx(ctx, &sql.TxOptions{Isolation: sql.LevelDefault})
     }
     for _, entity := range entities {
-        entity.UpdatedAt = utils.GetTimePtr(time.Now())
+        entity.UpdatedAt = data.GetTimePtr(time.Now())
         db.Model(&entity).UpdateColumns(entity)
     }
     if isTxEnabled {

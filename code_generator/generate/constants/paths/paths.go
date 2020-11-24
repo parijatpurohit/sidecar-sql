@@ -16,11 +16,13 @@ const (
 	HandlerImportPath      = BaseImportPath + HandlersRelativePath
 	TranslatorImportPath   = BaseImportPath + OutputGoPath + TranslatorRelativePath
 
-	UtilsRelativePath   = "utils"
-	TimestampImportPath = "github.com/golang/protobuf/ptypes/timestamp"
-	PTypesImportPath    = "github.com/golang/protobuf/ptypes"
-	SqlConnImportPath   = BaseImportPath + "lib/sqlconn"
-	ConfigImportPath    = BaseImportPath + "code_generator/config"
+	DataUtilsRelativePath   = "lib/data"
+	ConfigUtilsRelativePath = "lib/config"
+	SqlConnRelativePath     = "lib/sqlconn"
+	TimestampImportPath     = "github.com/golang/protobuf/ptypes/timestamp"
+	PTypesImportPath        = "github.com/golang/protobuf/ptypes"
+	SqlConnImportPath       = BaseImportPath + SqlConnRelativePath
+	ConfigImportPath        = BaseImportPath + ConfigUtilsRelativePath
 
 	// file paths
 	EntityProtoPath = "%s/pb/storage/%s_schema.proto"

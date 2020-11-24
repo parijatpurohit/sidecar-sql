@@ -7,7 +7,7 @@ import (
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
-	"github.com/parijatpurohit/sidecar-sql/code_generator/config"
+	"github.com/parijatpurohit/sidecar-sql/lib/config"
 )
 
 var (

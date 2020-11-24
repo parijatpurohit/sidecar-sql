@@ -3,8 +3,8 @@ package genstorage
 import (
 	"log"
 
-	"github.com/parijatpurohit/sidecar-sql/code_generator/config"
 	"github.com/parijatpurohit/sidecar-sql/code_generator/generate/genstorage/genviews"
+	"github.com/parijatpurohit/sidecar-sql/lib/config"
 )
 
 var viewGenerators = map[config.ViewType]func(*config.StorageConfig, *config.View){

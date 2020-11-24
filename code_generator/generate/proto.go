@@ -3,8 +3,8 @@ package generate
 import (
 	"log"
 
-	"github.com/parijatpurohit/sidecar-sql/code_generator/config"
 	"github.com/parijatpurohit/sidecar-sql/code_generator/generate/genproto"
+	"github.com/parijatpurohit/sidecar-sql/lib/config"
 )
 
 func Proto() {

@@ -25,31 +25,29 @@ func main() {
 	c := pb.NewStorageServiceClient(conn)
 
 	name := "random_"
-	createRes, err := c.User_CreateUser(context.Background(), &pb.User_CreateUserRequest{User: &pb.User{UUID: "12345", Name: name, Roll: 1234}})
+	createRes, err := c.User_CreateUser(context.Background(), &pb.User_CreateUserRequest{User: &pb.User{UUID: "1234567", Name: name, Roll: 1234}})
 	if err != nil {
 		fmt.Println("err here\n--------", err)
 	}
 
 	fmt.Println(createRes)
 
-	//findRes, err := c.User_FindByRollAndName(context.Background(), &pb.User_FindByRollAndNameRequest{
-	//	Query: &pb.User_FindByRollAndName_Query{Name: []string{name, "blah"}, Roll: 1234},
-	//})
-	//if err != nil {
-	//	fmt.Println("err here\n--------", err)
-	//}
-	user := &pb.User{
-		UUID: "12345",
-		Name: "UpdateName2",
+	findRes, err := c.User_FindByRollAndName(context.Background(), &pb.User_FindByRollAndNameRequest{
+		Query: &pb.User_FindByRollAndName_Query{Name: name, Roll: 1234},
+	})
+	if err != nil {
+		fmt.Println("err here\n--------", err)
 	}
-	updateRes, err := c.User_UpdateUsers(context.Background(), &pb.User_UpdateUsersRequest{Users: []*pb.User{user}})
+	fmt.Println("find", findRes)
+
+	updateRes, err := c.User_UpdateUsers(context.Background(), &pb.User_UpdateUsersRequest{Users: findRes.Users})
 	if err != nil {
 		fmt.Println("err here\n--------", err)
 	}
 
 	fmt.Println(updateRes)
 
-	deleteRes, err := c.User_DeleteUsers(context.Background(), &pb.User_DeleteUsersRequest{Users: []*pb.User{user}})
+	deleteRes, err := c.User_DeleteUsers(context.Background(), &pb.User_DeleteUsersRequest{Users: findRes.Users})
 	if err != nil {
 		fmt.Println("err here\n--------", err)
 	}

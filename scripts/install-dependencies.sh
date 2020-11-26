@@ -19,7 +19,8 @@ if [[ $? != 0 ]] ; then
 fi
 
 echo "current path is: "
-echo pwd
+pwd
+echo $GOPATH
 brew install protobuf
 brew install protoc-gen-go
 

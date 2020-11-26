@@ -1,2 +1,6 @@
 language: go
+addons:
+  apt:
+    packages:
+      - protobuf-compiler
 install: ./scripts/install-dependencies.sh

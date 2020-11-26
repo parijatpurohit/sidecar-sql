@@ -1,14 +1,5 @@
 #!/bin/bash
 
-which -s go
-if [[ $? != 0 ]] ; then
-  echo "go not installed. installing now"
-  brew install go
-  export GOPATH=~/go
-  export PATH=$PATH:$GOPATH
-fi
-
-echo "current path is: "
 pwd
 echo $GOPATH
 

@@ -1,3 +1,2 @@
-os: osx
 language: go
 install: ./scripts/install-dependencies.sh

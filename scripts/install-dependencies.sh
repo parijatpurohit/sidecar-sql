@@ -21,9 +21,10 @@ fi
 echo "current path is: "
 pwd
 echo $GOPATH
-brew install protobuf
-brew install protoc-gen-go
 
-go get gopkg.in/yaml.v2 github.com/go-sql-driver/mysql github.com/jinzhu/gorm google.golang.org/grpc golang.org/x/net github.com/golang/protobuf
+go get -u github.com/golang/protobuf/{proto,protoc-gen-go}
+go get -u gopkg.in/yaml.v2 github.com/go-sql-driver/mysql github.com/jinzhu/gorm google.golang.org/grpc golang.org/x/net github.com/golang/protobuf
+
+export PATH=$PATH:/$GOPATH/bin
 
 ./generate.sh go

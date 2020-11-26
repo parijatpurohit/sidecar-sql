@@ -18,5 +18,11 @@ if [[ $? != 0 ]] ; then
   export PATH=$PATH:$GOPATH
 fi
 
-mkdir -p $GOPATH/src/github.com/parijatpurohit
-cd $GOPATH/src/github.com/parijatpurohit
+echo "current path is: "
+echo pwd
+brew install protobuf
+brew install protoc-gen-go
+
+go get gopkg.in/yaml.v2 github.com/go-sql-driver/mysql github.com/jinzhu/gorm google.golang.org/grpc golang.org/x/net github.com/golang/protobuf
+
+./generate.sh go

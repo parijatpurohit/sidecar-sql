@@ -1,0 +1,64 @@
+table: UserDocs
+fields:
+  - fieldName: UUID
+    fieldType: string
+    primaryKey: true
+  - fieldName: UserID
+    fieldType: string
+    notNull: true
+  - fieldName: OfficialID
+    fieldType: string
+    notNull: true
+  - fieldName: OfficialIDType
+    fieldType: string
+    notNull: true
+  - fieldName: IssuingCountryID
+    fieldType: string
+    notNull: true
+  - fieldName: CreatedAt
+    fieldType: timestamp
+  - fieldName: UpdatedAt
+    fieldType: timestamp
+  - fieldName: DeletedAt
+    fieldType: timestamp
+views:
+  - name: FindByUserDocID
+    type: READ
+    config:
+      multiReturn: true
+      returnType: data
+    query:
+      fields:
+        - fieldName: UUID
+          searchType: CONTAINS
+#views:
+#  - name: FindByRollAndName
+#    type: READ
+#    config:
+#      multiReturn: true
+#      returnType: data
+#    query:
+#      fields:
+#        - fieldName: Roll
+#          searchType: EQUALS
+#        - fieldName: Name
+#          searchType: EQUALS
+#
+#  - name: CreateUser
+#    type: CREATE
+#    config:
+#      returnType: primaryKey
+#      multiReturn: true
+#
+#  - name: UpdateUsers
+#    type: UPDATE
+#    config:
+#      multiInput: true
+#      returnType: data
+#      multiReturn: true
+#
+#  - name: DeleteUsers
+#    type: DELETE
+#    config:
+#      multiInput: true
+#      returnType: rowCount

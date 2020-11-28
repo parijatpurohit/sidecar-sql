@@ -12,7 +12,8 @@ import (
 const viewNameFormat = "%s_%s"
 
 type ServerProtoConfig struct {
-	Views []string
+	Views         []string
+	GoPackagePath string
 }
 
 func GenerateServerProto(storageConfigs map[string]*config.StorageConfig) {
@@ -30,7 +31,9 @@ func GenerateServerProto(storageConfigs map[string]*config.StorageConfig) {
 }
 
 func getServerProtoConfig(storageConfigs map[string]*config.StorageConfig) *ServerProtoConfig {
-	serverProtoConfig := &ServerProtoConfig{}
+	serverProtoConfig := &ServerProtoConfig{
+		GoPackagePath: paths.GoPackagePath,
+	}
 	for _, storageConfig := range storageConfigs {
 		for _, view := range storageConfig.Views {
 			tableName := generateUtils.GetTableName(storageConfig.Table, storageConfig.Common.IsPlural)

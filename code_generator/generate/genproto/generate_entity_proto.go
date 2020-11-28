@@ -23,6 +23,7 @@ type EntityProtoConfig struct {
 	Fields        []*ProtoFieldConfig
 	PKConfig      *PKConfig
 	Imports       []string
+	GoPackagePath string
 }
 
 type ProtoFieldConfig struct {
@@ -65,6 +66,7 @@ func getEntityConfig(storageConfig *config.StorageConfig) *EntityProtoConfig {
 		Fields:        getProtoFields(storageConfig),
 		TableName:     tableName,
 		PKConfig:      getPrimaryKeyConfig(tableName, primaryKeys),
+		GoPackagePath: paths.GoPackagePath,
 	}
 	for _, field := range storageConfig.Fields {
 		if field.FieldType == config.FIELD_TYPE_TIMESTAMP {

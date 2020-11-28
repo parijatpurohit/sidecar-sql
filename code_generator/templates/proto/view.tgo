@@ -5,7 +5,7 @@ package storage;
 import "{{.}}";
 {{- end }}
 
-option go_package = "pb";
+option go_package = "{{ .GoPackagePath }}";
 
 message {{ .TableName }}_{{ .ViewName }}Request {
     {{ if .RequestConfig.Field.IsRepeated }}repeated{{end}} {{ .RequestConfig.Field.FieldType }} {{ .RequestConfig.Field.FieldName }} = {{ .RequestConfig.Field.FieldIndex }};

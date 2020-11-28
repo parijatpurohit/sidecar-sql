@@ -4,7 +4,7 @@ syntax = "proto3";
 import "{{ . }}";
 {{ end }}
 package storage;
-option go_package = "pb";
+option go_package = "{{ .GoPackagePath }}";
 
 message {{ .TableName }} {
     {{ range .Fields }}

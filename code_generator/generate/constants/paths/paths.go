@@ -4,6 +4,7 @@ const (
 	OutputGoPath = "%s/go"
 
 	BaseImportPath         = "github.com/parijatpurohit/sidecar-sql/"
+	GoPackagePath          = GeneratedFilePath + ProtoRelativePath
 	ModelsRelativePath     = "/go/storage/%s/models"
 	ViewsRelativePath      = "/go/storage/%s/views"
 	ProtoRelativePath      = "/go/protogen"

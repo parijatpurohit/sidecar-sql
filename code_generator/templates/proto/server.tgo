@@ -4,7 +4,7 @@ package storage;
 {{ range .Views }}
 import "{{- . }}_View.proto";
 {{- end }}
-option go_package = "pb";
+option go_package = "{{ .GoPackagePath }}";
 
 // StorageService has definition of all RPC methods
 service StorageService {

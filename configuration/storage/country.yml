@@ -1,16 +1,11 @@
-table: jobs
-schema:
-#all fields present in storage with their types
+table: Countries
 fields:
   - fieldName: UUID
     fieldType: string
     primaryKey: true
-  - fieldName: Position
+  - fieldName: Name
     fieldType: string
-  - fieldName: Company
-    fieldType: string
-  - fieldName: CreatedBy
-    fieldType: string
+    notNull: true
   - fieldName: CreatedAt
     fieldType: timestamp
   - fieldName: UpdatedAt
@@ -19,9 +14,12 @@ fields:
     fieldType: timestamp
 
 views:
-  - name: CreateJob
-    type: CREATE
+  - name: FindByCountryID
+    type: READ
     config:
-      returnType: primaryKey
       multiReturn: true
-
+      returnType: data
+    query:
+      fields:
+        - fieldName: UUID
+          searchType: CONTAINS

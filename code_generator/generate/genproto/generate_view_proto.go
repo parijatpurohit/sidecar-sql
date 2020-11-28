@@ -52,6 +52,7 @@ type ViewProtoConfig struct {
 	RequestConfig         *RequestConfig
 	QueryConfig           *QueryConfig
 	ResponseConfig        *ResponseConfig
+	GoPackagePath         string
 }
 
 // GenerateViewProto generates View protobuf config including request and response objects
@@ -88,6 +89,7 @@ func getProtoViewConfig(tableName string, view *config.View, fieldSchema map[str
 		RequestConfig:         getRequestConfig(tableName, view),
 		QueryConfig:           getQueryConfig(tableName, view, fieldSchema),
 		ResponseConfig:        getResponseConfig(tableName, view),
+		GoPackagePath:         paths.GoPackagePath,
 	}
 }
 

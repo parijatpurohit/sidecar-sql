@@ -4,8 +4,8 @@ echo "generating go server and $1 client code"
 if [ "$1" == "go" ] || [ "$1" == "golang" ]
 then
   mkdir -p zz_generated/go/protogen
-  protoc --proto_path=zz_generated/pb/storage \
-  --go_out=plugins=grpc:zz_generated/go/protogen zz_generated/pb/storage/*.proto
+  protoc --go_out=. --proto_path=zz_generated/pb/storage \
+  --go-grpc_out=. zz_generated/pb/storage/*.proto
 fi
 ## generate javascript clients
 #elif [ "$1" == "node" ] || [ "$1" == "nodejs" ] || [ "$1" == "javascript" ] || [ "$1" == "js" ]

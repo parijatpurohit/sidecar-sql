@@ -13,7 +13,7 @@ fields:
     fieldType: string
     notNull: true
   - fieldName: VaccinationDate
-    fieldType: timestamp
+    fieldType: string
     notNull: true
   - fieldName: CreatedAt
     fieldType: timestamp

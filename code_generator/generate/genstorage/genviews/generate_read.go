@@ -5,6 +5,8 @@ import (
 	"os"
 	"strings"
 
+	"github.com/parijatpurohit/sidecar-sql/lib/data"
+
 	"github.com/parijatpurohit/sidecar-sql/code_generator/generate/constants/alias"
 
 	"github.com/parijatpurohit/sidecar-sql/code_generator/generate/constants/paths"
@@ -54,7 +56,7 @@ func getReadConfig(storageConfig *config.StorageConfig, viewConfig *config.View,
 }
 
 func queryParamsToString(fieldName string, operator config.SearchType) string {
-	return fmt.Sprintf("%s %s (?)", strings.ToLower(fieldName), alias.OperatorMap[operator])
+	return fmt.Sprintf("%s %s (?)", data.ToSnakeCase(fieldName), alias.OperatorMap[operator])
 }
 
 func getQuery(viewConfig *config.View) string {

@@ -25,4 +25,4 @@ views:
     query:
       fields:
         - fieldName: UUID
-          searchType: CONTAINS
+          searchType: EQUALS

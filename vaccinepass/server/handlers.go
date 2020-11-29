@@ -23,7 +23,7 @@ func getUserDetails(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	res, err := logic.GetUserDetails(reqData)
+	res, err := logic.GetClient().GetUserDetails(reqData)
 	if err != nil {
 		server.WriteResponseToServer(w, server.CreateErrMessage(err))
 		return
@@ -41,7 +41,7 @@ func getUserVaccineDetails(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	res, err := logic.GetUserVaccineDetails(reqData)
+	res, err := logic.GetClient().GetUserVaccineDetails(reqData)
 	if err != nil {
 		server.WriteResponseToServer(w, server.CreateErrMessage(err))
 		return
@@ -58,7 +58,7 @@ func getRequiredVaccineDetails(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	res, err := logic.GetRequiredVaccines(reqData)
+	res, err := logic.GetClient().GetRequiredVaccines(reqData)
 	if err != nil {
 		server.WriteResponseToServer(w, server.CreateErrMessage(err))
 		return

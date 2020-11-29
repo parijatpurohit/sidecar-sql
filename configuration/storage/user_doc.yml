@@ -22,15 +22,15 @@ fields:
   - fieldName: DeletedAt
     fieldType: timestamp
 views:
-  - name: FindByUserDocID
+  - name: FindByUserID
     type: READ
     config:
       multiReturn: true
       returnType: data
     query:
       fields:
-        - fieldName: UUID
-          searchType: CONTAINS
+        - fieldName: UserID
+          searchType: EQUALS
 #views:
 #  - name: FindByRollAndName
 #    type: READ

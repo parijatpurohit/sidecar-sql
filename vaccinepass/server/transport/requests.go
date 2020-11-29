@@ -32,7 +32,7 @@ type VaccineDetails struct {
 	UserIDType string
 	Authority  string
 	Country    string
-	DOV        timestamp.Timestamp // DateOfVaccine
+	DOV        *timestamp.Timestamp // DateOfVaccine
 }
 
 type GetRequiredVaccineRequest struct {

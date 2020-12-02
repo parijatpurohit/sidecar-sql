@@ -76,7 +76,7 @@ func getDefImports(tableName string) []string {
 		ImportSync,
 		ImportGorm,
 		ImportSQLConn,
-		fmt.Sprintf(paths.ModelsImportPath, strings.ToLower(tableName)),
+		fmt.Sprintf(paths.ModelsImportPath, config.GetBaseImportPath(), strings.ToLower(tableName)),
 	}
 	return imports
 }
@@ -89,6 +89,6 @@ func getViews(tableName string, storageConfig *config.StorageConfig) []*ViewFunc
 }
 
 func getOutputViewDefFile(tableName string) (*os.File, error) {
-	outputFilePath := fmt.Sprintf(paths.ViewsFilePath, paths.GeneratedFilePath, strings.ToLower(tableName), paths.ViewDefsFileName)
+	outputFilePath := fmt.Sprintf(paths.ViewsFilePath, *config.GetFlags()[config.ServiceBasePath], paths.GeneratedFilePath, strings.ToLower(tableName), paths.ViewDefsFileName)
 	return os.Create(outputFilePath)
 }

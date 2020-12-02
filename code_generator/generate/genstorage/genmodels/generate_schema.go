@@ -97,6 +97,6 @@ func getGormTag(fieldConfig *config.Field) *FieldTag {
 }
 
 func getOutputViewSchemaFile(tableName string) (*os.File, error) {
-	outputFilePath := fmt.Sprintf(paths.SchemaFilePath, paths.GeneratedFilePath, strings.ToLower(tableName))
+	outputFilePath := fmt.Sprintf(paths.SchemaFilePath, *config.GetFlags()[config.ServiceBasePath], paths.GeneratedFilePath, strings.ToLower(tableName))
 	return os.Create(outputFilePath)
 }

@@ -15,6 +15,10 @@ func Proto() {
 	genproto.GenerateServerProto(config.GetAllStorage())
 }
 
+func Protogen() {
+	genproto.GenerateProtoOutput()
+}
+
 func generateProtoForConfig(conf *config.StorageConfig) {
 	log.Printf("generating proto entity for: %s", conf.Table)
 	genproto.GenerateEntityProto(conf)

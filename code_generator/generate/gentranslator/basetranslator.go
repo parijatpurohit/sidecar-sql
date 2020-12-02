@@ -65,19 +65,19 @@ func getBaseTranslatorFields(config *config.StorageConfig) []*ViewFieldConfig {
 	return viewFieldConfig
 }
 
-func getBaseTranslatorImports(config *config.StorageConfig) []*ImportConfig {
-	tableNameLower := strings.ToLower(generateUtils.GetTableName(config.Table, config.Common.IsPlural))
+func getBaseTranslatorImports(conf *config.StorageConfig) []*ImportConfig {
+	tableNameLower := strings.ToLower(generateUtils.GetTableName(conf.Table, conf.Common.IsPlural))
 	imports := []*ImportConfig{
 		{ImportPath: paths.PTypesImportPath},
 		{ImportPath: paths.TimestampImportPath},
 		{ImportPath: paths.BaseImportPath + paths.DataUtilsRelativePath},
-		{ImportKey: protoImportKey, ImportPath: paths.ProtoImportPath},
-		{ImportKey: fmt.Sprintf(modelsImportKey, tableNameLower), ImportPath: fmt.Sprintf(paths.ModelsImportPath, tableNameLower)},
+		{ImportKey: protoImportKey, ImportPath: fmt.Sprintf(paths.ProtoImportPath, config.GetBaseImportPath())},
+		{ImportKey: fmt.Sprintf(modelsImportKey, tableNameLower), ImportPath: fmt.Sprintf(paths.ModelsImportPath, config.GetBaseImportPath(), tableNameLower)},
 	}
 	return imports
 }
 
 func getOutputBaseTranslatorFile(tableName string) (*os.File, error) {
-	outputFilePath := fmt.Sprintf(paths.BaseTranslatorFilePath, paths.GeneratedFilePath, strings.ToLower(tableName))
+	outputFilePath := fmt.Sprintf(paths.BaseTranslatorFilePath, *config.GetFlags()[config.ServiceBasePath], paths.GeneratedFilePath, strings.ToLower(tableName))
 	return os.Create(outputFilePath)
 }

@@ -1,8 +1,7 @@
 set -e
-rm -rf zz_generated/
-mkdir -p zz_generated/pb/storage
-go run code_generator/main.go proto
-./code_generator/scripts/proto.sh "$1"
-go run code_generator/main.go storage
-go run code_generator/main.go translator
-go run code_generator/main.go server
+go run code_generator/main.go -gentype=init -basepath=$1 -gopath=$GOPATH
+go run code_generator/main.go -gentype=proto -basepath=$1 -gopath=$GOPATH
+go run code_generator/main.go -gentype=protogen -basepath=$1 -gopath=$GOPATH
+go run code_generator/main.go -gentype=storage -basepath=$1 -gopath=$GOPATH
+go run code_generator/main.go -gentype=translator -basepath=$1 -gopath=$GOPATH
+go run code_generator/main.go -gentype=server -basepath=$1 -gopath=$GOPATH

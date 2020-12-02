@@ -182,7 +182,7 @@ func getResponseConfig(tableName string, viewConfig *config.View) *ResponseConfi
 }
 
 func getOutputViewProtoFile(tableName string, viewName string) (*os.File, error) {
-	outputFilePath := fmt.Sprintf(paths.ViewProtoPath, paths.GeneratedFilePath, tableName, viewName)
+	outputFilePath := fmt.Sprintf(paths.ViewProtoPath, *config.GetFlags()[config.ServiceBasePath], paths.GeneratedFilePath, tableName, viewName)
 	return os.Create(outputFilePath)
 }
 

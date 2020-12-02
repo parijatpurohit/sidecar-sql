@@ -9,6 +9,7 @@ import (
 
 const (
 	port = ":{{ .GrpcPort }}"
+	serviceBasePath = "{{ .ServiceBasePath }}"
 )
 
 func Serve() {
@@ -37,7 +38,7 @@ func Serve() {
 }
 
 func initializeDB() {
-	sqlConfig := config.GetSQLConfig()
+	sqlConfig := config.GetSQLConfig(serviceBasePath)
 	_, err := sqlconn.Initialize(sqlConfig)
 	if err != nil {
 		log.Fatalf("error initialising storage: %v", err)

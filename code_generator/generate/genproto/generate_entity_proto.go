@@ -104,6 +104,6 @@ func getProtoFields(storageConfig *config.StorageConfig) []*ProtoFieldConfig {
 }
 
 func getOutputEntityProtoFile(tableName string) (*os.File, error) {
-	outputFilePath := fmt.Sprintf(paths.EntityProtoPath, paths.GeneratedFilePath, tableName)
+	outputFilePath := fmt.Sprintf(paths.EntityProtoPath, *config.GetFlags()[config.ServiceBasePath], paths.GeneratedFilePath, tableName)
 	return os.Create(outputFilePath)
 }

@@ -23,7 +23,7 @@ func Translator() {
 }
 
 func createTranslatorPath(tableName string) {
-	path := fmt.Sprintf("%s/%s/%s", paths.GeneratedFilePath, paths.TranslatorOutputPath, strings.ToLower(tableName))
+	path := fmt.Sprintf("%s/%s/%s/%s", *config.GetFlags()[config.ServiceBasePath], paths.GeneratedFilePath, paths.TranslatorOutputPath, strings.ToLower(tableName))
 	if err := os.MkdirAll(path, 0755); err != nil {
 		log.Panic(err)
 	}

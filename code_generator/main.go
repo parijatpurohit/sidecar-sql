@@ -1,46 +1,60 @@
 package main
 
 import (
+	"flag"
 	"log"
-	"os"
 
 	"github.com/parijatpurohit/sidecar-sql/lib/config"
 
 	"github.com/parijatpurohit/sidecar-sql/code_generator/generate"
-	"github.com/parijatpurohit/sidecar-sql/code_generator/utils"
 )
 
 const (
 	GenTypeProto      = "proto"
+	GenTypeProtogen   = "protogen"
 	GenTypeServer     = "server"
 	GenTypeStorage    = "storage"
 	GenTypeTranslator = "translator"
+	GenTypeInit       = "init"
 	GenTypeAll        = "all"
+
+	GenTypeDesc = "generation type. ex: proto, protogen, server, storage, translator, all"
 )
 
 func main() {
-	args := os.Args[1:]
 	config.InitStorageConfig()
-	if len(args) == 0 {
-		panic("invalid arguments. please try again")
+	flag.Parse()
+	genType := *config.GetFlags()[config.GenTypeFlag]
+
+	if genType == GenTypeInit || genType == GenTypeAll {
+		log.Printf("*********SETTING UP INITIAL DIRECTORY********")
+		generate.Setup()
+		log.Printf("*********INIT COMPLETE********")
 	}
-	if utils.ContainsAnyStr(args, GenTypeProto, GenTypeAll) != -1 {
+	if genType == GenTypeProto || genType == GenTypeAll {
 		log.Printf("*********GENERATING PROTOBUF FILES********")
 		generate.Proto()
 		log.Printf("*********PROTOBUF GENERATION COMPLETE********")
 	}
-	if utils.ContainsAnyStr(args, GenTypeStorage, GenTypeAll) != -1 {
+
+	if genType == GenTypeProtogen || genType == GenTypeAll {
+		log.Printf("*********GENERATING PROTOBUF OUTPUT FILES********")
+		generate.Protogen()
+		log.Printf("*********PROTOBUF OUTPUT GENERATION COMPLETE********")
+	}
+
+	if genType == GenTypeStorage || genType == GenTypeAll {
 		log.Printf("*********GENERATING STORAGE FILES*********")
 		generate.Storage()
 		log.Printf("*********STORAGE GENERATION COMPLETE********")
 
 	}
-	if utils.ContainsAnyStr(args, GenTypeTranslator, GenTypeAll) != -1 {
+	if genType == GenTypeTranslator || genType == GenTypeAll {
 		log.Printf("*********GENERATING TRANSLATOR FILES*********")
 		generate.Translator()
 		log.Printf("*********TRANSLATOR GENERATION COMPLETE*********")
 	}
-	if utils.ContainsAnyStr(args, GenTypeServer, GenTypeAll) != -1 {
+	if genType == GenTypeServer || genType == GenTypeAll {
 		log.Printf("*********GENERATING SERVER FILES*********")
 		generate.Server()
 		log.Printf("*********SERVER GENERATION COMPLETE*********")

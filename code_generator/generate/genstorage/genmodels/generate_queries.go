@@ -99,6 +99,6 @@ func GetQueryJSONTag(queryField *config.QueryField) *FieldTag {
 }
 
 func getOutputViewQueryFile(tableName string, queryName string) (*os.File, error) {
-	outputFilePath := fmt.Sprintf(paths.QueryFilePath, paths.GeneratedFilePath, strings.ToLower(tableName), queryName)
+	outputFilePath := fmt.Sprintf(paths.QueryFilePath, *config.GetFlags()[config.ServiceBasePath], paths.GeneratedFilePath, strings.ToLower(tableName), queryName)
 	return os.Create(outputFilePath)
 }

@@ -44,12 +44,12 @@ func getTableHandlerConfig(conf *config.StorageConfig) *TableHandlerConfig {
 func getTableHandlerImports(conf *config.StorageConfig) []*ImportConfig {
 	var imports []*ImportConfig
 
-	protoImport := &ImportConfig{ImportKey: protoImportKey, ImportPath: paths.ProtoImportPath}
+	protoImport := &ImportConfig{ImportKey: protoImportKey, ImportPath: fmt.Sprintf(paths.ProtoImportPath, config.GetBaseImportPath())}
 	contextImport := &ImportConfig{ImportPath: contextImport}
 	logImport := &ImportConfig{ImportPath: logImport}
 
 	tableName := generateUtils.GetTableName(conf.Table, conf.Common.IsPlural)
-	viewFilePath := fmt.Sprintf(paths.TranslatorImportPath, paths.GeneratedFilePath, strings.ToLower(tableName))
+	viewFilePath := fmt.Sprintf(paths.TranslatorImportPath, config.GetBaseImportPath(), paths.GeneratedFilePath, strings.ToLower(tableName))
 	importKey := fmt.Sprintf("%s", strings.ToLower(tableName))
 
 	imports = append(imports, &ImportConfig{ImportKey: importKey, ImportPath: viewFilePath})
@@ -67,6 +67,6 @@ func getTableViews(conf *config.StorageConfig) []*ViewConfig {
 }
 
 func getOutputTableHandlerFile(tableName string) (*os.File, error) {
-	outputFilePath := fmt.Sprintf(paths.TableHanderFilePath, paths.GeneratedFilePath, tableName)
+	outputFilePath := fmt.Sprintf(paths.TableHanderFilePath, *config.GetFlags()[config.ServiceBasePath], paths.GeneratedFilePath, tableName)
 	return os.Create(outputFilePath)
 }

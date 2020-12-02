@@ -13,17 +13,17 @@ import (
 
 var sqlConfig *SQLConfig
 
-func GetSQLConfig() *SQLConfig {
+func GetSQLConfig(basePath string) *SQLConfig {
 	if sqlConfig == nil {
-		sqlConfig = getSQLConfig()
+		sqlConfig = getSQLConfig(basePath)
 	}
 	return sqlConfig
 }
 
-func getSQLConfig() *SQLConfig {
+func getSQLConfig(basePath string) *SQLConfig {
 	conf := &SQLConfig{}
-	filePathStr := "%s/%s"
-	bytes, err := utils.GetFileBytes(fmt.Sprintf(filePathStr, paths.ConfigBasePath, paths.SQLConfigFileName))
+	filePathStr := "%s/%s/%s"
+	bytes, err := utils.GetFileBytes(fmt.Sprintf(filePathStr, basePath, paths.ConfigBasePath, paths.SQLConfigFileName))
 	if err != nil {
 		panic(err)
 	}

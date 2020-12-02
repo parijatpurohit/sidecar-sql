@@ -16,7 +16,7 @@ func Server() {
 }
 
 func createServerPath() {
-	path := fmt.Sprintf("%s/%s/%s", paths.GeneratedFilePath, paths.ServerOutputPath, paths.HandlersOutputPath)
+	path := fmt.Sprintf("%s/%s/%s/%s", *config.GetFlags()[config.ServiceBasePath], paths.GeneratedFilePath, paths.ServerOutputPath, paths.HandlersOutputPath)
 	if err := os.MkdirAll(path, 0755); err != nil {
 		log.Panic(err)
 	}

@@ -45,6 +45,6 @@ func getServerProtoConfig(storageConfigs map[string]*config.StorageConfig) *Serv
 }
 
 func getOutputServerProtoFile() (*os.File, error) {
-	outputFilePath := fmt.Sprintf(paths.ServerProtoPath, paths.GeneratedFilePath)
+	outputFilePath := fmt.Sprintf(paths.ServerProtoPath, *config.GetFlags()[config.ServiceBasePath], paths.GeneratedFilePath)
 	return os.Create(outputFilePath)
 }

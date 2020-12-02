@@ -26,11 +26,11 @@ func Storage() {
 }
 
 func createStoragePath(tableName string) {
-	var paths = []string{
-		fmt.Sprintf("%s/%s/%s/%s", paths.GeneratedFilePath, paths.StorageOutputPath, strings.ToLower(tableName), paths.ModelsOutputPath),
-		fmt.Sprintf("%s/%s/%s/%s", paths.GeneratedFilePath, paths.StorageOutputPath, strings.ToLower(tableName), paths.ViewsOutputPath),
+	var storagePaths = []string{
+		fmt.Sprintf("%s/%s/%s/%s/%s", *config.GetFlags()[config.ServiceBasePath], paths.GeneratedFilePath, paths.StorageOutputPath, strings.ToLower(tableName), paths.ModelsOutputPath),
+		fmt.Sprintf("%s/%s/%s/%s/%s", *config.GetFlags()[config.ServiceBasePath], paths.GeneratedFilePath, paths.StorageOutputPath, strings.ToLower(tableName), paths.ViewsOutputPath),
 	}
-	for _, path := range paths {
+	for _, path := range storagePaths {
 		if err := os.MkdirAll(path, 0755); err != nil {
 			log.Panic(err)
 		}

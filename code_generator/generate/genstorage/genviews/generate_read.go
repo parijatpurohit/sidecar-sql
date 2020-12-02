@@ -78,12 +78,12 @@ func getQueryFields(viewConfig *config.View) []string {
 func getReadImports(tableName string, viewType config.ViewType) []string {
 	var imports = []string{
 		ImportContext,
-		fmt.Sprintf(paths.ModelsImportPath, strings.ToLower(tableName)),
+		fmt.Sprintf(paths.ModelsImportPath, config.GetBaseImportPath(), strings.ToLower(tableName)),
 	}
 	return imports
 }
 
 func getOutputReadViewFile(tableName string, viewConfig *config.View) (*os.File, error) {
-	outputFilePath := fmt.Sprintf(paths.ViewsFilePath, paths.GeneratedFilePath, strings.ToLower(tableName), strings.ToLower(viewConfig.Name))
+	outputFilePath := fmt.Sprintf(paths.ViewsFilePath, *config.GetFlags()[config.ServiceBasePath], paths.GeneratedFilePath, strings.ToLower(tableName), strings.ToLower(viewConfig.Name))
 	return os.Create(outputFilePath)
 }

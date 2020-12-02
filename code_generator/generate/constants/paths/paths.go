@@ -1,7 +1,7 @@
 package paths
 
 const (
-	OutputGoPath = "%s/go"
+	OutputGoPath = "%s/%s/go"
 
 	BaseImportPath         = "github.com/parijatpurohit/sidecar-sql/"
 	GoPackagePath          = GeneratedFilePath + ProtoRelativePath
@@ -11,11 +11,11 @@ const (
 	TranslatorRelativePath = "/translator/%s"
 	ServerRelativePath     = OutputGoPath + "/server"
 	HandlersRelativePath   = ServerRelativePath + HandlersOutputPath
-	ModelsImportPath       = BaseImportPath + GeneratedFilePath + ModelsRelativePath
-	ViewsImportPath        = BaseImportPath + GeneratedFilePath + ViewsRelativePath
-	ProtoImportPath        = BaseImportPath + GeneratedFilePath + ProtoRelativePath
-	HandlerImportPath      = BaseImportPath + HandlersRelativePath
-	TranslatorImportPath   = BaseImportPath + OutputGoPath + TranslatorRelativePath
+
+	ModelsImportPath     = "%s/" + GeneratedFilePath + ModelsRelativePath
+	ViewsImportPath      = "%s/" + GeneratedFilePath + ViewsRelativePath
+	ProtoImportPath      = "%s/" + GeneratedFilePath + ProtoRelativePath
+	TranslatorImportPath = OutputGoPath + TranslatorRelativePath
 
 	DataUtilsRelativePath   = "lib/data"
 	ConfigUtilsRelativePath = "lib/config"
@@ -26,9 +26,9 @@ const (
 	ConfigImportPath        = BaseImportPath + ConfigUtilsRelativePath
 
 	// file paths
-	EntityProtoPath = "%s/pb/storage/%s_schema.proto"
-	ServerProtoPath = "%s/pb/storage/server.proto"
-	ViewProtoPath   = "%s/pb/storage/%s_%s_View.proto"
+	EntityProtoPath = "%s/%s/pb/storage/%s_schema.proto"
+	ServerProtoPath = "%s/%s/pb/storage/server.proto"
+	ViewProtoPath   = "%s/%s/pb/storage/%s_%s_View.proto"
 
 	SchemaFilePath         = OutputGoPath + "/storage/%s/models/schema.go"
 	QueryFilePath          = OutputGoPath + "/storage/%s/models/%s.go"
@@ -56,8 +56,8 @@ const (
 	ServerOutputPath     = "go/server"
 	ModelsOutputPath     = "/models"
 	ViewsOutputPath      = "/views"
-
-	HandlersOutputPath = "/handlers"
+	ProtobufFilePath     = "pb/storage"
+	HandlersOutputPath   = "/handlers"
 
 	// file names
 	ProtoSchemaTemplateFile = "schema.tgo"

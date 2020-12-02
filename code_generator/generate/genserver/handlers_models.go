@@ -28,8 +28,9 @@ type TableHandlerConfig struct {
 }
 
 type ServerConfig struct {
-	PackageName string
-	Imports     []*ImportConfig
-	Tables      []*TableConfig
-	GrpcPort    int64
+	PackageName     string
+	Imports         []*ImportConfig
+	Tables          []*TableConfig
+	GrpcPort        int64
+	ServiceBasePath string
 }

@@ -1,9 +1,11 @@
 package config
 
 import (
+	"flag"
 	"fmt"
 	"io/ioutil"
 	"log"
+	"strings"
 	"sync"
 
 	"github.com/parijatpurohit/sidecar-sql/code_generator/generate/constants/paths"
@@ -11,13 +13,24 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-var parsedStorageConfig map[string]*StorageConfig
-var once sync.Once
+const (
+	ServiceBasePath = "basepath"
+	GenTypeFlag     = "gentype"
+	GoPathFlag      = "gopath"
+)
+
+var (
+	parsedStorageConfig map[string]*StorageConfig
+	once                sync.Once
+	flagOnce            sync.Once
+	flagKeys            = []string{ServiceBasePath, GenTypeFlag, GoPathFlag}
+	flagMap             = map[string]*string{}
+)
 
 func InitStorageConfig() {
 	once.Do(func() {
 		parsedStorageConfig = map[string]*StorageConfig{}
-		files, err := ioutil.ReadDir(paths.StorageConfigPath)
+		files, err := ioutil.ReadDir(fmt.Sprintf("%s/%s", *GetFlags()[ServiceBasePath], paths.StorageConfigPath))
 		if err != nil {
 			log.Panic(err)
 		}
@@ -40,9 +53,9 @@ func GetStorageConfig(entity string) *StorageConfig {
 
 func getFinalConfig(entity string) *StorageConfig {
 	conf := &StorageConfig{}
-	filePathStr := "%s/%s"
-	conf = getYamlConfig(fmt.Sprintf(filePathStr, paths.StorageConfigPath, paths.CommonConfigFileName), conf)
-	return getYamlConfig(fmt.Sprintf(filePathStr, paths.StorageConfigPath, entity), conf)
+	filePathStr := "%s/%s/%s"
+	conf = getYamlConfig(fmt.Sprintf(filePathStr, *GetFlags()[ServiceBasePath], paths.StorageConfigPath, paths.CommonConfigFileName), conf)
+	return getYamlConfig(fmt.Sprintf(filePathStr, *GetFlags()[ServiceBasePath], paths.StorageConfigPath, entity), conf)
 }
 
 func getYamlConfig(path string, conf *StorageConfig) *StorageConfig {
@@ -59,4 +72,21 @@ func getYamlConfigForData(data []byte, config *StorageConfig) *StorageConfig {
 		panic(fmt.Sprintf("could not unmarshal file, err: %v", err))
 	}
 	return config
+}
+
+func GetFlags() map[string]*string {
+	flagOnce.Do(func() {
+		for _, f := range flagKeys {
+			flagMap[f] = flag.String(f, "", "")
+		}
+		flag.Parse()
+	})
+	return flagMap
+}
+
+func GetBaseImportPath() string {
+	gopath := fmt.Sprintf("%s/src/", *GetFlags()[GoPathFlag])
+	importPath := *GetFlags()[ServiceBasePath]
+	return strings.Replace(importPath, gopath, "", 1)
+
 }

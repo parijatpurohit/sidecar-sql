@@ -39,27 +39,28 @@ func getServerConfig(conf map[string]*config.StorageConfig) *ServerConfig {
 		tables = append(tables, &TableConfig{TableName: tableName, TableNameLower: strings.ToLower(tableName)})
 	}
 	return &ServerConfig{
-		PackageName: serverPackageName,
-		Imports:     getServerImports(conf),
-		Tables:      tables,
-		GrpcPort:    grpcPort,
+		PackageName:     serverPackageName,
+		Imports:         getServerImports(conf),
+		Tables:          tables,
+		GrpcPort:        grpcPort,
+		ServiceBasePath: *config.GetFlags()[config.ServiceBasePath],
 	}
 }
 
 func getServerImports(conf map[string]*config.StorageConfig) []*ImportConfig {
 	imports := []*ImportConfig{
-		{ImportKey: protoImportKey, ImportPath: paths.ProtoImportPath},
+		{ImportKey: protoImportKey, ImportPath: fmt.Sprintf(paths.ProtoImportPath, config.GetBaseImportPath())},
 		{ImportPath: netImportPath},
 		{ImportPath: logImport},
 		{ImportPath: grpcImportPath},
-		{ImportPath: fmt.Sprintf(paths.HandlerImportPath, paths.GeneratedFilePath)},
+		{ImportPath: fmt.Sprintf(paths.HandlersRelativePath, config.GetBaseImportPath(), paths.GeneratedFilePath)},
 		{ImportPath: paths.SqlConnImportPath},
 		{ImportPath: paths.ConfigImportPath},
 	}
 
 	for _, tableConfig := range conf {
 		tableName := generateUtils.GetTableName(tableConfig.Table, tableConfig.Common.IsPlural)
-		viewFilePath := fmt.Sprintf(paths.ViewsImportPath, strings.ToLower(tableName))
+		viewFilePath := fmt.Sprintf(paths.ViewsImportPath, config.GetBaseImportPath(), strings.ToLower(tableName))
 		importKey := fmt.Sprintf("%sviews", strings.ToLower(tableName))
 		imports = append(imports, &ImportConfig{ImportKey: importKey, ImportPath: viewFilePath})
 	}
@@ -68,6 +69,6 @@ func getServerImports(conf map[string]*config.StorageConfig) []*ImportConfig {
 }
 
 func getOutputServerFile() (*os.File, error) {
-	outputFilePath := fmt.Sprintf(paths.ServerFilePath, paths.GeneratedFilePath)
+	outputFilePath := fmt.Sprintf(paths.ServerFilePath, *config.GetFlags()[config.ServiceBasePath], paths.GeneratedFilePath)
 	return os.Create(outputFilePath)
 }

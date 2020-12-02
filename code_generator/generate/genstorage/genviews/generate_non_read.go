@@ -54,7 +54,7 @@ func getNonReadImports(tableName string, viewType config.ViewType) []string {
 	var imports = []string{
 		ImportContext,
 		ImportSQL,
-		fmt.Sprintf(paths.ModelsImportPath, strings.ToLower(tableName)),
+		fmt.Sprintf(paths.ModelsImportPath, config.GetBaseImportPath(), strings.ToLower(tableName)),
 	}
 	if viewType == config.VIEW_TYPE_UPDATE {
 		imports = append(imports, ImportError)
@@ -66,6 +66,6 @@ func getNonReadImports(tableName string, viewType config.ViewType) []string {
 }
 
 func getOutputNonReadViewFile(tableName string, viewConfig *config.View) (*os.File, error) {
-	outputFilePath := fmt.Sprintf(paths.ViewsFilePath, paths.GeneratedFilePath, strings.ToLower(tableName), strings.ToLower(viewConfig.Name))
+	outputFilePath := fmt.Sprintf(paths.ViewsFilePath, *config.GetFlags()[config.ServiceBasePath], paths.GeneratedFilePath, strings.ToLower(tableName), strings.ToLower(viewConfig.Name))
 	return os.Create(outputFilePath)
 }

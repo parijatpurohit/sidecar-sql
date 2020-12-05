@@ -1,3 +1,4 @@
+#!/bin/bash
 set -e
 go run code_generator/main.go -gentype=init -basepath=$1 -gopath=$GOPATH
 go run code_generator/main.go -gentype=proto -basepath=$1 -gopath=$GOPATH

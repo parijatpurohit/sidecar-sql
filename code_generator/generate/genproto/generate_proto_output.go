@@ -1,6 +1,7 @@
 package genproto
 
 import (
+	"bytes"
 	"fmt"
 	"log"
 	"os/exec"
@@ -19,8 +20,12 @@ func GenerateProtoOutput() {
 	cmdStr := fmt.Sprintf(protocCommand, basePath, protoFilePath, basePath, protoFilePath)
 
 	cmd := exec.Command("/bin/sh", "-c", cmdStr)
-	_, err := cmd.Output()
+
+	var out bytes.Buffer
+	cmd.Stdout = &out
+	err := cmd.Run()
 	if err != nil {
 		log.Panic(err)
 	}
+	fmt.Printf("exec command output: %s\n", out.String())
 }

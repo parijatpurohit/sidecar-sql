@@ -22,10 +22,13 @@ func GenerateProtoOutput() {
 	cmd := exec.Command("/bin/sh", "-c", cmdStr)
 
 	var out bytes.Buffer
+	var stderr bytes.Buffer
 	cmd.Stdout = &out
+	cmd.Stderr = &stderr
 	err := cmd.Run()
 	if err != nil {
-		log.Panic(err)
+		log.Panic(fmt.Sprint(err) + ": " + stderr.String())
+		return
 	}
-	fmt.Printf("exec command output: %s\n", out.String())
+	log.Println("Result: " + out.String())
 }

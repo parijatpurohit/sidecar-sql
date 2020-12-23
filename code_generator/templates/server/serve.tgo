@@ -12,6 +12,8 @@ const (
 	serviceBasePath = "{{ .ServiceBasePath }}"
 )
 
+var LocalService *handlers.Service
+
 func Serve() {
 	lis, err := net.Listen("tcp", port)
 	if err != nil {
@@ -25,12 +27,12 @@ func Serve() {
 	{{.TableNameLower}}Views := {{.TableNameLower}}views.GetViews()
 	{{- end}}
 
-	service := &handlers.Service{
+	LocalService = &handlers.Service{
 	{{- range .Tables}}
 		{{.TableName}}Views: {{.TableNameLower}}Views,
 	{{- end}}
 	}
-	pb.RegisterStorageServiceServer(s, service)
+	pb.RegisterStorageServiceServer(s, LocalService)
 	log.Printf("starting server on port: %v", port)
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)
